@@ -12,7 +12,7 @@ const Layout = props => (
         <Header />
         <div className="flex-1 flex overflow-x-hidden ">
             <Nav />
-            <main className="flex items-center justify-center">
+            <main className="w-full">
                 {props.children}
             </main>
         </div>
