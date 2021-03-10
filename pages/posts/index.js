@@ -1,13 +1,16 @@
 import Layout from "../../components/Layout";
+import Link from 'next/link'
 
 const PostsIndex = function() {
     return (
     <Layout>
         <div className="flex mx-6 my-6">
             <h2 className="mr-4 text-lg font-large uppercase">Posts</h2>
-            <button class="inline-block px-4 py-2 text-xs font-sm text-center text-gray-700 uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-200 focus:outline-none">
-                Create
-          </button>
+            <Link href="/posts/create">
+                <button class="inline-block px-4 py-2 text-xs font-sm text-center text-gray-700 uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-200 focus:outline-none">
+                    Create
+                </button>
+            </Link>
         </div>
         <div className="overflow-x-auto">
             <div className="bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
