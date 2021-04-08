@@ -5,7 +5,7 @@ import Head from 'next/head'
 const Layout = props => (
     <div className="h-screen overflow-hidden flex flex-col w-full bg-gray-100">
         <Head>
-            <title>Lam Do Blog</title>
+            <title>Lam Do</title>
             <link rel="icon" href="/favicon.ico" />
         </Head>
 

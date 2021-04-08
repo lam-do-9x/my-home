@@ -7,7 +7,7 @@ const PostsIndex = function() {
         <div className="flex mx-6 my-6">
             <h2 className="mr-4 text-lg font-large uppercase">Posts</h2>
             <Link href="/posts/create">
-                <button class="inline-block px-4 py-2 text-xs font-sm text-center text-gray-700 uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-200 focus:outline-none">
+                <button className="inline-block px-4 py-2 text-xs font-sm text-center text-gray-700 uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-200 focus:outline-none">
                     Create
                 </button>
             </Link>
