@@ -2,9 +2,12 @@ import Layout from "../../components/Layout";
 import MDE from '../../components/MDE';
 import DayPicker from "../../components/DayPicker";
 import SwitchToggle from "../../components/SwitchToggle";
-import SlugCreation from "../../components/SlugCreation";
+import TitleToSlug from "../../components/TitleToSlug";
+import { useState } from 'react';
 
 const PostsCreate = function () {
+    const [toggle, setToggle] = useState(false);
+
     return (
         <Layout>
             <div className="flex items-center justify-between px-5 py-2">
@@ -14,7 +17,7 @@ const PostsCreate = function () {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                         </svg>
-                        Save and Publish
+                        {toggle ? `Save and Publish` : `Save Draft`}
                     </button>
                 </div>
             </div>
@@ -23,7 +26,7 @@ const PostsCreate = function () {
                     <div className="overflow-hidden rounded-md">
                         <div className="mb-8">
                             <p className="mb-2 font-semibold">Title<i className="ml-sm text-red-500">*</i></p>
-                            <input className="w-full border" onChange={SlugCreation}/>
+                            <input className="w-full border" onChange={TitleToSlug}/>
                         </div>
                         <div className="w-full mb-8">
                             <p className="mb-2 font-semibold">Content</p>
@@ -38,7 +41,7 @@ const PostsCreate = function () {
                 <div className="flex flex-col w-1/4 max-w-6xl mx-auto rounded-xl bg-white shadow-lg p-5 text-black h-full ml-6">
                     <div className="flex items-center justify-between mb-4 pb-4 border-b">
                         <p>Published</p>
-                        <SwitchToggle />
+                        <SwitchToggle toggle={toggle} onClick={() => setToggle(!toggle)}/>
                     </div>
                     <div className="mb-4">
                         <p>Slug<i className="ml-sm text-red-500">*</i></p>
