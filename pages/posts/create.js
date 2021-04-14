@@ -2,6 +2,7 @@ import Layout from "../../components/Layout";
 import MDE from '../../components/MDE';
 import DayPicker from "../../components/DayPicker";
 import SwitchToggle from "../../components/SwitchToggle";
+import SlugCreation from "../../components/SlugCreation";
 
 const PostsCreate = function () {
     return (
@@ -22,7 +23,7 @@ const PostsCreate = function () {
                     <div className="overflow-hidden rounded-md">
                         <div className="mb-8">
                             <p className="mb-2 font-semibold">Title<i className="ml-sm text-red-500">*</i></p>
-                            <input className="w-full border"/>
+                            <input className="w-full border" onChange={SlugCreation}/>
                         </div>
                         <div className="w-full mb-8">
                             <p className="mb-2 font-semibold">Content</p>
@@ -41,7 +42,7 @@ const PostsCreate = function () {
                     </div>
                     <div className="mb-4">
                         <p>Slug<i className="ml-sm text-red-500">*</i></p>
-                        <input className="w-full border"/>
+                        <input className="w-full border" id="slug"/>
                     </div>
                     <div className="mb-4">
                         <p>Date<i className="ml-sm text-red-500">*</i></p>
