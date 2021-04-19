@@ -30,7 +30,7 @@ const PostsCreate = function () {
                         </div>
                         <div className="w-full mb-8">
                             <p className="mb-2 font-semibold">Content</p>
-                            <MDE />
+                            <MDE value=""/>
                         </div>
                         <div className="mb-8">
                             <p className="mb-2 font-semibold">Excerpt</p>

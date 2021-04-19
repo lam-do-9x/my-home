@@ -1,6 +1,7 @@
-import * as React from "react";
+import { useState } from "react";
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
+import uploadToCloudinary from '../lib/uploadToCloudinary';
 
 const converter = new Showdown.Converter({
     tables: true,
@@ -9,11 +10,11 @@ const converter = new Showdown.Converter({
     tasklists: true
 });
 
-export default function MDE() {
-    const [value, setValue] = React.useState("**Xin chao!!!**");
-    const [selectedTab, setSelectedTab] = React.useState("write");
+export default function MDE({values}) {
+    const [value, setValue] = useState(values);
+    const [selectedTab, setSelectedTab] = useState("write");
 
-    const save = async function* (data) {
+    const save = async function* () {
         // Promise that waits for "time" milliseconds
         const wait = function (time) {
             return new Promise((a, r) => {
@@ -21,17 +22,15 @@ export default function MDE() {
             });
         };
 
-        // Upload "data" to your server
-        // Use XMLHttpRequest.send to send a FormData object containing
-        // "data"
-        // Check this question: https://stackoverflow.com/questions/18055422/how-to-receive-php-image-data-over-copy-n-paste-javascript-with-xmlhttprequest
-
-        await wait(2000);
-        // yields the URL that should be inserted in the markdown
-        yield "https://picsum.photos/300";
         await wait(2000);
 
-        // returns true meaning that the save was successful
+        const file = document.querySelector('.image-input').files[0];
+
+        yield uploadToCloudinary(process.env.NEXT_PUBLIC_CLOUDINARY_API, file)
+            .then(data => data.secure_url);
+
+        await wait(2000);
+
         return true;
     };
 
