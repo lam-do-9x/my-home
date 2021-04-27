@@ -10,8 +10,7 @@ const converter = new Showdown.Converter({
     tasklists: true
 });
 
-export default function MDE({values}) {
-    const [value, setValue] = useState(values);
+export default function MDE(props) {
     const [selectedTab, setSelectedTab] = useState("write");
 
     const save = async function* () {
@@ -34,11 +33,15 @@ export default function MDE({values}) {
         return true;
     };
 
+    function onChange(type) {
+        props.onChange(type);
+    }
+
     return (
         <div className="container">
             <ReactMde
-                value={value}
-                onChange={setValue}
+                value={props.content}
+                onChange={onChange}
                 selectedTab={selectedTab}
                 onTabChange={setSelectedTab}
                 generateMarkdownPreview={(markdown) =>
