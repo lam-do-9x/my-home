@@ -4,7 +4,7 @@ import MDE from '../../components/MDE';
 import DayPicker from "../../components/DayPicker";
 import SwitchToggle from "../../components/SwitchToggle";
 import slugify from "../../lib/slugify";
-import SavePost from '../../components/SavePost';
+import fetchClient from "../../lib/fetchClient";
 
 const PostsCreate = function () {
     const [isPublished, setPublished] = useState(false);
@@ -19,12 +19,16 @@ const PostsCreate = function () {
         setSlug(slugify(e.target.value));
     }
 
+    async function submit() {
+        const response = await fetchClient('/api/posts', JSON.stringify({ title, content, excerpt, isPublished, slug, publishedDate }));
+    }
+
     return (
         <Layout>
             <div className="flex items-center justify-between px-5 py-2">
                 <h1 className="text-2xl	font-normal">Create Post</h1>
                 <div className="inline-block mr-2 mt-2">
-                    <button onClick={SavePost({ title, content, excerpt, isPublished, slug, publishedDate})} type="button" className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex items-center">
+                    <button onClick={submit} type="button" className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                         </svg>

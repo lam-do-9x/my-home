@@ -9,7 +9,7 @@ generator client {
 
 model Post {
     id            Int      @id @default (autoincrement())
-    title         String
+    title         String   @unique
     content       String?
     excerpt       String?
     slug          String

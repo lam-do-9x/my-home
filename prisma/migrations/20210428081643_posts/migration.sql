@@ -12,3 +12,6 @@ CREATE TABLE "Post" (
 
     PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Post.title_unique" ON "Post"("title");
