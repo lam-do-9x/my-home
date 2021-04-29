@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Layout from "../../components/Layout";
+import Notification from "../../components/Notification";
 import MDE from '../../components/MDE';
 import DayPicker from "../../components/DayPicker";
 import SwitchToggle from "../../components/SwitchToggle";
 import slugify from "../../lib/slugify";
 import fetchClient from "../../lib/fetchClient";
+import { useRouter } from 'next/router';
 
 const PostsCreate = function () {
     const [isPublished, setPublished] = useState(false);
@@ -12,7 +14,9 @@ const PostsCreate = function () {
     const [content, setContent] = useState('');
     const [excerpt, setExcerpt] = useState('');
     const [slug, setSlug] = useState('');
+    const [message, setMessage] = useState('');
     const [publishedDate, setPublishedDate] = useState(new Date());
+    const router = useRouter();
 
     function onChangeTitle(e) {
         setTitle(e.target.value);
@@ -21,12 +25,21 @@ const PostsCreate = function () {
 
     async function submit() {
         const response = await fetchClient('/api/posts', JSON.stringify({ title, content, excerpt, isPublished, slug, publishedDate }));
+        if (response.code === 400) {
+            setMessage(response.error);
+            setTimeout(() => {
+                setMessage('');
+            }, 3000);
+            return;
+        }
+        router.push('/posts');
     }
 
     return (
         <Layout>
             <div className="flex items-center justify-between px-5 py-2">
                 <h1 className="text-2xl	font-normal">Create Post</h1>
+                {message !== '' && <Notification message={message} />}
                 <div className="inline-block mr-2 mt-2">
                     <button onClick={submit} type="button" className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
