@@ -12,7 +12,7 @@ export default function DayPicker(props) {
             onChange={handleOnChange}
             value={props.publishedDate}
             className="w-full"
-            format="dd/MM/y"
+            format="dd-MM-yyyy"
             calendarIcon={<CalendarIcon />}
         />
     );
