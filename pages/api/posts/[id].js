@@ -2,10 +2,20 @@ import { prisma, Prisma } from '../../../lib/prisma';
 import prismaErrorCode from '../../../lib/prismaErrorCode';
 
 export default function handler(req, res) {
-    if (req.method === 'PUT') {
-        handlePUT(req, res);
-    } else {
-        handleGET(req, res);
+    switch (req.method) {
+        case 'PUT':
+            handlePUT(req, res);
+            break;
+        case 'DELETE':
+            handleDELETE(req, res);
+            break;
+        case 'GET':
+            handleGET(req, res);
+            break;
+        default:
+            throw new Error(
+                `The HTTP ${req.method} method is not supported at this route.`
+            )
     }
 }
 
@@ -35,4 +45,14 @@ async function handlePUT(req, res) {
             return res.json({ error: prismaErrorCode(e.code, e.meta.target[0]), code: 400 })
         }
     }
+}
+
+async function handleDELETE(req, res) {
+    const { id } = req.query;
+    await prisma.post.delete({
+        where: {
+            id: Number(id)
+        }
+    });
+    return res.json({ data: {}, code: 204 });
 }
