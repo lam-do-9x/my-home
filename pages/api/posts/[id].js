@@ -48,11 +48,16 @@ async function handlePUT(req, res) {
 }
 
 async function handleDELETE(req, res) {
-    const { id } = req.query;
-    await prisma.post.delete({
-        where: {
-            id: Number(id)
+    const id = Number(req.query.id);
+
+    try {
+        await prisma.post.delete({
+            where: { id }
+        });
+        return res.json({ data: { id }, message: 'Delete the post successfully!', code: 204 });
+    } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            return res.json({ message: prismaErrorCode(e.code), code: 400 })
         }
-    });
-    return res.json({ data: {}, code: 204 });
+    }
 }

@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import handleStatus from "../../lib/handleStatus";
 import { formatDate } from "../../lib/handleDate";
 import Modal from "../../components/Modal";
+import Notification from "../../components/Notification";
 
 const PostsIndex = function () {
     const [posts, setPosts] = useState([]);
     const [modal, setModal] = useState(false);
-    const [postDeleted, setpostDeleted] = useState({});
+    const [postDeleted, setPostDeleted] = useState({});
+    const [responseDeleted, setResponseDeleted] = useState({});
 
     useEffect(async () => {
         const res = await fetch('/api/posts');
@@ -17,8 +19,28 @@ const PostsIndex = function () {
     }, []);
 
     function showDeleteModal(post) {
-        setpostDeleted(post);
+        setPostDeleted(post);
         setModal(true);
+    }
+
+    function reRenderPost(res) {
+        if (res?.data) {
+            const renderPost = posts.filter((post) => {
+                return post.id !== res.data.id;
+            });
+            setPosts(renderPost);
+        }
+    }
+
+    function handleClickModal(responseDeleted) {
+        setResponseDeleted(responseDeleted);
+        setModal(!modal);
+        if (Object.keys(responseDeleted).length !== 0) {
+            reRenderPost(responseDeleted);
+            setTimeout(() => {
+                setResponseDeleted({});
+            }, 3000);
+        }
     }
 
     return (
@@ -31,6 +53,7 @@ const PostsIndex = function () {
                     </button>
                 </Link>
             </div>
+            {Object.keys(responseDeleted).length !== 0 && <Notification response={responseDeleted}/>}
             <div className="overflow-x-auto">
                 <div className="bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
                     <div className="w-full mx-6">
@@ -74,7 +97,7 @@ const PostsIndex = function () {
                                             </td>
                                         </tr>
                                     ))}
-                                    {modal && <Modal post={postDeleted} onClick={() => setModal(!modal)} />}
+                                    {modal && <Modal post={postDeleted} onClick={(res) => handleClickModal(res)} />}
                                 </tbody>
                             </table>
                         </div>
