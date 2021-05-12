@@ -24,12 +24,10 @@ const PostsIndex = function () {
     }
 
     function reRenderPost(res) {
-        if (res?.data) {
-            const renderPost = posts.filter((post) => {
-                return post.id !== res.data.id;
-            });
-            setPosts(renderPost);
-        }
+        const renderPost = posts.filter((post) => {
+            return post.id !== res.data.id;
+        });
+        setPosts(renderPost);
     }
 
     function handleClickModal(responseDeleted) {

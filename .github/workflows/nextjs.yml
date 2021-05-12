@@ -1,7 +1,7 @@
 name: Build
 on: [push]
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
-      - run: npm install
-      - run: npm run build
+      - run: yarn
+      - run: yarn build
         env:
             CI: false
