@@ -15,7 +15,7 @@ async function handlePOST(req, res) {
     return res.json({ data, code: 201 });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      return res.json({ error: prismaErrorCode(e.code, e.meta.target[0]), code: 400 })
+      return res.json({ message: prismaErrorCode(e.code, e.meta.target[0]), code: 400 })
     }
   }
 }

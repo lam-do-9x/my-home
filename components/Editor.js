@@ -15,7 +15,7 @@ const Editor = function ({post}) {
     const [excerpt, setExcerpt] = useState(post.excerpt);
     const [slug, setSlug] = useState(post.slug);
     const [publishedDate, setPublishedDate] = useState(new Date(post.publishedDate ?? new Date()));
-    const [message, setMessage] = useState('');
+    const [responded, setResponded] = useState({});
     const router = useRouter();
 
     function onChangeTitle(e) {
@@ -24,7 +24,7 @@ const Editor = function ({post}) {
     }
 
     async function submit() {
-        const body = JSON.stringify({ title, content, excerpt, isPublished, slug, publishedDate });
+        const body = JSON.stringify({ title: title.trim(), content, excerpt, isPublished, slug, publishedDate });
         let response = {};
         if (Object.keys(post).length !== 0) {
             response = await fetchClient(`/api/posts/${post.id}`, body, 'PUT');
@@ -33,9 +33,9 @@ const Editor = function ({post}) {
         }
 
         if (response.code === 400) {
-            setMessage(response.error);
+            setResponded(response);
             setTimeout(() => {
-                setMessage('');
+                setResponded({});
             }, 3000);
             return;
         }
@@ -46,7 +46,7 @@ const Editor = function ({post}) {
         <Layout>
             <div className="flex items-center justify-between px-5 py-2">
                 <h1 className="text-2xl	font-normal">{Object.keys(post).length === 0 ? 'Create Post' : 'Update Post'}</h1>
-                {message !== '' && <Notification message={message} />}
+                {Object.keys(responded).length !== 0 && <Notification response={responded} />}
                 <div className="inline-block mr-2 mt-2">
                     <button onClick={submit} type="button" className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
