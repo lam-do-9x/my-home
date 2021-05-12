@@ -16,7 +16,7 @@ export default function MDE(props) {
     const save = async function* () {
         // Promise that waits for "time" milliseconds
         const wait = function (time) {
-            return new Promise((a, r) => {
+            return new Promise((a) => {
                 setTimeout(() => a(), time);
             });
         };
