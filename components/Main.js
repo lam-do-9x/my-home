@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import DisplayPost from './DisplayPost';
 import Nav from './Nav';
 
-export default function Main() {
+export default function Main(props) {
     return (
         <div className="h-screen w-full flex flex-col bg-gray-100 overflow-x-hidden">
             <Head>
@@ -14,7 +13,7 @@ export default function Main() {
                 <div className="w-full justify-center items-center flex flex-col">
                     <h1 className="text-5xl	uppercase font-bold text-gray-700">Latest Blog</h1>
                     <div className="mt-6">
-                        <DisplayPost />
+                        {props.children}
                     </div>
                 </div>
             </div>

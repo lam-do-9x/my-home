@@ -39,7 +39,7 @@ const Editor = function ({post}) {
             }, 3000);
             return;
         }
-        router.push('/posts');
+        router.push('/cp/posts');
     }
 
     return (
