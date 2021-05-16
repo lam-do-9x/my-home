@@ -1,10 +1,10 @@
-import Layout from "../../components/Layout";
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import handleStatus from "../../lib/handleStatus";
-import { formatDate } from "../../lib/handleDate";
-import Modal from "../../components/Modal";
-import Notification from "../../components/Notification";
+import Layout from "../../../components/Layout";
+import handleStatus from "../../../lib/handleStatus";
+import { formatDate } from "../../../lib/handleDate";
+import Modal from "../../../components/Modal";
+import Notification from "../../../components/Notification";
 
 const PostsIndex = function () {
     const [posts, setPosts] = useState([]);
@@ -45,7 +45,7 @@ const PostsIndex = function () {
         <Layout>
             <div className="flex mx-6 my-6">
                 <h2 className="mr-4 text-lg font-large uppercase">Posts</h2>
-                <Link href="/posts/create">
+                <Link href="/cp/posts/create">
                     <button className="inline-block px-4 py-2 text-xs font-sm text-center text-gray-700 uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-200 focus:outline-none">
                         Create
                     </button>
@@ -79,7 +79,7 @@ const PostsIndex = function () {
                                             </td>
                                             <td className="py-3 px-6 text-center">
                                                 <div className="flex item-center justify-center">
-                                                    <Link href={`/posts/${post.id}`}>
+                                                    <Link href={`/cp/posts/${post.id}`}>
                                                         <div className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
-import Editor from '../../components/Editor';
+import Editor from '../../../components/Editor';
 
 const PostID = () => {
     const router = useRouter();

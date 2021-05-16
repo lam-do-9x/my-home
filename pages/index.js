@@ -1,5 +1,5 @@
-import Layout from "../components/Layout";
+import Main from "../components/Main";
 
-const Index = () => <Layout>Welcome to NextJs!</Layout>;
+const Index = () => <Main></Main>;
 
 export default Index;

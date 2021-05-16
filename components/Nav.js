@@ -1,17 +1,27 @@
-import Link from 'next/link'
-
-const Nav = () => (
-    <div className="w-64 p-6 overflow-y-auto border-r">
-        <Link href="/posts">
-            <div className="-mx-3 py-1 px-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-200">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                    <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-900 ml-4">Posts</span>
+export default function Nav() {
+    return (
+        <nav className="bg-white px-6 py-4 shadow">
+            <div className="flex flex-col container mx-auto md:flex-row md:items-center md:justify-between">
+                <div className="flex justify-between items-center">
+                    <div>
+                        <a href="#" className="text-gray-800 text-xl font-bold md:text-2xl">Lam Do</a>
+                    </div>
+                    <div>
+                        <button type="button" className="block text-gray-800 hover:text-gray-600 focus:text-gray-600 focus:outline-none md:hidden">
+                            <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current">
+                                <path d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div className="md:flex flex-col md:flex-row md:-mx-4 hidden">
+                    <a href="#" className="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Home</a>
+                    <a href="#" className="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">Blog</a>
+                    <a href="#" className="my-1 text-gray-800 hover:text-blue-500 md:mx-4 md:my-0">About us</a>
+                </div>
             </div>
-        </Link>
-    </div>
-);
+        </nav>
+    );
 
-export default Nav;
+}
