@@ -26,4 +26,4 @@ jobs:
             ${{ runner.OS }}-
       - run: yarn
       - run: yarn lint
-      - run: yarn build --if-present
+      - run: yarn build
