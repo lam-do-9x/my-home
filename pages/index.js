@@ -4,6 +4,7 @@ import DisplayPost from '../components/DisplayPost';
 function Index({ posts }) {
     return (
         <Main>
+            <h1 className="text-5xl	uppercase font-bold text-gray-700">Latest Blog</h1>
             {posts.map(post => (
                 <DisplayPost post={post} key={post.id}/>
             ))}

@@ -20,11 +20,16 @@ export default function handler(req, res) {
 }
 
 async function handleGET(req, res) {
-    const { id } = req.query;
-    const post = await prisma.post.findUnique({
-        where: {
-            id: Number(id)
-        }
+    const request = req.query;
+    const value = request.query;
+    let condition = { id: Number(value) };
+    if (request?.column) {
+        condition[`${request.column}`] = value;
+        delete condition['id'];
+    }
+
+    const post = await prisma.post.findFirst({
+        where: condition
     });
     return res.json({ post, code: 200 });
 }

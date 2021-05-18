@@ -4,7 +4,7 @@ export default function Nav() {
             <div className="flex flex-col container mx-auto md:flex-row md:items-center md:justify-between">
                 <div className="flex justify-between items-center">
                     <div>
-                        <a href="#" className="text-gray-800 text-xl font-bold md:text-2xl">Lam Do</a>
+                        <a href="/" className="text-gray-800 text-xl font-bold md:text-2xl">Lam Do</a>
                     </div>
                     <div>
                         <button type="button" className="block text-gray-800 hover:text-gray-600 focus:text-gray-600 focus:outline-none md:hidden">
