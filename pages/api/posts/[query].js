@@ -35,12 +35,12 @@ async function handleGET(req, res) {
 }
 
 async function handlePUT(req, res) {
-    const { id } = req.query;
+    const { query } = req.query;
 
     try {
         const post = await prisma.post.update({
             where: {
-                id: Number(id)
+                id: Number(query)
             },
             data: req.body
         });

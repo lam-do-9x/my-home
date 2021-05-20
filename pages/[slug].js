@@ -1,4 +1,5 @@
 import Main from "../components/Main";
+import MDRender from "../components/MDRender";
 import Nav from '../components/Nav';
 
 export default function slug({post}) {
@@ -19,7 +20,7 @@ export default function slug({post}) {
                     </div>
                 </div>
                 <div className="mx-20 px-56 container w-full">
-                    <div>{post.content}</div>
+                    <div className="prose lg:prose-xl">{<MDRender content={post.content}/>}</div>
                 </div>
             </div>
         </Main>
