@@ -1,18 +1,26 @@
 import Main from "../components/Main";
-import Image from 'next/image'
+import Nav from '../components/Nav';
 
 export default function slug({post}) {
     return (
         <Main>
-            <div className="fixed">
-                <Image className=" top-0 left-0 absolute min-w-full	min-h-full bg-center" src="https://markmanson.net/wp-content/uploads/2019/06/attention-diet-cover-image.jpg" layout="fill" objectFit="cover" />
-            </div>
-            <div className="mx-auto px-56 container">
-                <div className='mb-4 h-screen justify-center flex flex-col items-center'>
-                    <div>{post.title}</div>
-                    <div>{post.excerpt}</div>
+            <div>
+                <Nav post={post}/>
+                <div className="h-screen justify-center items-center flex flex-col mb-16 bg-black">
+                    <style jsx>{`
+                    .art-cover {
+                          background-image: url(${'https://markmanson.net/wp-content/uploads/2021/02/stoicism-cover-image.jpg'});
+                    }
+                    `}</style>
+                    <div className="art-cover bg-no-repeat bg-center bg-cover w-full h-screen opacity-30 absolute z-10"></div>
+                    <div className='mx-20 px-56 container justify-center flex flex-col text-white z-20'>
+                        <div className="text-5xl uppercase">{post.title}</div>
+                        <div className="my-8 text-xl">{post.excerpt}</div>
+                    </div>
                 </div>
-                <div>{post.content}</div>
+                <div className="mx-20 px-56 container w-full">
+                    <div>{post.content}</div>
+                </div>
             </div>
         </Main>
     );
