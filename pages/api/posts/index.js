@@ -21,6 +21,24 @@ async function handlePOST(req, res) {
 }
 
 async function handleGET(req, res) {
-  const posts = await prisma.post.findMany();
+  let { isPublished, take } = req.query;
+  let where = {};
+  if (isPublished) {
+    where['isPublished'] = true;
+    where['publishedDate'] = {
+        lte: new Date()
+    }
+  }
+  if (!take) {
+    const postCount = await prisma.post.count();
+    take = postCount;
+  }
+  const posts = await prisma.post.findMany({
+    where,
+    take: Number(take),
+    orderBy: {
+      publishedDate: 'desc'
+    }
+  });
   return res.json({ posts, code: 200 });
-}
+  }

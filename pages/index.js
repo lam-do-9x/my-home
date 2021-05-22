@@ -18,7 +18,7 @@ function Index({ posts }) {
 }
 
 export async function getStaticProps() {
-    const res = await fetch(`${process.env.APP_URL}/api/posts`);
+    const res = await fetch(`${process.env.APP_URL}/api/posts?isPublished=true&take=5`);
     const { posts } =  await res.json();
 
     return { props: { posts } }
