@@ -23,22 +23,48 @@ async function handlePOST(req, res) {
 async function handleGET(req, res) {
   let { isPublished, take } = req.query;
   let where = {};
-  if (isPublished) {
+  let select = {};
+  const postCount = await prisma.post.count();
+
+  if (isPublished && take) {
     where['isPublished'] = true;
     where['publishedDate'] = {
         lte: new Date()
     }
+    select = {
+      publishedDate: true,
+      slug: true,
+      title: true,
+      content: true
+    }
   }
-  if (!take) {
-    const postCount = await prisma.post.count();
+  if (!take && isPublished) {
     take = postCount;
+    select = {
+      publishedDate: true,
+      slug: true,
+      title: true
+    }
   }
+
+  if (!take && !isPublished) {
+    take = postCount;
+    select = {
+      id: true,
+      title: true,
+      publishedDate: true,
+      isPublished: true
+    }
+  }
+
   const posts = await prisma.post.findMany({
     where,
     take: Number(take),
     orderBy: {
       publishedDate: 'desc'
-    }
+    },
+    select
   });
+
   return res.json({ posts, code: 200 });
   }
