@@ -19,7 +19,7 @@ export default function slug({post}) {
                         <div className="my-8 text-xl">{post.excerpt}</div>
                     </div>
                 </div>
-                <div className="mx-20 px-56 container w-full">
+                <div className="mx-20 px-56 container w-full" key={post.slug}>
                     <div className="prose lg:prose-xl">{<MDRender content={post.content}/>}</div>
                 </div>
             </div>

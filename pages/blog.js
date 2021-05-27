@@ -12,10 +12,10 @@ export default function Blog({ posts }) {
                 <div>
                     {posts.map(({year, data}) => {
                         return (
-                            <div className="flex flex-col items-center">
+                            <div className="flex flex-col items-center" key={year}>
                                 <div className="text-3xl font-bold">{year}</div>
                                 {data.map(post => {
-                                    return (<AllBlog post={post} key={post.id} />)
+                                    return (<AllBlog post={post} key={post.slug} />)
                                 })}
                             </div>
                         )

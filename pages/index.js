@@ -15,7 +15,7 @@ export default function Index({ posts }) {
             <div className="px-6 flex flex-col items-center justify-center pt-4">
                 <h1 className="text-5xl	uppercase font-bold text-gray-700">Latest Blog</h1>
                 {posts.map((post, index) => (
-                    <DisplayPost post={post} key={post.id} last={isLast(posts, index)}/>
+                    <DisplayPost post={post} key={post.slug} last={isLast(posts, index)}/>
                 ))}
                 {   Object.keys(posts).length === 5 &&
                     <Link href='/blog'>
