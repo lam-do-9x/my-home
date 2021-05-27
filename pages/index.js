@@ -29,8 +29,8 @@ export default function Index({ posts }) {
 }
 
 function transformContent(posts) {
-    return posts.map(({ publishedDate, slug, title, content}) => {
-        return { publishedDate, slug, title, content: content.substr(0, 180)};
+    return posts.map(({ publishedDate, slug, title, content, cover}) => {
+        return { publishedDate, slug, title, content: content.substr(0, 180), cover};
     });
 }
 

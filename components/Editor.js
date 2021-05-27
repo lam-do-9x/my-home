@@ -23,8 +23,14 @@ const Editor = function ({post}) {
         setSlug(slugify(e.target.value));
     }
 
+    function getImageFromContent(content) {
+        const regex = /!\[(.*?)\]\((.*?)\)/g;
+        return regex.exec(content) ? regex.exec(content)[2] : null;
+    }
+
     async function submit() {
-        const body = JSON.stringify({ title: title.trim(), content, excerpt, isPublished, slug, publishedDate });
+        const cover = getImageFromContent(content);
+        const body = JSON.stringify({ title: title.trim(), content, excerpt, isPublished, slug, publishedDate, cover });
         let response = {};
         if (Object.keys(post).length !== 0) {
             response = await fetchClient(`/api/posts/${post.id}`, body, 'PUT');

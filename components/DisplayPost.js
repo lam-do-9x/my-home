@@ -7,7 +7,7 @@ export default function DisplayPost(props) {
     return (
         <Link href={`/${props.post.slug}`}>
             <div className={`max-w-4xl px-10 py-6 my-4 ${props.last ? '' : 'border-b border-gray-300'} flex items-center justify-center cursor-pointer`}>
-                <Image className="rounded-full" src="https://markmanson.net/wp-content/uploads/2021/04/documentary-cover-250x250.jpg" width={400} height={400}/>
+                <Image className="rounded-full" src={props.post.cover ?? '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'} width={400} height={400}/>
                 <div className="flex flex-col mx-8 w-2/3">
                     <span className="font-bold text-gray-600">Date:</span>
                     <span className="font-light text-gray-600 w-full">{formatDate(new Date(props.post.publishedDate))}</span>

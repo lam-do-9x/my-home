@@ -10,7 +10,7 @@ export default function slug({post}) {
                 <div className="h-screen justify-center items-center flex flex-col mb-16 bg-black">
                     <style jsx>{`
                     .art-cover {
-                          background-image: url(${'https://markmanson.net/wp-content/uploads/2021/02/stoicism-cover-image.jpg'});
+                          background-image: url(${post.cover ?? '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'});
                     }
                     `}</style>
                     <div className="art-cover bg-no-repeat bg-center bg-cover w-full h-screen opacity-30 absolute z-10"></div>

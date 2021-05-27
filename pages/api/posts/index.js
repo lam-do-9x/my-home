@@ -35,9 +35,11 @@ async function handleGET(req, res) {
       publishedDate: true,
       slug: true,
       title: true,
-      content: true
+      content: true,
+      cover: true
     }
   }
+
   if (!take && isPublished) {
     where['isPublished'] = true;
     where['publishedDate'] = {
@@ -47,7 +49,7 @@ async function handleGET(req, res) {
     select = {
       publishedDate: true,
       slug: true,
-      title: true
+      title: true,
     }
   }
 

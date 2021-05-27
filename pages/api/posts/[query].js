@@ -53,7 +53,7 @@ async function handlePUT(req, res) {
 }
 
 async function handleDELETE(req, res) {
-    const id = Number(req.query.id);
+    const id = Number(req.query.query);
 
     try {
         await prisma.post.delete({
