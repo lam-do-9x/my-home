@@ -9,7 +9,7 @@ const components = {
         if (node.children[0].tagName === 'img') {
             return  <iframe height="500" src={`${props.href}`} className="my-4 w-full"></iframe>
         }
-        return <a href={`${props.href}`} target="_blank">{children}</a>
+        return <a href={`${props.href}`} target="_blank" rel="noreferrer">{children}</a>
     }
 }
 
