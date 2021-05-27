@@ -102,5 +102,5 @@ export default function PostsIndex() {
                     </div>
                 </div>
             </div>
-        </Layout>);
-};
+        </Layout>)
+}

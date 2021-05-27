@@ -94,5 +94,5 @@ export default function Editor({post}) {
                     </div>
                 </div>
             </div >
-        </Layout>);
-};
+        </Layout>)
+}
