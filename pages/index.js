@@ -3,7 +3,7 @@ import DisplayPost from '../components/DisplayPost';
 import Nav from '../components/Nav';
 import Link from "next/link";
 
-function Index({ posts }) {
+export default function Index({ posts }) {
     function isLast(posts, index) {
         const postLength =  posts.length - 1;
         return postLength === index;
@@ -28,11 +28,15 @@ function Index({ posts }) {
 
 }
 
-export async function getStaticProps() {
-    const res = await fetch(`${process.env.APP_URL}/api/posts?isPublished=true&take=5`);
-    const { posts } =  await res.json();
-
-    return { props: { posts } }
+function transformContent(posts) {
+    return posts.map(({ publishedDate, slug, title, content}) => {
+        return { publishedDate, slug, title, content: content.substr(0, 180)};
+    });
 }
 
-export default Index;
+export async function getStaticProps() {
+    const res = await fetch(`${process.env.APP_URL}/api/posts?isPublished=true&take=5`);
+    let { posts } =  await res.json();
+    posts = transformContent(posts);
+    return { props: { posts } }
+}

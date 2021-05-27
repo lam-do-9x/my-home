@@ -39,6 +39,10 @@ async function handleGET(req, res) {
     }
   }
   if (!take && isPublished) {
+    where['isPublished'] = true;
+    where['publishedDate'] = {
+      lte: new Date()
+    }
     take = postCount;
     select = {
       publishedDate: true,

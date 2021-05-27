@@ -14,7 +14,7 @@ export default function DisplayPost(props) {
                 </div>
                 <div className="mt-2">
                     <p className="text-2xl text-gray-700 font-bold">{props.post.title}</p>
-                    <Dotdotdot clamp={4}>
+                    <Dotdotdot clamp={3}>
                         <p className="mt-2 text-gray-600">{props.post.content}</p>
                     </Dotdotdot>
                 </div>
