@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
 import Editor from '../../../components/Editor';
 
-const PostID = () => {
+export default function PostID() {
     const router = useRouter();
     const [post, setPost] = useState({});
 
@@ -14,9 +14,5 @@ const PostID = () => {
         setPost(post);
     }, [router.isReady]);
 
-    return (
-        Object.keys(post).length !== 0 && <Editor post={post} />
-    );
+    return ( Object.keys(post).length !== 0 && <Editor post={post} /> );
 }
-
-export default PostID

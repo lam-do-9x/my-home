@@ -2,7 +2,7 @@ import Main from "../components/Main";
 import MDRender from "../components/MDRender";
 import Nav from '../components/Nav';
 
-export default function slug({post}) {
+export default function Slug({post}) {
     return (
         <Main>
             <div>

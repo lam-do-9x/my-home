@@ -6,7 +6,7 @@ import { formatDate } from "../../../lib/handleDate";
 import Modal from "../../../components/Modal";
 import Notification from "../../../components/Notification";
 
-const PostsIndex = function () {
+export default function PostsIndex() {
     const [posts, setPosts] = useState([]);
     const [modal, setModal] = useState(false);
     const [postDeleted, setPostDeleted] = useState({});
@@ -104,5 +104,3 @@ const PostsIndex = function () {
             </div>
         </Layout>);
 };
-
-export default PostsIndex;

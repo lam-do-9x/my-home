@@ -2,6 +2,7 @@ import { useState } from "react";
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import uploadToCloudinary from '../lib/uploadToCloudinary';
+import "react-mde/lib/styles/css/react-mde-all.css";
 
 const converter = new Showdown.Converter({
     tables: true,

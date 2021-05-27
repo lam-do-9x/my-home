@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Layout from "./Layout";
 import Notification from "./Notification";
 import MDE from './MDE';
@@ -6,9 +7,8 @@ import DayPicker from "./DayPicker";
 import SwitchToggle from "./SwitchToggle";
 import slugify from "../lib/slugify";
 import fetchClient from "../lib/fetchClient";
-import { useRouter } from 'next/router';
 
-const Editor = function ({post}) {
+export default function Editor({post}) {
     const [isPublished, setPublished] = useState(post.isPublished);
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
@@ -96,5 +96,3 @@ const Editor = function ({post}) {
             </div >
         </Layout>);
 };
-
-export default Editor;
