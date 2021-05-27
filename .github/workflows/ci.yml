@@ -19,6 +19,8 @@ jobs:
         with:
           path: ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-nextjs-v3-${{ hashFiles('**/yarn.lock') }}
+      - name: Install yarn
+        run: npm install -g yarn
       - name: Install Dependencies
         run: yarn
       - name: Linting codebase
