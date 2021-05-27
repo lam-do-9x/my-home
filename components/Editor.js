@@ -24,7 +24,7 @@ const Editor = function ({post}) {
     }
 
     function getImageFromContent(content) {
-        const regex = /!\[(.*?)\]\((.*?)\)/g;
+        const regex = /!\[(.*?)\]\((.*?)\)/;
         return regex.exec(content) ? regex.exec(content)[2] : null;
     }
 
