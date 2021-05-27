@@ -5,7 +5,10 @@ const components = {
     h1({ children }) {
       return <h1 className='text-center'>{children}</h1>
     },
-    a({ children, ...props }) {
+    a({ node, children, ...props }) {
+        if (node.children[0].tagName === 'img') {
+            return  <iframe height="500" src={`${props.href}`} className="my-4 w-full"></iframe>
+        }
         return <a href={`${props.href}`} target="_blank">{children}</a>
     }
 }
