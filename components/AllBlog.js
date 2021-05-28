@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { monthDate } from "../lib/handleDate"
+import Link from 'next/link';
+import { monthDate } from "../lib/handleDate";
 
 export default function AllBlog(props) {
     return (

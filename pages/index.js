@@ -12,7 +12,7 @@ export default function Index({ posts }) {
     return (
         <Main>
             <Nav />
-            <div className="px-6 flex flex-col items-center justify-center pt-4">
+            <div className="px-6 flex flex-col items-center justify-center py-8">
                 <h1 className="text-5xl	uppercase font-bold text-gray-700">Latest Blog</h1>
                 {posts.map((post, index) => (
                     <DisplayPost post={post} key={post.slug} last={isLast(posts, index)}/>

@@ -7,10 +7,8 @@ export default function Main(props) {
                 <title>Lam Do</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="pb-8">
-                <div className="flex flex-col">
-                    {props.children}
-                </div>
+            <div className="flex flex-col">
+                {props.children}
             </div>
         </div>
     );

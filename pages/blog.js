@@ -7,7 +7,7 @@ export default function Blog({ posts }) {
     return (
         <Main>
             <Nav />
-            <div className="px-6 flex flex-col items-center justify-center pt-4">
+            <div className="px-6 flex flex-col items-center justify-center py-8">
                 <h1 className="text-5xl	uppercase font-bold text-gray-700 mb-8">All Blog</h1>
                 <div>
                     {posts.map(({year, data}) => {

@@ -5,7 +5,7 @@ import Nav from '../components/Nav';
 export default function Slug({post}) {
     return (
         <Main>
-            <div>
+            <div className="pb-8">
                 <Nav post={post}/>
                 <div className="h-screen justify-center items-center flex flex-col mb-16 bg-black">
                     <style jsx>{`
