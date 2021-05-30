@@ -1,5 +1,8 @@
 import Editor from '../../../components/Editor';
+import { WithAuthSync } from '../../../middleware/auth';
 
-export default function PostsCreate() {
+function PostsCreate() {
     return ( <Editor post={{}} /> )
 }
+
+export default WithAuthSync(PostsCreate);

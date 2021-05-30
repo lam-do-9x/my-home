@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react';
 import Editor from '../../../components/Editor';
+import { WithAuthSync } from '../../../middleware/auth';
 
-export default function PostID() {
+function PostID() {
     const router = useRouter();
     const [post, setPost] = useState({});
 
@@ -16,3 +17,5 @@ export default function PostID() {
 
     return ( Object.keys(post).length !== 0 && <Editor post={post} /> );
 }
+
+export default WithAuthSync(PostID);

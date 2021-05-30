@@ -5,8 +5,9 @@ import handleStatus from "../../../lib/handleStatus";
 import { formatDate } from "../../../lib/handleDate";
 import Modal from "../../../components/Modal";
 import Notification from "../../../components/Notification";
+import { WithAuthSync } from '../../../middleware/auth';
 
-export default function PostsIndex() {
+function PostsIndex() {
     const [posts, setPosts] = useState([]);
     const [modal, setModal] = useState(false);
     const [postDeleted, setPostDeleted] = useState({});
@@ -104,3 +105,6 @@ export default function PostsIndex() {
             </div>
         </Layout>)
 }
+
+
+export default WithAuthSync(PostsIndex);
