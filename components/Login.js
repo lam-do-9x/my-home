@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import fetchClient from "../lib/fetchClient";
 import Notification from "./Notification";
 
-export default function Login() {
+export default function Login({redirectTo}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [responded, setResponded] = useState({});
@@ -21,8 +21,8 @@ export default function Login() {
             return;
         }
 
-        cookie.set('token', response.data.token, { expires: 1 });
-        router.push('/cp/posts');
+        cookie.set('token', response.data.token, { expires: response.data.expiresIn });
+        router.push(`${redirectTo}`);
     }
 
     return (
