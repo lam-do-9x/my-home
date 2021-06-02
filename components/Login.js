@@ -1,8 +1,8 @@
-import Link from 'next/link';
 import { useState, useEffect } from "react";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/client';
 import Notification from "./Notification";
-import { signIn } from 'next-auth/client'
-import { useRouter } from 'next/router'
 
 export default function Login({ redirectTo }) {
     const [email, setEmail] = useState('');
