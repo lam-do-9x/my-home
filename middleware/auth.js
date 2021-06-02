@@ -1,14 +1,17 @@
 import React from 'react';
-import checkAuth from '../lib/auth';
+import { getSession } from 'next-auth/client';
 
-export const WithAuthSync = (WrappedComponent) => class MiddlewareAuth extends React.Component {
+export const AuthMiddleware = (WrappedComponent) => class MiddlewareAuth extends React.Component {
 
-    static async getInitialProps(ctx) {
-        let token = ctx.req.headers.cookie;
-        await checkAuth(ctx, token);
-        const componentProps = WrappedComponent.getInitialProps
-            && (await WrappedComponent.getInitialProps(ctx));
-        return { ...componentProps };
+    static async getInitialProps(context) {
+        const session = await getSession(context);
+        if (session) {
+            const componentProps = WrappedComponent.getInitialProps
+                && (await WrappedComponent.getInitialProps(ctx));
+            return { ...componentProps };
+        }
+        context.res.writeHead(302, { Location: `/login?redirect=${context.req.url}` });
+        context.res.end();
     }
 
     render() {

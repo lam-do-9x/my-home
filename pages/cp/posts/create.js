@@ -1,8 +1,8 @@
 import Editor from '../../../components/Editor';
-import { WithAuthSync } from '../../../middleware/auth';
+import { AuthMiddleware } from '../../../middleware/auth';
 
 function PostsCreate() {
     return ( <Editor post={{}} /> )
 }
 
-export default WithAuthSync(PostsCreate);
+export default AuthMiddleware(PostsCreate);

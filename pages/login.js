@@ -10,7 +10,9 @@ export default function login() {
     useEffect(async () => {
         if (!router.isReady) return;
         const {redirect} = router.query;
-        setRedirectTo(redirect);
+        if (redirect) {
+            setRedirectTo(redirect);
+        }
     }, [router.isReady]);
 
     return (

@@ -5,7 +5,7 @@ import handleStatus from "../../../lib/handleStatus";
 import { formatDate } from "../../../lib/handleDate";
 import Modal from "../../../components/Modal";
 import Notification from "../../../components/Notification";
-import { WithAuthSync } from '../../../middleware/auth';
+import { AuthMiddleware } from '../../../middleware/auth';
 
 function PostsIndex() {
     const [posts, setPosts] = useState([]);
@@ -107,4 +107,4 @@ function PostsIndex() {
 }
 
 
-export default WithAuthSync(PostsIndex);
+export default AuthMiddleware(PostsIndex);
