@@ -7,7 +7,7 @@ export const AuthMiddleware = (WrappedComponent) => class MiddlewareAuth extends
         const session = await getSession(context);
         if (session) {
             const componentProps = WrappedComponent.getInitialProps
-                && (await WrappedComponent.getInitialProps(ctx));
+                && (await WrappedComponent.getInitialProps(context));
             return { ...componentProps };
         }
         context.res.writeHead(302, { Location: `/login?redirect=${context.req.url}` });
