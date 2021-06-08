@@ -14,4 +14,11 @@ module.exports = {
             },
         ]
     },
+    serverRuntimeConfig: {
+        mySecret: 'secret',
+        secondSecret: process.env.SECOND_SECRET,
+    },
+    publicRuntimeConfig: {
+        staticFolder: '/static',
+    },
 }
