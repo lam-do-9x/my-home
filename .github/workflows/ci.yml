@@ -27,8 +27,8 @@ jobs:
         run: yarn lint
       - name: Test Nextjs
         env:
-          APP_URL: ${{ secrets }}
-        run: echo "Hello $APP_URL" && yarn build -APP_URL=$APP_URL
+          APP_URL: ${{ secrets.ADMIN_EMAIL }}
+        run: echo "Hello $APP_URL" && yarn build
       # - name: Build Nextjs
       #   run: yarn build
       #   env:
