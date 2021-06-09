@@ -28,7 +28,7 @@ jobs:
       - name: Test Nextjs
         env:
           APP_URL: ${{ secrets.APP_URL }}
-        run: echo "Hello $APP_URL" && yarn build
+        run: echo "Hello $APP_URL" && yarn build -APP_URL=$APP_URL
       # - name: Build Nextjs
       #   run: yarn build
       #   env:
