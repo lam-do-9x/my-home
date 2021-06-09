@@ -5,17 +5,13 @@ module.exports = {
             'img.youtube.com'
         ],
     },
-    async redirects() {
-        return [
-            {
-                source: '/cp',
-                destination: '/cp/posts',
-                permanent: true,
-            },
-        ]
-    },
-    future: {
-        webpack5: true,
-        strictPostcssConfiguration: true
-    },
+    // async redirects() {
+    //     return [
+    //         {
+    //             source: '/cp',
+    //             destination: '/cp/posts',
+    //             permanent: true,
+    //         },
+    //     ]
+    // },
 }
