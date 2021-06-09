@@ -14,11 +14,8 @@ module.exports = {
             },
         ]
     },
-    serverRuntimeConfig: {
-        mySecret: 'secret',
-        secondSecret: process.env.SECOND_SECRET,
-    },
-    publicRuntimeConfig: {
-        staticFolder: '/static',
+    future: {
+        webpack5: true,
+        strictPostcssConfiguration: true
     },
 }
