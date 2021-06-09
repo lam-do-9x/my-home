@@ -26,9 +26,9 @@ jobs:
       - name: Linting codebase
         run: yarn lint
       - name: Test Nextjs
-        run: echo "Hello $APP_URL" && yarn build
         env:
           APP_URL: ${{ secrets.APP_URL }}
+        run: echo "Hello $APP_URL" && yarn build
       # - name: Build Nextjs
       #   run: yarn build
       #   env:
