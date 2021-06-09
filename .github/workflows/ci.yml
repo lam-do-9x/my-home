@@ -27,3 +27,5 @@ jobs:
         run: yarn lint
       - name: Build Nextjs
         run: yarn build
+        env:
+6        APP_URL: ${{ secrets.APP_URL }}
