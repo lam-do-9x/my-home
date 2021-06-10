@@ -24,12 +24,9 @@ jobs:
         run: yarn
       - name: Linting codebase
         run: yarn lint
-      - name: Migration Prisma
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npx prisma migrate deploy
       - name: Build Nextjs
         env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           APP_URL: ${{ secrets.APP_URL }}
         run: |
           yarn build
