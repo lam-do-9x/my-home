@@ -34,7 +34,7 @@ function transformContent(posts) {
     });
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const res = await fetch(`${process.env.APP_URL}/api/posts?isPublished=true&take=5`);
     let { posts } =  await res.json();
     posts = transformContent(posts);

@@ -40,7 +40,7 @@ function tranformBlogByYear(blogs) {
     }, []);
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const res = await fetch(`${process.env.APP_URL}/api/posts?isPublished=true`);
     let { posts } = await res.json();
     posts = tranformBlogByYear(posts);
