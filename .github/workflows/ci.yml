@@ -26,7 +26,5 @@ jobs:
         run: yarn lint
       - name: Build Nextjs
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           APP_URL: ${{ secrets.APP_URL }}
-        run: |
-          yarn build
+        run: yarn build
