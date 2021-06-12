@@ -1,13 +1,13 @@
 module.exports = {
   mode: 'jit',
   purge: {
-    enabled: true,
+    enabled: process.env.NODE_ENV === 'production',
     content: [
-      './pages/**/*.{js,ts,jsx,tsx}',
-      './components/**/*.{js,ts,jsx,tsx}'
+      'pages/**/*.{js,ts,jsx,tsx}',
+      'components/**/*.{js,ts,jsx,tsx}'
     ],
     options: {
-      whitelist: ['bg-gray-200', 'bg-green-200', 'bg-yellow-200'],
+      whitelist: ["bg-gray-200", "bg-green-200", "bg-yellow-200"],
     }
   },
   darkMode: false,
