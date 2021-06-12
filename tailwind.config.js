@@ -1,7 +1,16 @@
 module.exports = {
   mode: 'jit',
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false, // or 'media' or 'class'
+  purge: {
+    enabled: true,
+    content: [
+      './pages/**/*.{js,ts,jsx,tsx}',
+      './components/**/*.{js,ts,jsx,tsx}'
+    ],
+    options: {
+      whitelist: ['bg-gray-200', 'bg-green-200', 'bg-yellow-200'],
+    }
+  },
+  darkMode: false,
   theme: {
     extend: {},
   },
