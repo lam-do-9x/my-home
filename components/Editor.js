@@ -50,8 +50,8 @@ export default function Editor({post}) {
 
     return (
         <Layout>
-            <div className="flex items-center justify-between px-5 py-2">
-                <h1 className="text-2xl	font-normal">{Object.keys(post).length === 0 ? 'Create Post' : 'Update Post'}</h1>
+            <div className="flex items-center justify-between p-5">
+                <h1 className="text-2xl	font-normal shadow rounded p-4 border">{Object.keys(post).length === 0 ? 'Create Post' : 'Update Post'}</h1>
                 {Object.keys(responded).length !== 0 && <Notification response={responded} />}
                 <div className="inline-block mr-2 mt-2">
                     <button onClick={submit} type="button" className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg flex items-center">
@@ -63,7 +63,7 @@ export default function Editor({post}) {
                 </div>
             </div>
             <div className="flex justify-center p-5">
-                <div className="w-3/4 max-w-6xl mx-auto rounded-xl bg-white shadow-lg p-5 text-black">
+                <div className="w-3/4 max-w-6xl mx-auto rounded-xl bg-white shadow-lg border p-5">
                     <div className="overflow-hidden rounded-md">
                         <div className="mb-8">
                             <p className="mb-2 font-semibold">Title<i className="ml-sm text-red-500">*</i></p>
@@ -79,7 +79,7 @@ export default function Editor({post}) {
                         </div>
                     </div >
                 </div >
-                <div className="flex flex-col w-1/4 max-w-6xl mx-auto rounded-xl bg-white shadow-lg p-5 text-black h-full ml-6">
+                <div className="flex flex-col w-1/4 max-w-6xl mx-auto rounded-xl bg-white shadow-lg p-5 border h-full ml-6">
                     <div className="flex items-center justify-between mb-4 pb-4 border-b">
                         <p>Published</p>
                         <SwitchToggle isPublished={isPublished} onClick={() => setPublished(!isPublished)} />

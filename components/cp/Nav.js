@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 const Nav = () => (
-    <div className="w-64 p-6 overflow-y-auto border-r">
+    <div className="w-64 p-6 overflow-y-auto border-r h-screen">
         <Link href="/cp/posts">
             <div className="-mx-3 py-1 px-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
