@@ -5,7 +5,7 @@ export default function Nav({post = {}}) {
         <nav className={`${Object.keys(post).length !== 0 ? 'absolute z-30' : 'shadow mb-4'} py-4 px-6 w-full`}>
             <div className="flex justify-between items-center container mx-auto">
                 <Link href="/">
-                    <div className={`${Object.keys(post).length !== 0 ? 'text-white' : ''} text-4xl uppercase font-bold cursor-pointer`}>Lam Do</div>
+                    <div className={`${Object.keys(post).length !== 0 ? 'text-white' : ''} text-4xl uppercase font-bold cursor-pointer`}>Leo Do</div>
                 </Link>
                 <div className="flex justify-between items-center">
                     <Link href="/blog">

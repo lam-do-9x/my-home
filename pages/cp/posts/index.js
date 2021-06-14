@@ -45,16 +45,16 @@ function PostsIndex() {
     return (
         <Layout>
             <div className="flex mx-6 my-6">
-                <h2 className="mr-4 text-lg font-large uppercase">Posts</h2>
+                <h2 className="mr-4 text-lg font-large uppercase rounded border p-4">Posts</h2>
                 <Link href="/cp/posts/create">
-                    <button className="inline-block px-4 py-2 text-xs font-sm text-center text-gray-700 uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-200 focus:outline-none">
+                    <button className="inline-block px-4 py-2 text-xs font-sm text-center uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-100 focus:outline-none">
                         Create
                     </button>
                 </Link>
             </div>
             {Object.keys(responseDeleted).length !== 0 && <Notification response={responseDeleted}/>}
             <div className="overflow-x-auto">
-                <div className="bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+                <div className="flex items-center justify-center font-sans overflow-hidden shadow">
                     <div className="w-full mx-6">
                         <div className="bg-white shadow-md rounded my-6">
                             <table className="min-w-max w-full table-auto">

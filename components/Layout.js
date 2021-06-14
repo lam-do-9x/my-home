@@ -4,14 +4,14 @@ import Nav from "./cp/Nav";
 
 export default function Layout(props) {
     return (
-        <div className="h-screen overflow-hidden flex flex-col w-full bg-gray-100">
+        <div className="h-screen overflow-hidden flex flex-col w-full">
             <Head>
-                <title>Lam Do</title>
+                <title>Leo Do</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <Header />
-            <div className="flex-1 flex overflow-x-hidden ">
+            <div className="flex-1 flex overflow-x-hidden">
                 <Nav />
                 <main className="w-full">
                     {props.children}
