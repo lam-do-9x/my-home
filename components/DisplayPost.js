@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import Dotdotdot from 'react-dotdotdot'
-import { formatDate} from "../lib/handleDate"
+import Image from 'next/image';
+import Link from 'next/link';
+import Dotdotdot from 'react-dotdotdot';
+import { formatDate} from "../lib/handleDate";
 
 export default function DisplayPost(props) {
     return (
