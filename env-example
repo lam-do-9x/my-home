@@ -1,0 +1,11 @@
+NEXT_PUBLIC_UPLOAD_PRESET=blog-image
+NEXT_PUBLIC_CLOUDINARY_API=https://api.cloudinary.com/v1_1/leno/image/upload/
+#DATABASE_URL=postgres://sibykxfsssxbew:55168397a6b4889866d01ebf3a292863ae0f83c7bdb3263152f3e4374dd93e3a@ec2-23-23-164-251.compute-1.amazonaws.com:5432/d7s3ebpsjt5nhv
+DATABASE_URL=postgresql://root:root@127.0.0.1/prisma?statusColor=DAEBC2&enviroment=local&name=ldb&tLSMode=0&usePrivateKey=false&safeModeLevel=0&advancedSafeModeLevel=0
+NODE_ENV=devP
+APP_URL=http://localhost:3000
+ADMIN_EMAIL=lamdo9491@gmail.com
+ADMIN_PASSWORD=123456789
+NEXTAUTH_URL=http://localhost:3000
+NOTION_API_OFFICIAL_KEYS=secret_5GTh3u2C4gi4K7Gzz3FA1tqx5AIzGU2Xf4jTbeTwB2K
+NOTION_DATABASE_ID=7d1858a3204d479aadf20e77cbd7787d
