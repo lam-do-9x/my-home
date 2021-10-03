@@ -1,17 +1,14 @@
 module.exports = {
-    images: {
-        domains: [
-            'markmanson.net',
-            'img.youtube.com'
-        ],
-    },
-    async redirects() {
-        return [
-            {
-                source: '/cp',
-                destination: '/cp/posts',
-                permanent: true,
-            },
-        ]
-    },
-}
+  images: {
+    domains: ["markmanson.net", "img.youtube.com", "res.cloudinary.com"],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/cp",
+        destination: "/cp/posts",
+        permanent: true,
+      },
+    ];
+  },
+};
