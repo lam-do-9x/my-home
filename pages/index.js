@@ -36,7 +36,7 @@ export default function Index({ blogs }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { results } = await notion.databases.query({
     database_id: process.env.NOTION_BLOG_ID,
     filter: {
