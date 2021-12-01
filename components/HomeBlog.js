@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Dotdotdot from "react-dotdotdot";
-import { formatDate } from "../lib/handleDate";
+import { formatDate } from "../lib/dateTime";
 
-export default function DisplayPost(props) {
+export default function HomeBlog(props) {
   return (
     <Link href={`/${props.blog.properties.slug.rich_text[0]?.plain_text}`}>
       <div

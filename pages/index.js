@@ -1,15 +1,14 @@
-import Main from "../components/Main";
-import DisplayPost from "../components/DisplayPost";
-import Nav from "../components/Nav";
 import Link from "next/link";
-import { notion } from "../lib/notion";
+import Main from "../components/Main";
+import HomePageBlog from "../components/HomeBlog";
+import Nav from "../components/Nav";
+
+const isLast = (blogs, index) => {
+  const blogLength = blogs.length - 1;
+  return blogLength === index;
+};
 
 export default function Index({ blogs }) {
-  function isLast(blogs, index) {
-    const blogLength = blogs.length - 1;
-    return blogLength === index;
-  }
-
   return (
     <Main>
       <Nav />
@@ -18,7 +17,7 @@ export default function Index({ blogs }) {
           Latest Blog
         </h1>
         {blogs.map((blog, index) => (
-          <DisplayPost
+          <HomePageBlog
             blog={blog}
             key={blog.properties.slug.rich_text[0]?.plain_text}
             last={isLast(blogs, index)}
@@ -37,26 +36,13 @@ export default function Index({ blogs }) {
 }
 
 export async function getServerSideProps() {
-  const { results } = await notion.databases.query({
-    database_id: process.env.NOTION_BLOG_ID,
-    filter: {
-      property: "isPublished",
-      select: {
-        equals: "Yes",
-      },
-    },
-    sorts: [
-      {
-        property: "publishedDate",
-        direction: "descending",
-      },
-    ],
-    page_size: 5,
-  });
+  const res = await fetch(`${process.env.APP_URL}/api/blogs/home`);
+
+  const { blogs } = await res.json();
 
   return {
     props: {
-      blogs: results,
+      blogs,
     },
   };
 }
