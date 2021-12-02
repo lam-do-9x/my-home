@@ -1,11 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 import Dotdotdot from "react-dotdotdot";
 import { formatDate } from "../lib/dateTime";
 
 export default function HomeBlog(props) {
   return (
-    <Link href={`/${props.blog.properties.slug.rich_text[0]?.plain_text}`}>
+    <a
+      href={`${props.blog.properties.slug.rich_text[0]?.plain_text}-${props.blog.id}`}
+    >
       <div
         className={`max-w-4xl w-full px-10 mt-4 pb-4 ${
           props?.last ? "" : "border-b border-gray-300"
@@ -38,6 +39,6 @@ export default function HomeBlog(props) {
           </Dotdotdot>
         </div>
       </div>
-    </Link>
+    </a>
   );
 }

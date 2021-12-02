@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Main from "../components/Main";
-import HomePageBlog from "../components/HomeBlog";
+import HomeBlog from "../components/HomeBlog";
 import Nav from "../components/Nav";
 
 const isLast = (blogs, index) => {
@@ -17,7 +17,7 @@ export default function Index({ blogs }) {
           Latest Blog
         </h1>
         {blogs.map((blog, index) => (
-          <HomePageBlog
+          <HomeBlog
             blog={blog}
             key={blog.properties.slug.rich_text[0]?.plain_text}
             last={isLast(blogs, index)}

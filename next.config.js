@@ -5,6 +5,7 @@ module.exports = {
       "img.youtube.com",
       "res.cloudinary.com",
       "s3.us-west-2.amazonaws.com",
+      "www.notion.so",
     ],
   },
   async redirects() {
