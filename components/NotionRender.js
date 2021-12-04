@@ -1,30 +1,15 @@
 import { Fragment } from "react";
-
-export const Text = ({ text }) => {
-  if (!text) {
-    return null;
-  }
-  return text.map((value) => {
-    const {
-      annotations: { bold, code, color, italic, strikethrough, underline },
-      text,
-    } = value;
-    return (
-      <span
-        className={[
-          bold ? "font-bold" : "",
-          code ? "font-mono bg-gray-200 rounded-sm" : "",
-          italic ? "italic" : "",
-          strikethrough ? "line-through" : "",
-          underline ? "underline" : "",
-        ].join(" ")}
-        style={color !== "default" ? { color } : {}}
-      >
-        {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
-      </span>
-    );
-  });
-};
+import {
+  Paragraph,
+  Heading,
+  ListItem,
+  ToDo,
+  Toggle,
+  Quote,
+  Picture,
+  BulletBox,
+} from "./notion/BasicBlock";
+import { Bookmarks } from "./notion/Media";
 
 const renderBlock = (block) => {
   const { type, id } = block;
@@ -32,58 +17,31 @@ const renderBlock = (block) => {
 
   switch (type) {
     case "paragraph":
-      return (
-        <p>
-          <Text text={value.text} />
-        </p>
-      );
+      return <Paragraph value={value} />;
     case "heading_1":
-      return (
-        <h1>
-          <Text text={value.text} />
-        </h1>
-      );
     case "heading_2":
-      return (
-        <h2>
-          <Text text={value.text} />
-        </h2>
-      );
     case "heading_3":
-      return (
-        <h3>
-          <Text text={value.text} />
-        </h3>
-      );
+      return <Heading value={value} type={type} />;
     case "bulleted_list_item":
     case "numbered_list_item":
-      return (
-        <li>
-          <Text text={value.text} />
-        </li>
-      );
+      return <ListItem value={value} />;
     case "to_do":
-      return (
-        <div>
-          <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{" "}
-            <Text text={value.text} />
-          </label>
-        </div>
-      );
+      return <ToDo value={value} id={id} />;
     case "toggle":
-      return (
-        <details>
-          <summary>
-            <Text text={value.text} />
-          </summary>
-          {value.children?.map((block) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-        </details>
-      );
-    case "child_page":
-      return <p>{value.title}</p>;
+      return <Toggle value={value} renderBlock={renderBlock} />;
+    case "quote":
+      return <Quote value={value} />;
+    case "image":
+      return <Picture value={value} />;
+    case "divider":
+      return <hr className="bg-gray-200 my-4 !important" />;
+    case "bookmark":
+      return <Bookmarks value={value} />;
+    case "callout":
+      if (value.icon.emoji === "📮") {
+        return <BulletBox value={value} />;
+      }
+      break;
     default:
       return `❌ Unsupported block (${
         type === "unsupported" ? "unsupported by Notion API" : type
