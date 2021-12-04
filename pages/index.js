@@ -35,10 +35,10 @@ export default function Index({ blogs }) {
   );
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(`${process.env.APP_URL}/api/blogs/home`);
-
-  const { blogs } = await res.json();
+export async function getStaticProps() {
+  const { blogs } = await fetch(
+    `${process.env.APP_URL}/api/blogs?page=home`
+  ).then((res) => res.json());
 
   return {
     props: {

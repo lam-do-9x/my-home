@@ -1,4 +1,4 @@
-import { childBlockNotion } from "../../../lib/notion";
+import { childBlockNotion, pageNotion } from "../../../lib/notion";
 
 const blocks = [];
 
@@ -14,5 +14,6 @@ const getChildBlockNotion = async (id, cursor = "") => {
 export default async function handle(req, res) {
   const { id } = req.query;
   const blocks = await getChildBlockNotion(id);
-  return res.json({ blocks, code: 200 });
+  const page = await pageNotion(id);
+  return res.json({ blocks, page, code: 200 });
 }

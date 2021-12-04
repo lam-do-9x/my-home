@@ -41,10 +41,9 @@ export default function Slug({ blocks, page }) {
 
 export const getServerSideProps = async ({ params }) => {
   const id = parsePageId(params.slug, { uuid: false });
-  const blocksRes = await fetch(`${process.env.APP_URL}/api/blogs/${id}`);
-  const { blocks } = await blocksRes.json();
-  const pageRes = await fetch(`${process.env.APP_URL}/api/blogs/page?id=${id}`);
-  const { page } = await pageRes.json();
+  const { blocks, page } = await fetch(
+    `${process.env.APP_URL}/api/blogs/${id}`
+  ).then((res) => res.json());
 
   return { props: { blocks, page } };
 };

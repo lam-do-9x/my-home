@@ -18,7 +18,7 @@ const transformBlogByYear = (blogs) => {
 
 export default async function handle(req, res) {
   const id = process.env.NOTION_BLOG_ID;
-  const body = {
+  let body = {
     filter: {
       property: "isPublished",
       select: {
@@ -32,9 +32,16 @@ export default async function handle(req, res) {
       },
     ],
   };
+  if (req.query.page) {
+    body = { ...body, page_size: 5 };
+  }
 
   const response = await databaseNotion(id, body);
-  const blogs = transformBlogByYear(response);
+  let blogs = transformBlogByYear(response);
+
+  if (req.query.page) {
+    blogs = response;
+  }
 
   return res.json({ blogs, code: 200 });
 }

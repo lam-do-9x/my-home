@@ -8,12 +8,11 @@ export default function AllBlog(props) {
       </span>
       <a
         href={`${props.blog.properties.slug.rich_text[0]?.plain_text}-${props.blog.id}`}
+        className="w-2/3"
       >
-        <div className="w-2/3">
-          <p className="text-xl text-blue-400 cursor-pointer hover:underline">
-            {props.blog.properties.title.title[0].text.content}
-          </p>
-        </div>
+        <p className="text-xl text-blue-400 cursor-pointer hover:underline">
+          {props.blog.properties.title.title[0].text.content}
+        </p>
       </a>
     </div>
   );
