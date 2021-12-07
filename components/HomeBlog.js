@@ -1,10 +1,11 @@
+import Link from "next/link";
 import Image from "next/image";
 import Dotdotdot from "react-dotdotdot";
 import { formatDate } from "../lib/dateTime";
 
 export default function HomeBlog(props) {
   return (
-    <a
+    <Link
       href={`${props.blog.properties.slug.rich_text[0]?.plain_text}-${props.blog.id}`}
     >
       <div
@@ -39,6 +40,6 @@ export default function HomeBlog(props) {
           </Dotdotdot>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

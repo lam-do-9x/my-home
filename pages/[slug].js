@@ -44,6 +44,5 @@ export const getServerSideProps = async ({ params }) => {
   const { blocks, page } = await fetch(
     `${process.env.APP_URL}/api/blogs/${id}`
   ).then((res) => res.json());
-
   return { props: { blocks, page } };
 };
