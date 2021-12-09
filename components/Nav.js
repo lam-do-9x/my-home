@@ -33,7 +33,7 @@ export default function Nav({ page = {} }) {
               Object.keys(page).length !== 0 ? "text-white" : ""
             }`}
           >
-            About us
+            About me
           </a>
         </div>
       </div>
