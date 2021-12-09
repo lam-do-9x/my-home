@@ -8,6 +8,7 @@ export default function BodyLanguage() {
       return (
         <button
           className={`border border-1 rounded-full my-2 p-3 uppercase ${colorByEmotion[emotion]}`}
+          key={emotion}
         >
           {emotion}
         </button>

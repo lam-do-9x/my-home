@@ -41,8 +41,8 @@ const Nav = () => (
         </svg>
         <span className="text-gray-900 ml-4">English</span>
       </div>
-      <div class="accordion-content overflow-hidden">
-        <p class="leading-6 text-gray-900 border-t p-3 mt-2 flex items-center justify-center">
+      <div className="accordion-content overflow-hidden">
+        <p className="leading-6 text-gray-900 border-t p-3 mt-2 flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 mx-2"
@@ -59,7 +59,7 @@ const Nav = () => (
           </svg>
           Dictionary
         </p>
-        <p class="leading-6 text-gray-900 border-t p-3 flex items-center justify-center">
+        <p className="leading-6 text-gray-900 border-t p-3 flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 mx-2"
@@ -76,7 +76,7 @@ const Nav = () => (
           </svg>
           Youglish
         </p>
-        <p class="leading-6 text-gray-900 border-t p-3 flex items-center justify-center">
+        <p className="leading-6 text-gray-900 border-t p-3 flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 mx-2"

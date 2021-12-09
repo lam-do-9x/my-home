@@ -32,7 +32,7 @@ export default function Blog({ blogs }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { blogs } = await fetch(`${process.env.APP_URL}/api/blogs`).then(
     (res) => res.json()
   );

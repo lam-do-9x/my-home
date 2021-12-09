@@ -35,7 +35,7 @@ export default function Index({ blogs }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { blogs } = await fetch(
     `${process.env.APP_URL}/api/blogs?page=home`
   ).then((res) => res.json());
