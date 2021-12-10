@@ -89,3 +89,20 @@ export const BulletBox = ({ value }) => {
     </div>
   );
 };
+
+export const Callout = ({ value }) => {
+  return (
+    <div className="p-8 bg-gray-100" key={`${value.icon.emoji}`}>
+      {value.text.map((item, i) => {
+        if (i === 0) {
+          return (
+            <div className="text-center">
+              <Text text={item} />
+            </div>
+          );
+        }
+        return <Text text={item} />;
+      })}
+    </div>
+  );
+};

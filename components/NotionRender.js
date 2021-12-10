@@ -8,8 +8,9 @@ import {
   Quote,
   Picture,
   BulletBox,
+  Callout,
 } from "./notion/BasicBlock";
-import { Bookmarks } from "./notion/Media";
+import { Bookmarks, Video } from "./notion/Media";
 
 const renderBlock = (block) => {
   const { type, id } = block;
@@ -41,7 +42,9 @@ const renderBlock = (block) => {
       if (value.icon.emoji === "📮") {
         return <BulletBox value={value} />;
       }
-      break;
+      return <Callout value={value} />;
+    case "video":
+      return <Video value={value} />;
     default:
       return `❌ Unsupported block (${
         type === "unsupported" ? "unsupported by Notion API" : type
