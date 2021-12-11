@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Link from "next/link";
 import {
   GlobeIcon,
   BookmarkAltIcon,
@@ -10,6 +9,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@heroicons/react/outline";
+import ActiveLink from "./ActiveLink";
 
 export default function Nav() {
   const [show, setShow] = useState(false);
@@ -35,18 +35,22 @@ export default function Nav() {
             )}
           </div>
           <div className={`w-full mt-2 ${show ? "" : "hidden"}`}>
-            <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
-              <BookmarkAltIcon className="h-6 w-6 mr-2" />
-              Dictionary
-            </p>
-            <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
-              <FilmIcon className="h-6 w-6 mr-2" />
-              Youglish
-            </p>
+            <ActiveLink activeClassName="bg-gray-100" href="#">
+              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
+                <BookmarkAltIcon className="h-6 w-6 mr-2" />
+                Dictionary
+              </p>
+            </ActiveLink>
+            <ActiveLink activeClassName="bg-gray-100" href="">
+              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
+                <FilmIcon className="h-6 w-6 mr-2" />
+                Youglish
+              </p>
+            </ActiveLink>
           </div>
         </div>
       </div>
-      <Link href="/cp/posts">
+      <ActiveLink activeClassName="bg-gray-100" href="/cp/posts">
         <div
           className="-mx-3 p-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
           onClick={() => setShow(false)}
@@ -54,8 +58,8 @@ export default function Nav() {
           <DocumentIcon className="h-6 w-6" />
           <span className="text-gray-900 ml-4">Posts</span>
         </div>
-      </Link>
-      <Link href="/cp/receipts">
+      </ActiveLink>
+      <ActiveLink activeClassName="bg-gray-100" href="/cp/receipts">
         <div
           className="-mx-3 p-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
           onClick={() => setShow(false)}
@@ -63,8 +67,8 @@ export default function Nav() {
           <ReceiptTaxIcon className="h-6 w-6" />
           <span className="text-gray-900 ml-4">Receipts</span>
         </div>
-      </Link>
-      <Link href="/cp/body-language">
+      </ActiveLink>
+      <ActiveLink activeClassName="bg-gray-100" href="/cp/body-language">
         <div
           className="-mx-3 p-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
           onClick={() => setShow(false)}
@@ -72,7 +76,7 @@ export default function Nav() {
           <UserIcon className="h-6 w-6" />
           <span className="text-gray-900 ml-4">Body Language</span>
         </div>
-      </Link>
+      </ActiveLink>
     </div>
   );
 }
