@@ -101,7 +101,7 @@ export const Callout = ({ value }) => {
             </div>
           );
         }
-        return <Text text={item} />;
+        return <Text text={item} key={item.plain_text} />;
       })}
     </div>
   );
