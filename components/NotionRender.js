@@ -8,6 +8,7 @@ import {
   Quote,
   Picture,
   BulletBox,
+  ContentBox,
   Callout,
 } from "./notion/BasicBlock";
 import { Bookmarks, Video } from "./notion/Media";
@@ -41,6 +42,9 @@ const renderBlock = (block) => {
     case "callout":
       if (value.icon.emoji === "📮") {
         return <BulletBox value={value} />;
+      }
+      if (value.icon.emoji === "📦") {
+        return <ContentBox value={value} />;
       }
       return <Callout value={value} />;
     case "video":

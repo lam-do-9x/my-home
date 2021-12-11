@@ -3,6 +3,11 @@ const renderText = (value, type) => {
     annotations: { bold, code, color, italic, strikethrough, underline },
     text,
   } = value;
+
+  function hasWhiteSpace() {
+    return text.content.indexOf("\n") > -1;
+  }
+
   return (
     <span
       className={[
@@ -11,7 +16,10 @@ const renderText = (value, type) => {
         italic ? "italic" : "",
         strikethrough ? "line-through" : "",
         underline ? "underline" : "",
-      ].join(" ")}
+        hasWhiteSpace() ? "whitespace-pre-wrap" : "",
+      ]
+        .join(" ")
+        .trim("")}
       style={color !== "default" ? { color } : {}}
       key={type}
     >

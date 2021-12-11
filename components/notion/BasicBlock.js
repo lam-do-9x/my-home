@@ -71,21 +71,44 @@ export const Picture = ({ value }) => {
 
 export const BulletBox = ({ value }) => {
   const bullet = value.text[1].text.content.split("-");
-  bullet.shift();
+  const content = bullet.shift();
 
   return (
     <div
-      className="border border-gray-300 p-8"
+      className="border border-gray-300 p-8 mb-4"
       key={`${value.text[0].plain_text}`}
     >
       <div className="bg-gray-200 p-4">
         <Text text={value.text[0]} />
       </div>
-      <div>
+      {content !== "" ? <p>{content}</p> : ""}
+      <style jsx>{`
+        .columns-2 {
+          column-count: 2;
+        }
+      `}</style>
+      <ul className={`${bullet.length >= 10 ? "columns-2" : ""}`}>
         {bullet.map((item) => {
           return <li key={`${item}`}>{item}</li>;
         })}
-      </div>
+      </ul>
+    </div>
+  );
+};
+
+export const ContentBox = ({ value }) => {
+  return (
+    <div className="border border-gray-300 p-8 " key={`${value.icon.emoji}`}>
+      {value.text.map((item, i) => {
+        if (i === 0) {
+          return (
+            <div className="bg-gray-200 p-4 mb-4">
+              <Text text={item} />
+            </div>
+          );
+        }
+        return <Text text={item} key={item.plain_text} />;
+      })}
     </div>
   );
 };
