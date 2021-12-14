@@ -41,7 +41,10 @@ export default function Nav() {
                 Dictionary
               </p>
             </ActiveLink>
-            <ActiveLink activeClassName="bg-gray-100" href="">
+            <ActiveLink
+              activeClassName="bg-gray-100"
+              href="/cp/english/youglish"
+            >
               <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
                 <FilmIcon className="h-6 w-6 mr-2" />
                 Youglish
