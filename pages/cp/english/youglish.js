@@ -6,7 +6,9 @@ import { formatDate } from "../../../lib/dateTime";
 function Youglish() {
   useEffect(() => {
     /* eslint-disable no-undef */
-    new YG.Widget("yg-widget", { autoStart: 0 }).fetch("hello", "english");
+    if (YG) {
+      new YG.Widget("yg-widget", { autoStart: 0 }).fetch("hello", "english");
+    }
   }, []);
 
   return (
