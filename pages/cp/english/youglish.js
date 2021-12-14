@@ -4,7 +4,7 @@ import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
 
 function Youglish() {
-  useEffect(async () => {
+  useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://youglish.com/public/emb/widget.js";
     script.async = true;

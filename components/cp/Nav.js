@@ -15,7 +15,7 @@ import ActiveLink from "./ActiveLink";
 export default function Nav() {
   const { pathname } = useRouter();
   const [show, setShow] = useState(false);
-  const pathShow = ["/cp/english/youglish"];
+  const pathShow = ["/cp/english/youglish", "/cp/english/dictionary"];
 
   useEffect(() => {
     if (pathShow.includes(pathname)) {
@@ -44,7 +44,10 @@ export default function Nav() {
             )}
           </div>
           <div className={`w-full mt-2 ${show ? "" : "hidden"}`}>
-            <ActiveLink activeClassName="bg-gray-100" href="#">
+            <ActiveLink
+              activeClassName="bg-gray-100"
+              href="/cp/english/dictionary"
+            >
               <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
                 <BookmarkAltIcon className="h-6 w-6 mr-2" />
                 Dictionary
