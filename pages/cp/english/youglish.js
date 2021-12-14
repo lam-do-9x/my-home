@@ -25,11 +25,6 @@ function Youglish() {
         </a>
       </div>
       <div id="yg-widget"></div>
-      <script
-        async
-        src="https://youglish.com/public/emb/widget.js"
-        charSet="utf-8"
-      ></script>
     </Layout>
   );
 }
