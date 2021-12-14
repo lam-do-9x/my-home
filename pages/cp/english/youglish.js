@@ -4,9 +4,14 @@ import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
 
 function Youglish() {
-  useEffect(() => {
-    /* eslint-disable no-undef */
-    new YG.Widget("yg-widget", { autoStart: 0 }).fetch("hello", "english");
+  useEffect(async () => {
+    const script = document.createElement("script");
+    script.src = "https://youglish.com/public/emb/widget.js";
+    script.async = true;
+    script.onload = () =>
+      /* eslint-disable no-undef */
+      new YG.Widget("yg-widget", { autoStart: 0 }).fetch("hello", "english");
+    document.body.appendChild(script);
   }, []);
 
   return (

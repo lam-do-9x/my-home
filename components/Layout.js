@@ -8,11 +8,6 @@ export default function Layout(props) {
       <Head>
         <title>Leo Do</title>
         <link rel="icon" href="/favicon.ico" />
-        <script
-          async
-          src="https://youglish.com/public/emb/widget.js"
-          charSet="utf-8"
-        ></script>
       </Head>
 
       <Header />
