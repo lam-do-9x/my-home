@@ -9,11 +9,6 @@ const Header = () => (
         </span>
       </div>
     </Link>
-    <script
-      async
-      src="https://youglish.com/public/emb/widget.js"
-      charSet="utf-8"
-    ></script>
   </header>
 );
 
