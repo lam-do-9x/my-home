@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import {
   GlobeIcon,
   BookmarkAltIcon,
@@ -12,7 +13,15 @@ import {
 import ActiveLink from "./ActiveLink";
 
 export default function Nav() {
+  const { pathname } = useRouter();
   const [show, setShow] = useState(false);
+  const pathShow = ["/cp/english/youglish"];
+
+  useEffect(() => {
+    if (pathShow.includes(pathname)) {
+      setShow(true);
+    }
+  }, []);
 
   return (
     <div className="w-64 p-6 overflow-y-auto border-r h-screen">

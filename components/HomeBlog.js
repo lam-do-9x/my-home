@@ -26,7 +26,10 @@ export default function HomeBlog(props) {
         <div className="flex flex-col items-center justify-center w-1/3">
           <span className="font-bold text-gray-600">Date:</span>
           <span className="flex items-center justify-center font-light text-gray-600 w-full">
-            {formatDate(props.blog.properties.publishedDate?.date.start)}
+            {formatDate(
+              "dd-mm-yyyy",
+              props.blog.properties.publishedDate?.date.start
+            )}
           </span>
         </div>
         <div className="mt-2 w-2/3 flex flex-col items-start justify-center">

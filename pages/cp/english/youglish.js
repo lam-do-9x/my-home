@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import Layout from "../../../components/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
+import { formatDate } from "../../../lib/dateTime";
 
 function Youglish() {
   useEffect(() => {
     /* eslint-disable no-undef */
-    new YG.Widget("yg-widget").fetch("hello", "english");
+    new YG.Widget("yg-widget", { autoStart: 0 }).fetch("hello", "english");
   }, []);
 
   return (
@@ -16,9 +17,8 @@ function Youglish() {
         </h2>
         <a
           className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"
-          href="https://youglish.com/lesson/video/"
+          href={`https://youglish.com/lesson/video/${formatDate("dd-mm-yyyy")}`}
           target="_blank"
-          id="yg-daily-lesson"
           rel="noreferrer"
         >
           Daily Lesson
