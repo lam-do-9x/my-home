@@ -10,7 +10,7 @@ function Youglish() {
     script.async = true;
     script.onload = () =>
       /* eslint-disable no-undef */
-      new YG.Widget("yg-widget", { autoStart: 0 }).fetch("hello", "english");
+      new YG.Widget("yg-widget").fetch("hello", "english");
     document.body.appendChild(script);
   }, []);
 
