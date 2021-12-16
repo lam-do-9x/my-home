@@ -12,3 +12,4 @@ NOTION_BLOCK_BASE_URI=https://api.notion.com/v1/blocks
 NOTION_PAGE_BASE_URI=https://api.notion.com/v1/pages
 NOTION_BLOG_ID=
 NOTION_RECEIPT_ID=
+NOTION_DICTIONARY_ID=

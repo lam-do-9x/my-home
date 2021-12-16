@@ -24,7 +24,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <div className="w-64 p-6 overflow-y-auto border-r h-screen">
+    <div className="w-64 p-6">
       <div
         className={`-mx-3 p-3 text-sm font-medium flex flex-col rounded-lg cursor-pointer ${
           show ? "" : "hover:bg-gray-100"

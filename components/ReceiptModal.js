@@ -34,7 +34,13 @@ export default function ReceiptModal(props) {
             </svg>
           </div>
           <div className="px-20 py-6">
-            {isLoading ? <Loader /> : <NotionRender blocks={blocks} />}
+            {isLoading ? (
+              <div className="my-52">
+                <Loader />
+              </div>
+            ) : (
+              <NotionRender blocks={blocks} />
+            )}
           </div>
         </div>
       </div>
