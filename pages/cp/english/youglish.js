@@ -1,24 +1,62 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import {
+  InformationCircleIcon,
+  RefreshIcon,
+  VideoCameraIcon,
+} from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
+import Modal from "../../../components/cp/Modal";
 import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
 
 function Youglish() {
-  useEffect(() => {
+  const [show, setShow] = useState(false);
+  const [dictionary, setDictionary] = useState({});
+
+  function showModal() {
+    setShow(true);
+    /* eslint-disable no-undef */
+    YG.Widget("yg-widget").pause();
+  }
+
+  async function fetchRandom() {
+    const { dictionaries } = await fetch("/api/dictionaries?page=yg").then(
+      (res) => res.json()
+    );
+    setDictionary(dictionaries[0]);
+    return dictionaries;
+  }
+
+  async function changeYg() {
+    const dictionaries = await fetchRandom();
+    /* eslint-disable no-undef */
+    YG.Widget("yg-widget").fetch(dictionaries[0].word, "english");
+  }
+
+  useEffect(async () => {
     const script = document.createElement("script");
     script.src = "https://youglish.com/public/emb/widget.js";
     script.async = true;
-    script.onload = () =>
-      /* eslint-disable no-undef */
-      new YG.Widget("yg-widget").fetch("hello", "english");
+    script.onload = () => changeYg();
+
     document.body.appendChild(script);
   }, []);
 
   return (
     <Layout>
       <div className="flex p-4">
-        <h2 className="mx-2 text-lg font-bold uppercase rounded p-2">
+        <h2 className="mx-2 text-lg font-bold uppercase rounded p-2 flex justify-center items-center">
           Youglish
+          <div className="flex mx-2">
+            <InformationCircleIcon
+              className="h-5 w-5 mx-2"
+              onClick={showModal}
+            />
+            {show && (
+              <Modal dictionary={dictionary} onClick={() => setShow(false)} />
+            )}
+            <RefreshIcon className="h-5 w-5" onClick={changeYg} />
+          </div>
         </h2>
         <a
           className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"
@@ -27,6 +65,15 @@ function Youglish() {
           rel="noreferrer"
         >
           Daily Lesson
+        </a>
+        <a
+          className="bg-gray-100 hover:bg-gray-200 text-gray-500 font-bold rounded p-2 mx-2 flex justify-center items-center"
+          href="https://www.youtube.com/playlist?list=WL"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <VideoCameraIcon className="h-5 w-5 mx-2" />
+          Youtube
         </a>
       </div>
       <div id="yg-widget"></div>
