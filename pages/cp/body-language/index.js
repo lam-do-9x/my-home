@@ -1,5 +1,5 @@
-import Layout from "../../../components/Layout";
-import { colorByEmotion } from "../../../components/Emotion";
+import Layout from "../../../components/cp/Layout";
+import { colorByEmotion } from "../../../components/cp/Emotion";
 import Image from "next/image";
 
 export default function BodyLanguage() {

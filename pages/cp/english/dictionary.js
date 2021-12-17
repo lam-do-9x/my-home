@@ -4,9 +4,9 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
-import Layout from "../../../components/Layout";
+import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
-import Loader from "../../../components/Loader";
+import Loader from "../../../components/cp/Loader";
 
 function Dictionary() {
   const [dictionaries, setDictionaries] = useState([]);

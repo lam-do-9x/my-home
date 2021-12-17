@@ -1,6 +1,6 @@
 import Main from "../components/Main";
 import Nav from "../components/Nav";
-import NotionRender from "../components/NotionRender";
+import NotionRender from "../components/notion/NotionRender";
 import { parsePageId } from "../lib/parsePageId";
 
 export default function Slug({ blocks, page }) {

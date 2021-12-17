@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Layout from "../../../components/Layout";
+import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
 

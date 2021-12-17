@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Layout from "../../../components/Layout";
-import ReceiptModal from "../../../components/ReceiptModal";
+import Layout from "../../../components/cp/Layout";
+import ReceiptModal from "../../../components/cp/ReceiptModal";
 import { AuthMiddleware } from "../../../middleware/auth";
-import Loader from "../../../components/Loader";
+import Loader from "../../../components/cp/Loader";
 
 function Receipts() {
   const [modal, setModal] = useState(false);

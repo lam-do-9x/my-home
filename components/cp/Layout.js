@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Header from "./cp/Header";
-import Nav from "./cp/Nav";
+import Header from "./Header";
+import Nav from "./Nav";
 
 export default function Layout(props) {
   return (

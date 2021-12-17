@@ -10,8 +10,8 @@ import {
   BulletBox,
   ContentBox,
   Callout,
-} from "./notion/BasicBlock";
-import { Bookmarks, Video } from "./notion/Media";
+} from "./BasicBlock";
+import { Bookmarks, Video } from "./Media";
 
 const renderBlock = (block) => {
   const { type, id } = block;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import NotionRender from "./NotionRender";
+import NotionRender from "../notion/NotionRender";
 import Loader from "./Loader";
 
 export default function ReceiptModal(props) {
