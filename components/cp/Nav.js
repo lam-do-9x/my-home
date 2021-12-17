@@ -4,7 +4,6 @@ import {
   GlobeIcon,
   BookmarkAltIcon,
   FilmIcon,
-  DocumentIcon,
   ReceiptTaxIcon,
   UserIcon,
   ChevronDownIcon,
@@ -65,15 +64,6 @@ export default function Nav() {
           </div>
         </div>
       </div>
-      <ActiveLink activeClassName="bg-gray-100" href="/cp/posts">
-        <div
-          className="-mx-3 p-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
-          onClick={() => setShow(false)}
-        >
-          <DocumentIcon className="h-6 w-6" />
-          <span className="text-gray-900 ml-4">Posts</span>
-        </div>
-      </ActiveLink>
       <ActiveLink activeClassName="bg-gray-100" href="/cp/receipts">
         <div
           className="-mx-3 p-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"

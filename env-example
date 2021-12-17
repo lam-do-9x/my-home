@@ -1,6 +1,5 @@
 NEXT_PUBLIC_UPLOAD_PRESET=blog-image
 NEXT_PUBLIC_CLOUDINARY_API=https://api.cloudinary.com/v1_1/leno/image/upload/
-DATABASE_URL=
 NODE_ENV=dev
 APP_URL=http://localhost:8080
 ADMIN_EMAIL=lamdo9491@gmail.com
@@ -12,4 +11,4 @@ NOTION_BLOCK_BASE_URI=https://api.notion.com/v1/blocks
 NOTION_PAGE_BASE_URI=https://api.notion.com/v1/pages
 NOTION_BLOG_ID=
 NOTION_RECEIPT_ID=
-NOTION_DICTIONARY_ID=
+DICTIONARY_DATABASE_URL=
