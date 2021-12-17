@@ -8,15 +8,12 @@ generator client {
   binaryTargets = ["native"]
 }
 
-model Post {
-    id            Int      @id @default (autoincrement())
-    title         String   @unique
-    content       String?
-    excerpt       String?
-    cover         String?
-    slug          String
-    isPublished   Boolean  @default (false)
-    publishedDate DateTime
-    createdAt     DateTime @default (now())
-    updatedAt     DateTime @updatedAt
+model Dictionary {
+    id              Int      @id @default (autoincrement())
+    word            String   @unique
+    ipa             String?
+    pronunciation   String?
+    content         String?
+    createdAt       DateTime? @default (now())
+    updatedAt       DateTime? @updatedAt
 }
