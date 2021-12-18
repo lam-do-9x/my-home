@@ -8,6 +8,7 @@ import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
+import Modal from "../../../components/cp/Modal";
 
 function Dictionary() {
   const [itemsLength, setItemsLength] = useState(0);
@@ -15,6 +16,8 @@ function Dictionary() {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
+  const [dictionary, setDictionary] = useState({});
+  const [show, setShow] = useState(false);
 
   useEffect(async () => {
     const { dictionaries } = await fetch("/api/dictionaries").then((res) =>
@@ -30,6 +33,14 @@ function Dictionary() {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * 10) % itemsLength;
     setItemOffset(newOffset);
+  };
+
+  const showDictionary = async (id) => {
+    const { dictionary } = await fetch(`/api/dictionaries/${id}`).then((res) =>
+      res.json()
+    );
+    setDictionary(dictionary);
+    setShow(true);
   };
 
   return (
@@ -67,8 +78,9 @@ function Dictionary() {
                   ) : (
                     currentItems.map((dictionary) => (
                       <tr
-                        className="border-b border-gray-200 hover:bg-gray-100"
+                        className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
                         key={dictionary.id}
+                        onClick={() => showDictionary(dictionary.id)}
                       >
                         <td className="py-3 px-6 text-left whitespace-nowrap">
                           <span className="font-medium">{dictionary.word}</span>
@@ -100,6 +112,12 @@ function Dictionary() {
                         </td>
                       </tr>
                     ))
+                  )}
+                  {show && (
+                    <Modal
+                      dictionary={dictionary}
+                      onClick={() => setShow(false)}
+                    />
                   )}
                 </tbody>
               </table>
