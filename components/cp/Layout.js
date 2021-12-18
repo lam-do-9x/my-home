@@ -11,7 +11,7 @@ export default function Layout(props) {
       </Head>
 
       <Header />
-      <div className="flex-1 flex overflow-x-hidden">
+      <div className="flex-1 flex overflow-x-auto">
         <Nav />
         <main className="w-full">{props.children}</main>
       </div>

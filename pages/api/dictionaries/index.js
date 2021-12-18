@@ -5,7 +5,6 @@ export default async function handle(req, res) {
     orderBy: {
       word: "asc",
     },
-    take: 10,
   };
 
   if (req.query.page) {

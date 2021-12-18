@@ -4,21 +4,33 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
+import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 
 function Dictionary() {
-  const [dictionaries, setDictionaries] = useState([]);
+  const [itemsLength, setItemsLength] = useState(0);
   const [isLoading, setLoading] = useState(true);
+  const [currentItems, setCurrentItems] = useState(null);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(async () => {
     const { dictionaries } = await fetch("/api/dictionaries").then((res) =>
       res.json()
     );
-    setDictionaries(dictionaries);
+    setItemsLength(dictionaries.length);
+    setCurrentItems(dictionaries.slice(itemOffset, itemOffset + 10));
+    setPageCount(Math.ceil(dictionaries.length / 10));
+
     setLoading(false);
-  }, []);
+  }, [itemOffset, 10]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * 10) % itemsLength;
+    setItemOffset(newOffset);
+  };
 
   return (
     <Layout>
@@ -53,7 +65,7 @@ function Dictionary() {
                       </td>
                     </tr>
                   ) : (
-                    dictionaries.map((dictionary) => (
+                    currentItems.map((dictionary) => (
                       <tr
                         className="border-b border-gray-200 hover:bg-gray-100"
                         key={dictionary.id}
@@ -91,6 +103,26 @@ function Dictionary() {
                   )}
                 </tbody>
               </table>
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel="next"
+                previousLabel="previous"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={10}
+                pageCount={pageCount}
+                renderOnZeroPageCount={null}
+                className="flex justify-center p-4"
+                pageClassName="border"
+                pageLinkClassName="px-3 py-6"
+                breakClassName="border"
+                breakLinkClassName="px-3 py-6"
+                activeClassName="bg-gray-200"
+                previousClassName="mr-3 border"
+                previousLinkClassName="px-3 py-6"
+                nextClassName="ml-3 border"
+                nextLinkClassName="px-3 py-6"
+                disabledLinkClassName="text-gray-100"
+              />
             </div>
           </div>
         </div>
