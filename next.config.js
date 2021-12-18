@@ -12,7 +12,7 @@ module.exports = {
     return [
       {
         source: "/cp",
-        destination: "/cp/english/dictionary ",
+        destination: "/cp/english/dictionary",
         permanent: true,
       },
     ];

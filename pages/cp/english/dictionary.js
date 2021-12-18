@@ -59,29 +59,18 @@ function Dictionary() {
                         key={dictionary.id}
                       >
                         <td className="py-3 px-6 text-left whitespace-nowrap">
-                          <span className="font-medium">
-                            {dictionary.properties.word.title[0].text.content}
-                          </span>
+                          <span className="font-medium">{dictionary.word}</span>
                         </td>
                         <td className="py-3 px-6 text-center">
                           <div className="flex items-center justify-center text-bold">
-                            {
-                              dictionary.properties.ipa.rich_text[0].text
-                                .content
-                            }
+                            {dictionary.ipa}
                           </div>
                         </td>
                         <td className="py-3 px-6 text-center">
                           <div className="flex item-center justify-center">
-                            <audio
-                              id={
-                                dictionary.properties.pronunciation.rich_text[0]
-                                  .id
-                              }
-                              controls
-                            >
+                            <audio id={dictionary.id} controls>
                               <source
-                                src={`https://www.oxfordlearnersdictionaries.com${dictionary.properties.pronunciation.rich_text[0].text.content}`}
+                                src={`https://www.oxfordlearnersdictionaries.com${dictionary.pronunciation}`}
                                 type="audio/mpeg"
                               ></source>
                             </audio>

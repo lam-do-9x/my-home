@@ -1,14 +1,18 @@
-import { databaseNotion } from "../../../lib/notion";
 import { prisma } from "../../../lib/prisma";
 
 export default async function handle(req, res) {
-  const id = process.env.NOTION_DICTIONARY_ID;
-  let dictionaries;
+  let operate = {
+    orderBy: {
+      word: "asc",
+    },
+    take: 10,
+  };
+
   if (req.query.page) {
     const dictionaryCount = await prisma.dictionary.count();
     const randomId = Math.ceil(Math.random() * (dictionaryCount - 1) + 1);
 
-    dictionaries = await prisma.dictionary.findMany({
+    operate = {
       select: {
         word: true,
         content: true,
@@ -18,17 +22,9 @@ export default async function handle(req, res) {
           equals: randomId,
         },
       },
-    });
-    return res.json({ dictionaries, code: 200 });
+    };
   }
-  dictionaries = await databaseNotion(id, {
-    sorts: [
-      {
-        property: "word",
-        direction: "ascending",
-      },
-    ],
-    page_size: 10,
-  });
+
+  const dictionaries = await prisma.dictionary.findMany(operate);
   return res.json({ dictionaries, code: 200 });
 }
