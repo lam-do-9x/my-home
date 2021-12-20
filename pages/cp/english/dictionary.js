@@ -9,6 +9,7 @@ import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 import Modal from "../../../components/cp/Modal";
+import UpSetModal from "../../../components/cp/UpSetModal";
 
 function Dictionary() {
   const [itemsLength, setItemsLength] = useState(0);
@@ -18,6 +19,7 @@ function Dictionary() {
   const [itemOffset, setItemOffset] = useState(0);
   const [dictionary, setDictionary] = useState({});
   const [show, setShow] = useState(false);
+  const [isUpSet, setUpSet] = useState(false);
 
   useEffect(async () => {
     const { dictionaries } = await fetch("/api/dictionaries").then((res) =>
@@ -35,12 +37,21 @@ function Dictionary() {
     setItemOffset(newOffset);
   };
 
-  const showDictionary = async (id) => {
+  async function fetchDictionary(id) {
     const { dictionary } = await fetch(`/api/dictionaries/${id}`).then((res) =>
       res.json()
     );
     setDictionary(dictionary);
+  }
+
+  const showDictionary = async (id) => {
+    await fetchDictionary(id);
     setShow(true);
+  };
+
+  const editDictionary = async (id) => {
+    await fetchDictionary(id);
+    setUpSet(true);
   };
 
   return (
@@ -78,11 +89,13 @@ function Dictionary() {
                   ) : (
                     currentItems.map((dictionary) => (
                       <tr
-                        className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+                        className="border-b border-gray-200 hover:bg-gray-100"
                         key={dictionary.id}
-                        onClick={() => showDictionary(dictionary.id)}
                       >
-                        <td className="py-3 px-6 text-left whitespace-nowrap">
+                        <td
+                          className="py-3 px-6 text-left whitespace-nowrap cursor-pointer"
+                          onClick={() => showDictionary(dictionary.id)}
+                        >
                           <span className="font-medium">{dictionary.word}</span>
                         </td>
                         <td className="py-3 px-6 text-center">
@@ -102,7 +115,10 @@ function Dictionary() {
                         </td>
                         <td className="py-3 px-6">
                           <div className="flex item-center justify-center">
-                            <div className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer">
+                            <div
+                              className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
+                              onClick={() => editDictionary(dictionary.id)}
+                            >
                               <PencilIcon className="h-5 w-5" />
                             </div>
                             <div className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor-pointer">
@@ -117,6 +133,12 @@ function Dictionary() {
                     <Modal
                       dictionary={dictionary}
                       onClick={() => setShow(false)}
+                    />
+                  )}
+                  {isUpSet && (
+                    <UpSetModal
+                      dictionary={dictionary}
+                      onClick={() => setUpSet(false)}
                     />
                   )}
                 </tbody>
