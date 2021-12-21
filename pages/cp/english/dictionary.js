@@ -3,6 +3,7 @@ import {
   AdjustmentsIcon,
   PencilIcon,
   TrashIcon,
+  PencilAltIcon,
 } from "@heroicons/react/outline";
 import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
@@ -18,7 +19,7 @@ function Dictionary() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [dictionary, setDictionary] = useState({});
-  const [show, setShow] = useState(false);
+  const [isShow, setShow] = useState(false);
   const [isUpSet, setUpSet] = useState(false);
 
   useEffect(async () => {
@@ -44,25 +45,23 @@ function Dictionary() {
     setDictionary(dictionary);
   }
 
-  const showDictionary = async (id) => {
+  const show = async (id) => {
     await fetchDictionary(id);
     setShow(true);
   };
 
-  const editDictionary = async (id) => {
+  const edit = async (id) => {
     await fetchDictionary(id);
     setUpSet(true);
   };
 
   return (
     <Layout>
-      <div className="flex mx-6 my-6">
-        <h2 className="mr-4 text-lg font-large uppercase rounded border p-4">
+      <div className="mx-6 my-6">
+        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-4 max-w-min">
           Dictionary
+          <PencilAltIcon className="h-6 w-6 cursor-pointer ml-2" />
         </h2>
-        <button className="inline-block px-4 py-2 text-xs font-sm text-center uppercase transition bg-transparent border-1 border-gray-200 rounded shadow ripple hover:shadow-lg hover:bg-gray-100 focus:outline-none">
-          Create
-        </button>
       </div>
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center font-sans overflow-hidden shadow">
@@ -94,7 +93,7 @@ function Dictionary() {
                       >
                         <td
                           className="py-3 px-6 text-left whitespace-nowrap cursor-pointer"
-                          onClick={() => showDictionary(dictionary.id)}
+                          onClick={() => show(dictionary.id)}
                         >
                           <span className="font-medium">{dictionary.word}</span>
                         </td>
@@ -117,7 +116,7 @@ function Dictionary() {
                           <div className="flex item-center justify-center">
                             <div
                               className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
-                              onClick={() => editDictionary(dictionary.id)}
+                              onClick={() => edit(dictionary.id)}
                             >
                               <PencilIcon className="h-5 w-5" />
                             </div>
@@ -129,20 +128,17 @@ function Dictionary() {
                       </tr>
                     ))
                   )}
-                  {show && (
-                    <Modal
-                      dictionary={dictionary}
-                      onClick={() => setShow(false)}
-                    />
-                  )}
-                  {isUpSet && (
-                    <UpSetModal
-                      dictionary={dictionary}
-                      onClick={() => setUpSet(false)}
-                    />
-                  )}
                 </tbody>
               </table>
+              {isShow && (
+                <Modal dictionary={dictionary} onClick={() => setShow(false)} />
+              )}
+              {isUpSet && (
+                <UpSetModal
+                  dictionary={dictionary}
+                  onClick={() => setUpSet(false)}
+                />
+              )}
               <ReactPaginate
                 breakLabel="..."
                 nextLabel="next"
