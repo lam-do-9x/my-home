@@ -8,13 +8,18 @@ import {
   UserIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  VolumeUpIcon,
 } from "@heroicons/react/outline";
 import ActiveLink from "./ActiveLink";
 
 export default function Nav() {
   const { pathname } = useRouter();
   const [show, setShow] = useState(false);
-  const pathShow = ["/cp/english/youglish", "/cp/english/dictionary"];
+  const pathShow = [
+    "/cp/english/youglish",
+    "/cp/english/dictionary",
+    "/cp/english/pronunciation",
+  ];
 
   useEffect(() => {
     if (pathShow.includes(pathname)) {
@@ -59,6 +64,15 @@ export default function Nav() {
               <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
                 <FilmIcon className="h-6 w-6 mr-2" />
                 Youglish
+              </p>
+            </ActiveLink>
+            <ActiveLink
+              activeClassName="bg-gray-100"
+              href="/cp/english/pronunciation"
+            >
+              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
+                <VolumeUpIcon className="h-6 w-6 mr-2" />
+                Pronunciation
               </p>
             </ActiveLink>
           </div>
