@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import {
   AdjustmentsIcon,
   PencilIcon,
-  TrashIcon,
-  PencilAltIcon,
+  AnnotationIcon,
 } from "@heroicons/react/outline";
 import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
@@ -57,11 +56,19 @@ function Dictionary() {
 
   return (
     <Layout>
-      <div className="mx-6 my-6">
+      <div className="flex items-center mx-6 my-6">
         <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-4 max-w-min">
           Dictionary
-          <PencilAltIcon className="h-6 w-6 cursor-pointer ml-2" />
         </h2>
+        <a
+          className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"
+          href="https://notevibes.com/cabinet.php"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <AnnotationIcon className="h-5 w-5 mx-2" />
+          Text to speech
+        </a>
       </div>
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center font-sans overflow-hidden shadow">
@@ -119,9 +126,6 @@ function Dictionary() {
                               onClick={() => edit(dictionary.id)}
                             >
                               <PencilIcon className="h-5 w-5" />
-                            </div>
-                            <div className="w-4 mr-2 transform hover:text-red-500 hover:scale-110 cursor-pointer">
-                              <TrashIcon className="h-5 w-5" />
                             </div>
                           </div>
                         </td>
