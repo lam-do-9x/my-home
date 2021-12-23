@@ -3,7 +3,7 @@ import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
-import Modal from "../../../components/cp/Modal";
+import PronunciationModal from "../../../components/cp/PronunciationModal";
 
 function Pronunciation() {
   const [itemsLength, setItemsLength] = useState(0);
@@ -11,8 +11,9 @@ function Pronunciation() {
   const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-  const [dictionary, setDictionary] = useState({});
   const [isShow, setShow] = useState(false);
+  const [pronunciations, setPronunciation] = useState([]);
+  const [ipa, setIpa] = useState(null);
 
   useEffect(async () => {
     const { pronunciations } = await fetch("/api/pronunciations").then((res) =>
@@ -30,15 +31,12 @@ function Pronunciation() {
     setItemOffset(newOffset);
   };
 
-  async function fetchDictionary(id) {
-    const { dictionary } = await fetch(`/api/dictionaries/${id}`).then((res) =>
-      res.json()
+  const show = async (ipa) => {
+    const { pronunciations } = await fetch(`/api/pronunciations/${ipa}`).then(
+      (res) => res.json()
     );
-    setDictionary(dictionary);
-  }
-
-  const show = async (id) => {
-    await fetchDictionary(id);
+    setPronunciation(pronunciations);
+    setIpa(ipa);
     setShow(true);
   };
 
@@ -99,7 +97,11 @@ function Pronunciation() {
                 </tbody>
               </table>
               {isShow && (
-                <Modal dictionary={dictionary} onClick={() => setShow(false)} />
+                <PronunciationModal
+                  pronunciations={pronunciations}
+                  ipa={ipa}
+                  onClick={() => setShow(false)}
+                />
               )}
               <ReactPaginate
                 breakLabel="..."

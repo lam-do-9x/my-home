@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.5",
-    "@prisma/client": "^2.21.2",
+    "@prisma/client": "^3.7.0",
     "@tailwindcss/typography": "^0.4.0",
     "next": "10.0.7",
     "next-auth": "^3.24.0",
@@ -31,7 +31,7 @@
     "eslint": "^7.26.0",
     "eslint-plugin-react": "^7.23.2",
     "postcss": "^8.2.6",
-    "prisma": "^2.21.2",
+    "prisma": "^3.7.0",
     "tailwindcss": "^2.0.3"
   }
 }
