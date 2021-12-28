@@ -1,15 +1,30 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   AdjustmentsIcon,
   PencilIcon,
   AnnotationIcon,
 } from "@heroicons/react/outline";
+import { SearchIcon } from "@heroicons/react/solid";
 import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 import Modal from "../../../components/cp/Modal";
 import UpSetModal from "../../../components/cp/UpSetModal";
+
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function () {
+    var context = this,
+      args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args);
+  };
+}
 
 function Dictionary() {
   const [itemsLength, setItemsLength] = useState(0);
@@ -20,6 +35,7 @@ function Dictionary() {
   const [dictionary, setDictionary] = useState({});
   const [isShow, setShow] = useState(false);
   const [isUpSet, setUpSet] = useState(false);
+  const [keyword, setKeyword] = useState("");
 
   useEffect(async () => {
     const { dictionaries } = await fetch("/api/dictionaries").then((res) =>
@@ -42,6 +58,25 @@ function Dictionary() {
       res.json()
     );
     setDictionary(dictionary);
+  }
+
+  async function fetchDicByQuery(word) {
+    const { dictionaries } = await fetch(`/api/dictionaries?q=${word}`).then(
+      (res) => res.json()
+    );
+    setItemsLength(dictionaries.length);
+    setCurrentItems(dictionaries.slice(itemOffset, itemOffset + 10));
+    setPageCount(Math.ceil(dictionaries.length / 10));
+  }
+
+  const debounceDropDown = useRef(
+    debounce((nextValue) => fetchDicByQuery(nextValue), 1000)
+  ).current;
+
+  function search(e) {
+    const { value } = e.target;
+    setKeyword(value);
+    debounceDropDown(value);
   }
 
   const show = async (id) => {
@@ -73,8 +108,23 @@ function Dictionary() {
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center font-sans overflow-hidden shadow">
           <div className="w-full mx-6">
-            <div className="bg-white shadow-md rounded my-6">
-              <table className="min-w-max w-full table-auto">
+            <div className="bg-white my-6">
+              <div className="flex justify-end mb-2">
+                <label className="relative block">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                    <SearchIcon className="h-5 w-5 fill-gray-300" />
+                  </span>
+                  <input
+                    className="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none sm:text-sm"
+                    placeholder="Search for word..."
+                    type="text"
+                    name="search"
+                    onChange={search}
+                    value={keyword}
+                  />
+                </label>
+              </div>
+              <table className="min-w-max w-full table-auto shadow-md rounded">
                 <thead>
                   <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal text-center">
                     <th className="py-3 px-6 text-left">word</th>

@@ -24,6 +24,16 @@ export default async function handle(req, res) {
     };
   }
 
+  if (req.query.q) {
+    operate = {
+      where: {
+        word: {
+          contains: req.query.q,
+        },
+      },
+    };
+  }
+
   const dictionaries = await prisma.dictionary.findMany(operate);
   return res.json({ dictionaries, code: 200 });
 }
