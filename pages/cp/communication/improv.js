@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   PlusSmIcon,
   AdjustmentsIcon,
@@ -10,6 +10,10 @@ import { RandomWord } from "../../../lib/randomWord";
 export default function Improv() {
   const [number, setNumber] = useState(1);
   const [randomWords, setRandomWords] = useState([]);
+
+  useEffect(() => {
+    getRandom();
+  }, []);
 
   function getRandom() {
     const words = new RandomWord(Number(number)).get();
