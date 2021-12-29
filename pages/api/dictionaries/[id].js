@@ -24,6 +24,7 @@ async function handleGET(req, res) {
       id: true,
       word: true,
       content: true,
+      contentAt: true,
     },
   };
 

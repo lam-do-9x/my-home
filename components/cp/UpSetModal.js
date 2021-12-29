@@ -17,6 +17,7 @@ export default function UpSetModal(props) {
     const body = JSON.stringify({
       word: word.trim(),
       content,
+      contentAt: props.dictionary.contentAt ?? new Date(),
     });
     let response = {};
     if (Object.keys(props.dictionary).length !== 0) {
