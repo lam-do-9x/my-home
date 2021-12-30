@@ -8,19 +8,23 @@ export default async function handle(req, res) {
   };
 
   if (req.query.page) {
-    const dictionaryCount = await prisma.dictionary.count();
-    const randomId = Math.ceil(Math.random() * (dictionaryCount - 1) + 1);
+    const now = new Date();
+    const workDays = new Date(now.setDate(now.getDate() - 5));
 
     operate = {
+      where: {
+        contentAt: {
+          gte: workDays,
+        },
+      },
       select: {
         word: true,
         content: true,
       },
-      where: {
-        id: {
-          equals: randomId,
-        },
+      orderBy: {
+        contentAt: "desc",
       },
+      take: 25,
     };
   }
 
