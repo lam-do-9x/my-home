@@ -20,6 +20,7 @@ export default async function handle(req, res) {
       select: {
         word: true,
         content: true,
+        contentAt: true,
       },
       orderBy: {
         contentAt: "desc",

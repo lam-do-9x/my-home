@@ -5,13 +5,14 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
-import Modal from "../../../components/cp/Modal";
+// import Modal from "../../../components/cp/Modal";
+import WordInDays from "../../../components/cp/WordInDays";
 import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
 
 function Youglish() {
   const [show, setShow] = useState(false);
-  const [dictionary, setDictionary] = useState({});
+  const [dictionaries, setDictionaries] = useState([]);
 
   function showModal() {
     setShow(true);
@@ -23,7 +24,7 @@ function Youglish() {
     const { dictionaries } = await fetch("/api/dictionaries?page=yg").then(
       (res) => res.json()
     );
-    setDictionary(dictionaries[0]);
+    setDictionaries(dictionaries);
     return dictionaries;
   }
 
@@ -52,12 +53,16 @@ function Youglish() {
               className="h-5 w-5 mx-2"
               onClick={showModal}
             />
-            {show && (
-              <Modal dictionary={dictionary} onClick={() => setShow(false)} />
-            )}
+
             <RefreshIcon className="h-5 w-5" onClick={changeYg} />
           </div>
         </h2>
+        {/* {show && (
+              <Modal dictionary={dictionary} onClick={() => setShow(false)} />
+            )} */}
+        {show && (
+          <WordInDays words={dictionaries} onClick={() => setShow(false)} />
+        )}
         <a
           className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"
           href={`https://youglish.com/lesson/video/${formatDate("dd-mm-yyyy")}`}
