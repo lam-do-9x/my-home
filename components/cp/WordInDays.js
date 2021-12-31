@@ -25,20 +25,21 @@ export default function WordInDays({ words }) {
         words.length !== 0 ? "" : "hidden"
       }`}
     >
-      <div className={`bg-white rounded flex items-start shadow-lg`}>
-        <div className="flex space-x-2 p-2">
-          <div className="flex">
-            {wordInWeek.map((word) => (
-              <div key={word.dateMonth} className="mx-2 text-center">
-                <h3 className="font-bold">{word.dateMonth}</h3>
-                {word.data.map((w) => (
-                  <p key={w.word} className="cursor-pointer">
-                    {w.word}
-                  </p>
-                ))}
-              </div>
-            ))}
-          </div>
+      <div className="bg-white rounded shadow-lg">
+        <div className="flex p-1">
+          {wordInWeek.map((word) => (
+            <div key={word.dateMonth} className="mx-2 text-center">
+              <h3 className="font-bold">{word.dateMonth}</h3>
+              {word.data.map((w) => (
+                <p
+                  key={w.word}
+                  className="cursor-pointer hover:bg-gray-200 rounded-lg"
+                >
+                  {w.word}
+                </p>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>
