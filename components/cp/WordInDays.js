@@ -1,6 +1,7 @@
+import { useEffect, useRef } from "react";
 import { monthDate } from "../../lib/dateTime";
 
-const transformBlogByDate = (words) => {
+const transformWordInWeek = (words) => {
   return words.reduce((transform, word) => {
     let dateMonth = monthDate(new Date(word.contentAt));
 
@@ -16,14 +17,29 @@ const transformBlogByDate = (words) => {
   }, []);
 };
 
-export default function WordInDays({ words }) {
-  const wordInWeek = transformBlogByDate(words);
-  console.log(wordInWeek);
+export default function WordInDays(props) {
+  const wordInWeek = transformWordInWeek(props.words);
+  const nodeRef = useRef(null);
+
+  const handleClickOutside = (event) => {
+    if (nodeRef.current && !nodeRef.current.contains(event.target)) {
+      props.onClick();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  });
+
   return (
     <div
       className={`flex items-center fixed right-0 top-0 ${
-        words.length !== 0 ? "" : "hidden"
+        props.words.length !== 0 ? "" : "hidden"
       }`}
+      ref={nodeRef}
     >
       <div className="bg-white rounded shadow-lg">
         <div className="flex p-1">
