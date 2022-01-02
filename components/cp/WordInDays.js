@@ -22,8 +22,12 @@ export default function WordInDays(props) {
   const nodeRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    if (nodeRef.current && !nodeRef.current.contains(event.target)) {
-      props.onClick();
+    if (
+      nodeRef.current &&
+      !nodeRef.current.contains(event.target) &&
+      props.showModal === false
+    ) {
+      props.onClick(false);
     }
   };
 
@@ -33,6 +37,10 @@ export default function WordInDays(props) {
       document.removeEventListener("click", handleClickOutside, true);
     };
   });
+
+  function onClickWord(id) {
+    props.onClick(true, id);
+  }
 
   return (
     <div
@@ -50,6 +58,7 @@ export default function WordInDays(props) {
                 <p
                   key={w.word}
                   className="cursor-pointer hover:bg-gray-200 rounded-lg"
+                  onClick={() => onClickWord(w.id)}
                 >
                   {w.word}
                 </p>

@@ -5,7 +5,7 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
-// import Modal from "../../../components/cp/Modal";
+import Modal from "../../../components/cp/Modal";
 import WordInDays from "../../../components/cp/WordInDays";
 import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
@@ -13,8 +13,10 @@ import { formatDate } from "../../../lib/dateTime";
 function Youglish() {
   const [show, setShow] = useState(false);
   const [dictionaries, setDictionaries] = useState([]);
+  const [dictionary, setDictionary] = useState([]);
+  const [showModal, setShowModal] = useState(false);
 
-  function showModal() {
+  function showWords() {
     setShow(true);
     /* eslint-disable no-undef */
     YG.Widget("yg-widget").pause();
@@ -43,6 +45,17 @@ function Youglish() {
     document.body.appendChild(script);
   }, []);
 
+  async function clickWordInDay(show, id) {
+    setShow(show);
+    if (id) {
+      const { dictionary } = await fetch(`/api/dictionaries/${id}`).then(
+        (res) => res.json()
+      );
+      setDictionary(dictionary);
+      setShowModal(true);
+    }
+  }
+
   return (
     <Layout>
       <div className="flex p-4">
@@ -51,17 +64,21 @@ function Youglish() {
           <div className="flex mx-2">
             <InformationCircleIcon
               className="h-5 w-5 mx-2"
-              onClick={showModal}
+              onClick={showWords}
             />
 
             <RefreshIcon className="h-5 w-5" onClick={changeYg} />
           </div>
         </h2>
-        {/* {show && (
-              <Modal dictionary={dictionary} onClick={() => setShow(false)} />
-            )} */}
+        {showModal && (
+          <Modal dictionary={dictionary} onClick={() => setShowModal(false)} />
+        )}
         {show && (
-          <WordInDays words={dictionaries} onClick={() => setShow(false)} />
+          <WordInDays
+            words={dictionaries}
+            showModal={showModal}
+            onClick={(show, id = null) => clickWordInDay(show, id)}
+          />
         )}
         <a
           className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"

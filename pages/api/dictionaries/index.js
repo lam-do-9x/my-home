@@ -18,6 +18,7 @@ export default async function handle(req, res) {
         },
       },
       select: {
+        id: true,
         word: true,
         content: true,
         contentAt: true,
