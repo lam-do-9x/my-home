@@ -30,17 +30,26 @@ function Youglish() {
     return dictionaries;
   }
 
-  async function changeYg() {
-    const dictionaries = await fetchRandom();
+  function fetchYg(word) {
     /* eslint-disable no-undef */
-    YG.Widget("yg-widget").fetch(dictionaries[0].word, "english");
+    YG.Widget("yg-widget").fetch(word, "english");
+  }
+
+  async function initYg() {
+    const dictionaries = await fetchRandom();
+    fetchYg(dictionaries[0].word);
+  }
+
+  function changeYg() {
+    const index = Math.floor(Math.random() * dictionaries.length);
+    fetchYg(dictionaries[index].word);
   }
 
   useEffect(async () => {
     const script = document.createElement("script");
     script.src = "https://youglish.com/public/emb/widget.js";
     script.async = true;
-    script.onload = () => changeYg();
+    script.onload = () => initYg();
 
     document.body.appendChild(script);
   }, []);
