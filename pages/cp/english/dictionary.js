@@ -4,7 +4,7 @@ import {
   PencilIcon,
   AnnotationIcon,
 } from "@heroicons/react/outline";
-import { SearchIcon } from "@heroicons/react/solid";
+import { SearchIcon, CheckIcon } from "@heroicons/react/solid";
 import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
@@ -149,10 +149,13 @@ function Dictionary() {
                         key={dictionary.id}
                       >
                         <td
-                          className="py-3 px-6 text-left whitespace-nowrap cursor-pointer"
+                          className="flex my-4 py-3 px-6 cursor-pointer"
                           onClick={() => show(dictionary.id)}
                         >
                           <span className="font-medium">{dictionary.word}</span>
+                          {dictionary.content.length !== 0 && (
+                            <CheckIcon className="h-5 w-5" />
+                          )}
                         </td>
                         <td className="py-3 px-6 text-center">
                           <div className="flex items-center justify-center text-bold">
