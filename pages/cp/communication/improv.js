@@ -1,23 +1,32 @@
 import { useState, useEffect } from "react";
-import {
-  PlusSmIcon,
-  AdjustmentsIcon,
-  RefreshIcon,
-} from "@heroicons/react/outline";
+import { PlusSmIcon, AdjustmentsIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
-import { RandomWord } from "../../../lib/randomWord";
+import { generateRandomWord } from "../../../lib/randomWord";
 
 export default function Improv() {
-  const [number, setNumber] = useState(1);
-  const [randomWords, setRandomWords] = useState([]);
+  const [randomWord, setRandomWord] = useState("");
+  const [time, setTime] = useState(60);
+
+  const tick = () => {
+    if (time === 0) {
+      setTime(0);
+      return;
+    }
+
+    if (time > 0) {
+      setTime(time - 1);
+    }
+  };
 
   useEffect(() => {
-    getRandom();
-  }, []);
+    const timerID = setInterval(() => tick(), 1000);
+    return () => clearInterval(timerID);
+  });
 
   function getRandom() {
-    const words = new RandomWord(Number(number)).get();
-    setRandomWords(words);
+    const word = generateRandomWord();
+    setRandomWord(word);
+    setTime(60);
   }
 
   return (
@@ -27,44 +36,28 @@ export default function Improv() {
           Improv
         </h2>
       </div>
-      <div className="flex mx-6 my-6 justify-center align-center">
-        <div className="w-1/3">
-          <div className="flex mb-4">
-            <h3 className="my-2 font-medium uppercase mr-2">
-              Random Word Generator
-            </h3>
-            <a
-              className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded px-1"
-              href="https://randomwordgenerator.com/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <RefreshIcon className="h-5 w-5 mx-2" />
-              Random Word
-            </a>
-          </div>
-          <div className="flex justify-center items-center">
-            <input
-              className="w-full border p-2 rounded-sm focus:outline-none text-center"
-              type="number"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
-            />
-            <button
-              className="flex items-center justify-center border mx-2 p-2 rounded-full focus:outline-none"
-              onClick={getRandom}
-            >
-              <PlusSmIcon className="h-5 w-5" />
-              Generate
-            </button>
-          </div>
-          <div className="border-t my-2 text-center font-medium">
-            {randomWords.map((word) => (
-              <p className="my-2" key={word}>
-                {word}
-              </p>
-            ))}
-          </div>
+      <div className="flex mx-6 my-6">
+        <div className="flex flex-col justify-center items-center w-1/3 border mr-4 p-4">
+          <h3 className="font-medium uppercase p-2 border-b my-2">
+            Random Word Generator
+          </h3>
+          {randomWord.length !== 0 && (
+            <p className="my-2 p-4 border rounded" key={randomWord}>
+              {randomWord}
+            </p>
+          )}
+          {randomWord.length !== 0 && (
+            <p>
+              {time === 0 ? `countdown's over` : `${time} seconds remaining`}
+            </p>
+          )}
+          <button
+            className="flex items-center justify-center border my-2 p-2 rounded-full focus:outline-none"
+            onClick={getRandom}
+          >
+            <PlusSmIcon className="h-5 w-5" />
+            Generate
+          </button>
         </div>
         <table className="min-w-min w-2/3 table-auto">
           <thead>
