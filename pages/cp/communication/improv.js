@@ -66,7 +66,7 @@ export default function Improv() {
         </div>
         <div className="w-2/3">
           <div className="flex justify-between mb-2">
-            <div className="p-2 bg-indigo-500 rounded-md shadow border cursor-pointer hover:bg-gray-100">
+            <div className="p-2 rounded-md shadow border cursor-pointer hover:bg-gray-100">
               <PencilAltIcon className="h-6 w-6" />
             </div>
             <label className="relative block">
