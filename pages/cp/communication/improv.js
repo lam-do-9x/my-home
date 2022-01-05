@@ -7,10 +7,13 @@ import {
 import { SearchIcon } from "@heroicons/react/solid";
 import Layout from "../../../components/cp/Layout";
 import { generateRandomWord } from "../../../lib/randomWord";
+import UpSetImpov from "../../../components/cp/UpSetImpov";
 
 export default function Improv() {
   const [randomWord, setRandomWord] = useState("");
   const [time, setTime] = useState(0);
+  const [isUpSet, setUpSet] = useState(false);
+  const [improv, setImprov] = useState([]);
 
   const tick = () => {
     if (time === 0) {
@@ -66,7 +69,10 @@ export default function Improv() {
         </div>
         <div className="w-2/3">
           <div className="flex justify-between mb-2">
-            <div className="p-2 rounded-md shadow border cursor-pointer hover:bg-gray-100">
+            <div
+              className="p-2 rounded-md shadow border cursor-pointer hover:bg-gray-100"
+              onClick={() => setUpSet(true)}
+            >
               <PencilAltIcon className="h-6 w-6" />
             </div>
             <label className="relative block">
@@ -92,6 +98,9 @@ export default function Improv() {
             </thead>
             <tbody className="text-gray-600 text-sm font-light"></tbody>
           </table>
+          {isUpSet && (
+            <UpSetImpov improv={improv} onClick={(improv) => setUpSet(false)} />
+          )}
         </div>
       </div>
     </Layout>
