@@ -5,7 +5,7 @@ import { generateRandomWord } from "../../../lib/randomWord";
 
 export default function Improv() {
   const [randomWord, setRandomWord] = useState("");
-  const [time, setTime] = useState(60);
+  const [time, setTime] = useState(0);
 
   const tick = () => {
     if (time === 0) {
