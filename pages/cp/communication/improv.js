@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { PlusSmIcon, AdjustmentsIcon } from "@heroicons/react/outline";
+import {
+  PlusSmIcon,
+  AdjustmentsIcon,
+  PencilAltIcon,
+} from "@heroicons/react/outline";
+import { SearchIcon } from "@heroicons/react/solid";
 import Layout from "../../../components/cp/Layout";
 import { generateRandomWord } from "../../../lib/randomWord";
 
@@ -59,18 +64,35 @@ export default function Improv() {
             Generate
           </button>
         </div>
-        <table className="min-w-min w-2/3 table-auto">
-          <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal text-center">
-              <th className="py-3 px-6 text-center">word</th>
-              <th className="py-3 px-6 text-center">content</th>
-              <th className="py-3 px-6 flex justify-center">
-                <AdjustmentsIcon className="h-6 w-6" />
-              </th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-600 text-sm font-light"></tbody>
-        </table>
+        <div className="w-2/3">
+          <div className="flex justify-between mb-2">
+            <div className="p-2 bg-indigo-500 rounded-md shadow border cursor-pointer hover:bg-gray-100">
+              <PencilAltIcon className="h-6 w-6" />
+            </div>
+            <label className="relative block">
+              <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                <SearchIcon className="h-5 w-5 fill-gray-300" />
+              </span>
+              <input
+                className="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none sm:text-sm"
+                placeholder="Search for content..."
+                type="text"
+                name="search"
+              />
+            </label>
+          </div>
+          <table className="min-w-min w-full table-auto">
+            <thead>
+              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal text-center">
+                <th className="py-3 px-6 text-center">content</th>
+                <th className="py-3 px-6 flex justify-center">
+                  <AdjustmentsIcon className="h-6 w-6" />
+                </th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-600 text-sm font-light"></tbody>
+          </table>
+        </div>
       </div>
     </Layout>
   );
