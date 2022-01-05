@@ -1,6 +1,21 @@
-import { createPageNotion } from "../../../lib/notion";
+import { createPageNotion, databaseNotion } from "../../../lib/notion";
 
 export default async function handle(req, res) {
+  switch (req.method) {
+    case "POST":
+      handlePOST(req, res);
+      break;
+    case "GET":
+      handleGET(req, res);
+      break;
+    default:
+      throw new Error(
+        `The HTTP ${req.method} method is not supported at this route.`
+      );
+  }
+}
+
+async function handlePOST(req, res) {
   const database_id = process.env.NOTION_IMPROV_ID;
   const context = req.body.content;
 
@@ -22,4 +37,12 @@ export default async function handle(req, res) {
   const improv = await createPageNotion(condition);
 
   return res.json({ improv, code: 200 });
+}
+
+async function handleGET(req, res) {
+  const id = process.env.NOTION_IMPROV_ID;
+
+  const improvs = await databaseNotion(id, {});
+
+  return res.json({ improvs, code: 200 });
 }

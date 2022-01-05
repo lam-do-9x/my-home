@@ -3,17 +3,19 @@ import {
   PlusSmIcon,
   AdjustmentsIcon,
   PencilAltIcon,
+  PencilIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
 import Layout from "../../../components/cp/Layout";
 import { generateRandomWord } from "../../../lib/randomWord";
 import UpSetImpov from "../../../components/cp/UpSetImpov";
+import MDRender from "../../../components/cp/MDR";
 
 export default function Improv() {
   const [randomWord, setRandomWord] = useState("");
   const [time, setTime] = useState(0);
   const [isUpSet, setUpSet] = useState(false);
-  const [improv, setImprov] = useState([]);
+  const [improvs, setImprov] = useState([]);
 
   const tick = () => {
     if (time === 0) {
@@ -26,9 +28,14 @@ export default function Improv() {
     }
   };
 
-  useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
-    return () => clearInterval(timerID);
+  //   useEffect(async () => {
+  //     const timerID = setInterval(() => tick(), 1000);
+  //     return () => clearInterval(timerID);
+  //   });
+
+  useEffect(async () => {
+    const { improvs } = await fetch("/api/improv").then((res) => res.json());
+    setImprov(improvs);
   });
 
   function getRandom() {
@@ -96,7 +103,32 @@ export default function Improv() {
                 </th>
               </tr>
             </thead>
-            <tbody className="text-gray-600 text-sm font-light"></tbody>
+            <tbody className="text-gray-600 text-sm font-light">
+              {console.log(improvs)}
+              {improvs.map((improv) => (
+                <tr
+                  className="border-b border-gray-200 hover:bg-gray-100"
+                  key={improv.id}
+                >
+                  <td className="flex my-4 py-3 px-6 cursor-pointer">
+                    <span className="font-medium">
+                      <MDRender
+                        content={
+                          improv.properties.content.title[0].text.content
+                        }
+                      />
+                    </span>
+                  </td>
+                  <td className="py-3 px-6">
+                    <div className="flex item-center justify-center">
+                      <div className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer">
+                        <PencilIcon className="h-5 w-5" />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           {isUpSet && (
             <UpSetImpov improv={improv} onClick={(improv) => setUpSet(false)} />
