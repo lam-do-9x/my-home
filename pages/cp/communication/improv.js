@@ -13,11 +13,17 @@ import RandomWord from "../../../components/cp/RandomWord";
 export default function Improv() {
   const [isUpSet, setUpSet] = useState(false);
   const [improvs, setImprov] = useState([]);
+  const [improv, setSImprov] = useState([]);
 
   useEffect(async () => {
     const { improvs } = await fetch("/api/improv").then((res) => res.json());
     setImprov(improvs);
   }, []);
+
+  function createImprov(improv) {
+    setUpSet(false);
+    setImprov([improv, ...improvs]);
+  }
 
   return (
     <Layout>
@@ -87,7 +93,10 @@ export default function Improv() {
           </div>
 
           {isUpSet && (
-            <UpSetImpov improv={improv} onClick={(improv) => setUpSet(false)} />
+            <UpSetImpov
+              improv={improv}
+              onClick={(improv) => createImprov(improv)}
+            />
           )}
         </div>
       </div>

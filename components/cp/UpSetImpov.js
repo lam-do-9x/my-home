@@ -8,8 +8,8 @@ export default function UpSetImpov(props) {
   const [content, setContent] = useState(props.improv?.content);
   //   const [response, setResponse] = useState({});
 
-  function close(response) {
-    props.onClick(response);
+  function close(improv) {
+    props.onClick(improv);
   }
 
   async function submit() {
@@ -27,7 +27,7 @@ export default function UpSetImpov(props) {
       response = await fetchClient("/api/improv", body);
     }
 
-    close(response);
+    close(response.improv);
   }
 
   return (
