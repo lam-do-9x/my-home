@@ -13,16 +13,36 @@ import RandomWord from "../../../components/cp/RandomWord";
 export default function Improv() {
   const [isUpSet, setUpSet] = useState(false);
   const [improvs, setImprov] = useState([]);
-  const [improv, setSImprov] = useState([]);
+  const [improv, setSImprov] = useState({});
 
   useEffect(async () => {
     const { improvs } = await fetch("/api/improv").then((res) => res.json());
     setImprov(improvs);
   }, []);
 
-  function createImprov(improv) {
+  function close(improv) {
+    if (Object.keys(improv).length !== 0) {
+      const isExist = improvs.findIndex((i) => i.id === improv.id);
+      if (isExist !== -1) {
+        improvs[isExist] = improv;
+        setImprov(improvs);
+      } else {
+        setImprov([improv, ...improvs]);
+      }
+    }
+
     setUpSet(false);
-    setImprov([improv, ...improvs]);
+  }
+
+  function create() {
+    setSImprov({});
+    setUpSet(true);
+  }
+
+  function edit(id) {
+    const improv = improvs.find((i) => i.id === id);
+    setSImprov(improv);
+    setUpSet(true);
   }
 
   return (
@@ -39,7 +59,7 @@ export default function Improv() {
             <div className="flex justify-between my-2">
               <div
                 className="p-2 rounded-md shadow border cursor-pointer hover:bg-gray-100"
-                onClick={() => setUpSet(true)}
+                onClick={create}
               >
                 <PencilAltIcon className="h-5 w-5" />
               </div>
@@ -80,10 +100,11 @@ export default function Improv() {
                       </span>
                     </td>
                     <td className="py-3 px-6">
-                      <div className="flex item-center justify-center">
-                        <div className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer">
-                          <PencilIcon className="h-5 w-5" />
-                        </div>
+                      <div
+                        className="flex justify-center transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
+                        onClick={() => edit(improv.id)}
+                      >
+                        <PencilIcon className="h-5 w-5" />
                       </div>
                     </td>
                   </tr>
@@ -93,10 +114,7 @@ export default function Improv() {
           </div>
 
           {isUpSet && (
-            <UpSetImpov
-              improv={improv}
-              onClick={(improv) => createImprov(improv)}
-            />
+            <UpSetImpov improv={improv} onClick={(improv) => close(improv)} />
           )}
         </div>
       </div>
