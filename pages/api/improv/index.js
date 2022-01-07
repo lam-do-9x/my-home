@@ -17,7 +17,6 @@ export default async function handle(req, res) {
 
 async function handlePOST(req, res) {
   const database_id = process.env.NOTION_IMPROV_ID;
-  const context = req.body.content;
 
   let condition = {
     parent: { database_id },
@@ -26,7 +25,16 @@ async function handlePOST(req, res) {
         title: [
           {
             text: {
-              content: context,
+              content: req.body.content,
+            },
+          },
+        ],
+      },
+      display: {
+        rich_text: [
+          {
+            text: {
+              content: req.body.display,
             },
           },
         ],

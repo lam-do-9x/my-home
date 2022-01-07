@@ -14,7 +14,6 @@ export default async function handle(req, res) {
 
 async function handlePATCH(req, res) {
   const id = req.query.id;
-  const context = req.body.content;
 
   let condition = {
     properties: {
@@ -22,7 +21,16 @@ async function handlePATCH(req, res) {
         title: [
           {
             text: {
-              content: context,
+              content: req.body.content,
+            },
+          },
+        ],
+      },
+      display: {
+        rich_text: [
+          {
+            text: {
+              content: req.body.display,
             },
           },
         ],

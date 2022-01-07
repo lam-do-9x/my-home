@@ -15,6 +15,7 @@ export default function UpSetImpov(props) {
   async function submit() {
     const body = JSON.stringify({
       content,
+      display: content.substr(0, 100),
     });
     let response = {};
 

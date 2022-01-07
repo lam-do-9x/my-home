@@ -5,6 +5,7 @@ import {
   PencilIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
+import Dotdotdot from "react-dotdotdot";
 import Layout from "../../../components/cp/Layout";
 import UpSetImpov from "../../../components/cp/UpSetImpov";
 import MDRender from "../../../components/cp/MDR";
@@ -90,14 +91,14 @@ export default function Improv() {
                     className="border-b border-gray-200 hover:bg-gray-100"
                     key={improv.id}
                   >
-                    <td className="flex my-4 py-3 px-6 cursor-pointer">
-                      <span className="font-medium">
+                    <td className="flex my-4 py-3 px-6 cursor-pointer font-medium">
+                      <Dotdotdot clamp={1}>
                         <MDRender
                           content={
-                            improv.properties.content.title[0].text.content
+                            improv.properties.display.rich_text[0]?.text.content
                           }
                         />
-                      </span>
+                      </Dotdotdot>
                     </td>
                     <td className="py-3 px-6">
                       <div
