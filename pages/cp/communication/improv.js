@@ -5,7 +5,6 @@ import {
   PencilIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/solid";
-import Dotdotdot from "react-dotdotdot";
 import Layout from "../../../components/cp/Layout";
 import UpSetImpov from "../../../components/cp/UpSetImpov";
 import MDRender from "../../../components/cp/MDR";
@@ -92,13 +91,12 @@ export default function Improv() {
                     key={improv.id}
                   >
                     <td className="flex my-4 py-3 px-6 cursor-pointer font-medium">
-                      <Dotdotdot clamp={1}>
-                        <MDRender
-                          content={
-                            improv.properties.display.rich_text[0]?.text.content
-                          }
-                        />
-                      </Dotdotdot>
+                      <MDRender
+                        content={
+                          improv.properties.display.rich_text[0]?.text.content
+                        }
+                        className={"h-5 overflow-hidden"}
+                      />
                     </td>
                     <td className="py-3 px-6">
                       <div
