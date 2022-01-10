@@ -50,7 +50,20 @@ async function handlePOST(req, res) {
 async function handleGET(req, res) {
   const id = process.env.NOTION_IMPROV_ID;
 
-  const improvs = await databaseNotion(id, {});
+  let condition = {};
+
+  if (req.query.q) {
+    condition = {
+      filter: {
+        property: "content",
+        text: {
+          contains: req.query.q,
+        },
+      },
+    };
+  }
+
+  const improvs = await databaseNotion(id, condition);
 
   return res.json({ improvs, code: 200 });
 }

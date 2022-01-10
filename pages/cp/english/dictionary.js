@@ -11,20 +11,7 @@ import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 import Modal from "../../../components/cp/Modal";
 import UpSetModal from "../../../components/cp/UpSetModal";
-
-function debounce(func, wait, immediate) {
-  var timeout;
-  return function () {
-    var context = this,
-      args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function () {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    }, wait);
-    if (immediate && !timeout) func.apply(context, args);
-  };
-}
+import { debounce } from "../../../lib/helper";
 
 function Dictionary() {
   const [itemsLength, setItemsLength] = useState(0);

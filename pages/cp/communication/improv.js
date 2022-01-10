@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   AdjustmentsIcon,
   PencilAltIcon,
@@ -9,11 +9,13 @@ import Layout from "../../../components/cp/Layout";
 import UpSetImpov from "../../../components/cp/UpSetImpov";
 import MDRender from "../../../components/cp/MDR";
 import RandomWord from "../../../components/cp/RandomWord";
+import { debounce } from "../../../lib/helper";
 
 export default function Improv() {
   const [isUpSet, setUpSet] = useState(false);
   const [improvs, setImprov] = useState([]);
   const [improv, setSImprov] = useState({});
+  const [keyword, setKeyword] = useState("");
 
   useEffect(async () => {
     const { improvs } = await fetch("/api/improv").then((res) => res.json());
@@ -45,6 +47,23 @@ export default function Improv() {
     setUpSet(true);
   }
 
+  async function fetchImprovByQuery(keyword) {
+    const { improvs } = await fetch(`/api/improv?q=${keyword}`).then((res) =>
+      res.json()
+    );
+    setImprov(improvs);
+  }
+
+  const debounceDropDown = useRef(
+    debounce((nextValue) => fetchImprovByQuery(nextValue), 1000)
+  ).current;
+
+  function search(e) {
+    const { value } = e.target;
+    setKeyword(value);
+    debounceDropDown(value);
+  }
+
   return (
     <Layout>
       <div className="flex mx-6 my-6">
@@ -72,6 +91,8 @@ export default function Improv() {
                   placeholder="Search for content..."
                   type="text"
                   name="search"
+                  value={keyword}
+                  onChange={search}
                 />
               </label>
             </div>
