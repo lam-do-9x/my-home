@@ -10,8 +10,10 @@ import UpSetImpov from "../../../components/cp/UpSetImpov";
 import MDRender from "../../../components/cp/MDR";
 import RandomWord from "../../../components/cp/RandomWord";
 import { debounce } from "../../../lib/helper";
+import Loader from "../../../components/cp/Loader";
 
 export default function Improv() {
+  const [isLoading, setLoading] = useState(true);
   const [isUpSet, setUpSet] = useState(false);
   const [improvs, setImprov] = useState([]);
   const [improv, setSImprov] = useState({});
@@ -20,6 +22,7 @@ export default function Improv() {
   useEffect(async () => {
     const { improvs } = await fetch("/api/improv").then((res) => res.json());
     setImprov(improvs);
+    setLoading(false);
   }, []);
 
   function close(improv) {
@@ -52,6 +55,7 @@ export default function Improv() {
       res.json()
     );
     setImprov(improvs);
+    setLoading(false);
   }
 
   const debounceDropDown = useRef(
@@ -62,6 +66,7 @@ export default function Improv() {
     const { value } = e.target;
     setKeyword(value);
     debounceDropDown(value);
+    setLoading(true);
   }
 
   return (
@@ -106,29 +111,37 @@ export default function Improv() {
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm font-light">
-                {improvs.map((improv) => (
-                  <tr
-                    className="border-b border-gray-200 hover:bg-gray-100"
-                    key={improv.id}
-                  >
-                    <td className="flex my-4 py-3 px-6 cursor-pointer font-medium">
-                      <MDRender
-                        content={
-                          improv.properties.display.rich_text[0]?.text.content
-                        }
-                        className={"h-5 overflow-hidden"}
-                      />
-                    </td>
-                    <td className="py-3 px-6">
-                      <div
-                        className="flex justify-center transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
-                        onClick={() => edit(improv.id)}
-                      >
-                        <PencilIcon className="h-5 w-5" />
-                      </div>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan="2">
+                      <Loader />
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  improvs.map((improv) => (
+                    <tr
+                      className="border-b border-gray-200 hover:bg-gray-100"
+                      key={improv.id}
+                    >
+                      <td className="flex my-4 py-3 px-6 cursor-pointer font-medium">
+                        <MDRender
+                          content={
+                            improv.properties.display.rich_text[0]?.text.content
+                          }
+                          className={"h-5 overflow-hidden"}
+                        />
+                      </td>
+                      <td className="py-3 px-6">
+                        <div
+                          className="flex justify-center transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
+                          onClick={() => edit(improv.id)}
+                        >
+                          <PencilIcon className="h-5 w-5" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
