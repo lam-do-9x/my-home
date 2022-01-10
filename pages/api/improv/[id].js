@@ -1,9 +1,12 @@
-import { updatePageNotion } from "../../../lib/notion";
+import { pageNotion, updatePageNotion } from "../../../lib/notion";
 
 export default async function handle(req, res) {
   switch (req.method) {
     case "PATCH":
       handlePATCH(req, res);
+      break;
+    case "GET":
+      handleGET(req, res);
       break;
     default:
       throw new Error(
@@ -39,6 +42,14 @@ async function handlePATCH(req, res) {
   };
 
   const improv = await updatePageNotion(id, condition);
+
+  return res.json({ improv, code: 200 });
+}
+
+async function handleGET(req, res) {
+  const id = req.query.id;
+
+  const improv = await pageNotion(id);
 
   return res.json({ improv, code: 200 });
 }

@@ -11,6 +11,7 @@ import MDRender from "../../../components/cp/MDR";
 import RandomWord from "../../../components/cp/RandomWord";
 import { debounce } from "../../../lib/helper";
 import Loader from "../../../components/cp/Loader";
+import Modal from "../../../components/cp/ImprovModal";
 
 export default function Improv() {
   const [isLoading, setLoading] = useState(true);
@@ -18,6 +19,7 @@ export default function Improv() {
   const [improvs, setImprov] = useState([]);
   const [improv, setSImprov] = useState({});
   const [keyword, setKeyword] = useState("");
+  const [isShow, setShow] = useState(false);
 
   useEffect(async () => {
     const { improvs } = await fetch("/api/improv").then((res) => res.json());
@@ -67,6 +69,15 @@ export default function Improv() {
     setKeyword(value);
     debounceDropDown(value);
     setLoading(true);
+  }
+
+  async function show(id) {
+    const { improv } = await fetch(`/api/improv/${id}`).then((res) =>
+      res.json()
+    );
+    console.log(improv);
+    setSImprov(improv);
+    setShow(true);
   }
 
   return (
@@ -123,7 +134,10 @@ export default function Improv() {
                       className="border-b border-gray-200 hover:bg-gray-100"
                       key={improv.id}
                     >
-                      <td className="flex my-4 py-3 px-6 cursor-pointer font-medium">
+                      <td
+                        className="flex my-4 py-3 px-6 cursor-pointer font-medium"
+                        onClick={() => show(improv.id)}
+                      >
                         <MDRender
                           content={
                             improv.properties.display.rich_text[0]?.text.content
@@ -145,7 +159,7 @@ export default function Improv() {
               </tbody>
             </table>
           </div>
-
+          {isShow && <Modal improv={improv} onClick={() => setShow(false)} />}
           {isUpSet && (
             <UpSetImpov improv={improv} onClick={(improv) => close(improv)} />
           )}
