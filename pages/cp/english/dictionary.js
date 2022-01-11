@@ -3,6 +3,8 @@ import {
   AdjustmentsIcon,
   PencilIcon,
   AnnotationIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon, CheckIcon } from "@heroicons/react/solid";
 import ReactPaginate from "react-paginate";
@@ -191,22 +193,19 @@ function Dictionary() {
               )}
               <ReactPaginate
                 breakLabel="..."
-                nextLabel="next"
-                previousLabel="previous"
+                nextLabel={<ChevronRightIcon className="h-5 w-5" />}
+                previousLabel={<ChevronLeftIcon className="h-5 w-5" />}
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={10}
                 pageCount={pageCount}
                 renderOnZeroPageCount={null}
-                className="flex justify-center p-4"
-                pageClassName="border"
-                pageLinkClassName="px-3 py-6"
-                breakClassName="border"
-                breakLinkClassName="px-3 py-6"
-                activeClassName="bg-gray-200"
-                previousClassName="mr-3 border"
-                previousLinkClassName="px-3 py-6"
-                nextClassName="ml-3 border"
-                nextLinkClassName="px-3 py-6"
+                className="py-4 flex items-center justify-center"
+                pageClassName="hover:bg-gray-100"
+                pageLinkClassName="inline-flex items-center px-4 py-2 border border-gray-50 text-gray-700 text-sm font-medium"
+                breakLinkClassName="inline-flex items-center px-4 py-2 border border-gray-50 text-gray-700 text-sm font-medium"
+                activeLinkClassName="bg-indigo-50 border-indigo-500 text-indigo-600"
+                previousLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-l-md border border-gray-50"
+                nextLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-r-md border border-gray-50"
                 disabledLinkClassName="text-gray-100"
               />
             </div>
