@@ -206,7 +206,7 @@ function Dictionary() {
                 activeLinkClassName="bg-indigo-50 border-indigo-500 text-indigo-600"
                 previousLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-l-md border border-gray-300"
                 nextLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-r-md border border-gray-300"
-                disabledLinkClassName="text-gray-100"
+                disabledLinkClassName="text-gray-100 cursor-not-allowed"
               />
             </div>
           </div>
