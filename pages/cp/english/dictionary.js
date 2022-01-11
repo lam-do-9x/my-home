@@ -69,6 +69,7 @@ function Dictionary() {
 
   function search(e) {
     setLoading(true);
+    setPageCount(0);
     const { value } = e.target;
     setKeyword(value);
     debounceDropDown(value);
