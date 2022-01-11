@@ -18,7 +18,7 @@ import fetchClient from "../../../lib/fetchClient";
 
 function Dictionary() {
   const [isLoading, setLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(10);
+  const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
   const [dictionaries, setDictionaries] = useState([]);
   const [dictionary, setDictionary] = useState({});
@@ -201,11 +201,11 @@ function Dictionary() {
                 renderOnZeroPageCount={null}
                 className="py-4 flex items-center justify-center"
                 pageClassName="hover:bg-gray-100"
-                pageLinkClassName="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium"
-                breakLinkClassName="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium"
+                pageLinkClassName="inline-flex items-center px-4 py-2 border border-gray-100 text-gray-700 text-sm font-medium"
+                breakLinkClassName="inline-flex items-center px-4 py-2 border border-gray-100 text-gray-700 text-sm font-medium"
                 activeLinkClassName="bg-indigo-50 border-indigo-500 text-indigo-600"
-                previousLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-l-md border border-gray-300"
-                nextLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-r-md border border-gray-300"
+                previousLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-l-md border border-gray-100"
+                nextLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-r-md border border-gray-100"
                 disabledLinkClassName="text-gray-100 cursor-not-allowed"
               />
             </div>
