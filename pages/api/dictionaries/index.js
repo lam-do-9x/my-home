@@ -1,6 +1,9 @@
 import { prisma } from "../../../lib/prisma";
 
 export default async function handle(req, res) {
+  const skip = Number(req.query.skip);
+  const take = Number(req.query.take);
+
   let operate = {
     orderBy: {
       word: "asc",
@@ -28,6 +31,10 @@ export default async function handle(req, res) {
       },
       take: 25,
     };
+
+    const dictionaries = await prisma.dictionary.findMany(operate);
+
+    return res.json({ dictionaries, code: 200 });
   }
 
   if (req.query.q) {
@@ -40,6 +47,13 @@ export default async function handle(req, res) {
     };
   }
 
-  const dictionaries = await prisma.dictionary.findMany(operate);
-  return res.json({ dictionaries, code: 200 });
+  const totalPage = await prisma.dictionary.count(operate);
+
+  const dictionaries = await prisma.dictionary.findMany({
+    skip,
+    take,
+    ...operate,
+  });
+
+  return res.json({ dictionaries, totalPage, code: 200 });
 }
