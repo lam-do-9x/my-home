@@ -3,11 +3,8 @@ import {
   AdjustmentsIcon,
   PencilIcon,
   AnnotationIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
 } from "@heroicons/react/outline";
 import { SearchIcon, CheckIcon } from "@heroicons/react/solid";
-import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
@@ -15,6 +12,7 @@ import Modal from "../../../components/cp/Modal";
 import UpSetModal from "../../../components/cp/UpSetModal";
 import { debounce } from "../../../lib/helper";
 import fetchClient from "../../../lib/fetchClient";
+import Paginate from "../../../components/cp/Paginate";
 
 function Dictionary() {
   const [isLoading, setLoading] = useState(true);
@@ -30,11 +28,6 @@ function Dictionary() {
     await getDictionaries();
     setLoading(false);
   }, [offset, 10]);
-
-  const handlePageClick = (event) => {
-    const newOffset = event.selected * 10;
-    setOffset(newOffset);
-  };
 
   async function getDictionary(id) {
     const { dictionary } = await fetch(`/api/dictionaries/${id}`).then((res) =>
@@ -70,6 +63,7 @@ function Dictionary() {
   function search(e) {
     setLoading(true);
     setPageCount(0);
+    setOffset(0);
     const { value } = e.target;
     setKeyword(value);
     debounceDropDown(value);
@@ -192,22 +186,10 @@ function Dictionary() {
                   onClick={() => setUpSet(false)}
                 />
               )}
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel={<ChevronRightIcon className="h-5 w-5" />}
-                previousLabel={<ChevronLeftIcon className="h-5 w-5" />}
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={10}
+              <Paginate
+                perPage={10}
                 pageCount={pageCount}
-                renderOnZeroPageCount={null}
-                className="py-4 flex items-center justify-center"
-                pageClassName="hover:bg-gray-100"
-                pageLinkClassName="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium"
-                breakLinkClassName="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium"
-                activeLinkClassName="bg-indigo-50 border-indigo-500 text-indigo-600"
-                previousLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-l-md border border-gray-300"
-                nextLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-r-md border border-gray-300"
-                disabledLinkClassName="text-gray-100 cursor-not-allowed"
+                handlePageClick={(offset) => setOffset(offset)}
               />
             </div>
           </div>
