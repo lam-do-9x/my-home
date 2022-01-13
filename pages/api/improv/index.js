@@ -1,4 +1,8 @@
-import { createPageNotion, databaseNotion } from "../../../lib/notion";
+import {
+  createPageNotion,
+  databaseNotion,
+  AllDatabaseCursorNotion,
+} from "../../../lib/notion";
 
 export default async function handle(req, res) {
   switch (req.method) {
@@ -48,6 +52,9 @@ async function handlePOST(req, res) {
 }
 
 async function handleGET(req, res) {
+  const page_size = Number(req.query.page_size);
+  const start_cursor = req.query.start_cursor;
+
   const id = process.env.NOTION_IMPROV_ID;
 
   let condition = {};
@@ -63,7 +70,16 @@ async function handleGET(req, res) {
     };
   }
 
-  const improvs = await databaseNotion(id, condition);
+  const cursor = await new AllDatabaseCursorNotion(id, {
+    page_size,
+    ...condition,
+  }).get();
 
-  return res.json({ improvs, code: 200 });
+  const response = await databaseNotion(id, {
+    page_size,
+    start_cursor: start_cursor === "undefined" ? undefined : start_cursor,
+    ...condition,
+  });
+
+  return res.json({ improvisations: response.results, cursor, code: 200 });
 }

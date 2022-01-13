@@ -12,51 +12,58 @@ import RandomWord from "../../../components/cp/RandomWord";
 import { debounce } from "../../../lib/helper";
 import Loader from "../../../components/cp/Loader";
 import Modal from "../../../components/cp/ImprovModal";
+import Paginate from "../../../components/cp/Paginate";
 
 export default function Improv() {
   const [isLoading, setLoading] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
+  const [offset, setOffset] = useState(0);
   const [isUpSet, setUpSet] = useState(false);
-  const [improvs, setImprov] = useState([]);
-  const [improv, setSImprov] = useState({});
-  const [keyword, setKeyword] = useState("");
+  const [cursors, setCursor] = useState([]);
   const [isShow, setShow] = useState(false);
+  const [improvisations, setImprovisations] = useState([]);
+  const [improvisation, setImprovisation] = useState({});
+  const [keyword, setKeyword] = useState("");
 
   useEffect(async () => {
-    const { improvs } = await fetch("/api/improv").then((res) => res.json());
-    setImprov(improvs);
+    await fetchImprovisations();
     setLoading(false);
-  }, []);
+  }, [offset]);
 
   function close(improv) {
-    if (Object.keys(improv).length !== 0) {
-      const isExist = improvs.findIndex((i) => i.id === improv.id);
+    if (Object.keys(improvisations).length !== 0) {
+      const isExist = improvisations.findIndex((i) => i.id === improv.id);
       if (isExist !== -1) {
-        improvs[isExist] = improv;
-        setImprov(improvs);
+        improvisations[isExist] = improv;
+        setImprovisations(improvisations);
       } else {
-        setImprov([improv, ...improvs]);
+        setImprovisations([improv, ...improvisations]);
       }
     }
 
     setUpSet(false);
   }
 
-  function create() {
-    setSImprov({});
-    setUpSet(true);
-  }
+  async function fetchImprovisations(word) {
+    setLoading(true);
 
-  function edit(id) {
-    const improv = improvs.find((i) => i.id === id);
-    setSImprov(improv);
-    setUpSet(true);
-  }
+    let url = `/api/improv?page_size=5&start_cursor=${cursors[offset - 1]}`;
 
-  async function fetchImprovByQuery(keyword) {
-    const { improvs } = await fetch(`/api/improv?q=${keyword}`).then((res) =>
+    if (word || keyword !== "") {
+      url = `${url}&q=${word || keyword}`;
+    }
+
+    const { improvisations, cursor } = await fetch(url).then((res) =>
       res.json()
     );
-    setImprov(improvs);
+    setCursor(cursor);
+    setPageCount(cursor.length + 1 > 1 ? cursor.length + 1 : 0);
+
+    setImprovisations(improvisations);
+  }
+
+  async function fetchImprovByQuery(word) {
+    await fetchImprovisations(word);
     setLoading(false);
   }
 
@@ -65,18 +72,30 @@ export default function Improv() {
   ).current;
 
   function search(e) {
+    setLoading(true);
+    setPageCount(0);
+    setOffset(0);
     const { value } = e.target;
     setKeyword(value);
     debounceDropDown(value);
-    setLoading(true);
+  }
+
+  function create() {
+    setImprovisation({});
+    setUpSet(true);
+  }
+
+  function edit(id) {
+    const improv = improvisations.find((i) => i.id === id);
+    setImprovisation(improv);
+    setUpSet(true);
   }
 
   async function show(id) {
     const { improv } = await fetch(`/api/improv/${id}`).then((res) =>
       res.json()
     );
-    console.log(improv);
-    setSImprov(improv);
+    setImprovisation(improv);
     setShow(true);
   }
 
@@ -129,7 +148,7 @@ export default function Improv() {
                     </td>
                   </tr>
                 ) : (
-                  improvs.map((improv) => (
+                  improvisations.map((improv) => (
                     <tr
                       className="border-b border-gray-200 hover:bg-gray-100"
                       key={improv.id}
@@ -158,10 +177,20 @@ export default function Improv() {
                 )}
               </tbody>
             </table>
+            <Paginate
+              perPage={5}
+              pageCount={pageCount}
+              handlePageClick={(offset) => setOffset(offset / 5)}
+            />
           </div>
-          {isShow && <Modal improv={improv} onClick={() => setShow(false)} />}
+          {isShow && (
+            <Modal improv={improvisation} onClick={() => setShow(false)} />
+          )}
           {isUpSet && (
-            <UpSetImpov improv={improv} onClick={(improv) => close(improv)} />
+            <UpSetImpov
+              improv={improvisation}
+              onClick={(improv) => close(improv)}
+            />
           )}
         </div>
       </div>
