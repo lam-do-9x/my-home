@@ -40,7 +40,7 @@ async function handlePUT(req, res) {
       },
       data: req.body,
     });
-    return res.json({ dictionary, code: 201 });
+    return res.json({ dictionary, code: 200 });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       return res.json({

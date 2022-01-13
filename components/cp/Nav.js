@@ -23,7 +23,7 @@ export default function Nav() {
     "/cp/english/dictionary": "english",
     "/cp/english/pronunciation": "english",
     "/cp/communication/body-language": "communication",
-    "/cp/communication/improv": "communication",
+    "/cp/communication/improvisation": "communication",
   };
 
   useEffect(() => {
@@ -139,11 +139,11 @@ export default function Nav() {
             </ActiveLink>
             <ActiveLink
               activeClassName="bg-gray-100"
-              href="/cp/communication/improv"
+              href="/cp/communication/improvisation"
             >
               <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
                 <ChatIcon className="h-6 w-6 mr-2" />
-                Improv
+                Improvisation
               </p>
             </ActiveLink>
           </div>

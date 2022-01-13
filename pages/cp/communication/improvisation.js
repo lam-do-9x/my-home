@@ -14,12 +14,11 @@ import Loader from "../../../components/cp/Loader";
 import Modal from "../../../components/cp/ImprovModal";
 import Paginate from "../../../components/cp/Paginate";
 
-export default function Improv() {
+export default function Improvisation() {
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
   const [isUpSet, setUpSet] = useState(false);
-  const [cursors, setCursor] = useState([]);
   const [isShow, setShow] = useState(false);
   const [improvisations, setImprovisations] = useState([]);
   const [improvisation, setImprovisation] = useState({});
@@ -30,14 +29,16 @@ export default function Improv() {
     setLoading(false);
   }, [offset]);
 
-  function close(improv) {
-    if (Object.keys(improvisations).length !== 0) {
-      const isExist = improvisations.findIndex((i) => i.id === improv.id);
+  function close(improvisation) {
+    if (Object.keys(improvisation).length !== 0) {
+      const isExist = improvisations.findIndex(
+        (i) => i.id === improvisation.id
+      );
       if (isExist !== -1) {
-        improvisations[isExist] = improv;
+        improvisations[isExist] = improvisation;
         setImprovisations(improvisations);
       } else {
-        setImprovisations([improv, ...improvisations]);
+        setImprovisations([improvisation, ...improvisations]);
       }
     }
 
@@ -45,19 +46,18 @@ export default function Improv() {
   }
 
   async function fetchImprovisations(word) {
-    setLoading(true);
-
-    let url = `/api/improv?page_size=5&start_cursor=${cursors[offset - 1]}`;
+    let url = `/api/improvisations?take=5&skip=${offset}`;
 
     if (word || keyword !== "") {
       url = `${url}&q=${word || keyword}`;
     }
 
-    const { improvisations, cursor } = await fetch(url).then((res) =>
+    const { improvisations, totalPage } = await fetch(url).then((res) =>
       res.json()
     );
-    setCursor(cursor);
-    setPageCount(cursor.length + 1 > 1 ? cursor.length + 1 : 0);
+
+    const pageCount = Math.ceil(totalPage / 5);
+    setPageCount(pageCount > 1 ? pageCount : 0);
 
     setImprovisations(improvisations);
   }
@@ -86,16 +86,14 @@ export default function Improv() {
   }
 
   function edit(id) {
-    const improv = improvisations.find((i) => i.id === id);
-    setImprovisation(improv);
+    const improvisation = improvisations.find((i) => i.id === id);
+    setImprovisation(improvisation);
     setUpSet(true);
   }
 
   async function show(id) {
-    const { improv } = await fetch(`/api/improv/${id}`).then((res) =>
-      res.json()
-    );
-    setImprovisation(improv);
+    const improvisation = improvisations.find((i) => i.id === id);
+    setImprovisation(improvisation);
     setShow(true);
   }
 
@@ -103,7 +101,7 @@ export default function Improv() {
     <Layout>
       <div className="flex mx-6 my-6">
         <h2 className="mr-4 text-lg font-large uppercase rounded border p-4">
-          Improv
+          Improvisation
         </h2>
       </div>
       <div className="w-full">
@@ -148,26 +146,24 @@ export default function Improv() {
                     </td>
                   </tr>
                 ) : (
-                  improvisations.map((improv) => (
+                  improvisations.map((improvisation) => (
                     <tr
                       className="border-b border-gray-200 hover:bg-gray-100"
-                      key={improv.id}
+                      key={improvisation.id}
                     >
                       <td
                         className="flex my-4 py-3 px-6 cursor-pointer font-medium"
-                        onClick={() => show(improv.id)}
+                        onClick={() => show(improvisation.id)}
                       >
                         <MDRender
-                          content={
-                            improv.properties.display.rich_text[0]?.text.content
-                          }
+                          content={improvisation.display}
                           className={"h-5 overflow-hidden"}
                         />
                       </td>
                       <td className="py-3 px-6">
                         <div
                           className="flex justify-center transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
-                          onClick={() => edit(improv.id)}
+                          onClick={() => edit(improvisation.id)}
                         >
                           <PencilIcon className="h-5 w-5" />
                         </div>
@@ -180,16 +176,19 @@ export default function Improv() {
             <Paginate
               perPage={5}
               pageCount={pageCount}
-              handlePageClick={(offset) => setOffset(offset / 5)}
+              handlePageClick={(offset) => setOffset(offset)}
             />
           </div>
           {isShow && (
-            <Modal improv={improvisation} onClick={() => setShow(false)} />
+            <Modal
+              improvisation={improvisation}
+              onClick={() => setShow(false)}
+            />
           )}
           {isUpSet && (
             <UpSetImpov
-              improv={improvisation}
-              onClick={(improv) => close(improv)}
+              improvisation={improvisation}
+              onClick={(improvisation) => close(improvisation)}
             />
           )}
         </div>

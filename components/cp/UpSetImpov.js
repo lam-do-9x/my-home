@@ -4,12 +4,10 @@ import fetchClient from "../../lib/fetchClient";
 import MDE from "./MDE";
 
 export default function UpSetImpov(props) {
-  const [content, setContent] = useState(
-    props.improv.properties?.content.title[0].text.content
-  );
+  const [content, setContent] = useState(props.improvisation.content);
 
-  function close(improv = {}) {
-    props.onClick(improv);
+  function close(improvisation = {}) {
+    props.onClick(improvisation);
   }
 
   async function submit() {
@@ -17,19 +15,20 @@ export default function UpSetImpov(props) {
       content,
       display: content.substr(0, 100),
     });
+
     let response = {};
 
-    if (Object.keys(props.improv).length !== 0) {
+    if (Object.keys(props.improvisation).length !== 0) {
       response = await fetchClient(
-        `/api/improv/${props.improv.id}`,
+        `/api/improvisations/${props.improvisation.id}`,
         body,
         "PATCH"
       );
     } else {
-      response = await fetchClient("/api/improv", body);
+      response = await fetchClient("/api/improvisations", body);
     }
 
-    close(response.improv);
+    close(response.improvisation);
   }
 
   return (

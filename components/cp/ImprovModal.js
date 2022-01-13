@@ -19,9 +19,7 @@ export default function ImprovModal(props) {
         <div
           className={`px-7 my-2 ${styles["max-h-modal"]} overflow-x-hidden prose mb-4`}
         >
-          <MDRender
-            content={props.improv.properties.content.title[0]?.text.content}
-          />
+          <MDRender content={props.improvisation.content} />
         </div>
       </div>
     </div>
