@@ -27,7 +27,7 @@ function Dictionary() {
   useEffect(async () => {
     await getDictionaries();
     setLoading(false);
-  }, [offset, 10]);
+  }, [offset]);
 
   async function getDictionary(id) {
     const { dictionary } = await fetch(`/api/dictionaries/${id}`).then((res) =>
@@ -46,7 +46,8 @@ function Dictionary() {
 
     const { dictionaries, totalPage } = await fetchClient(url);
 
-    setPageCount(Math.ceil(totalPage / 10));
+    const pageCount = Math.ceil(totalPage / 10);
+    setPageCount(pageCount > 1 ? pageCount : 0);
 
     setDictionaries(dictionaries);
   }

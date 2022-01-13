@@ -1,10 +1,20 @@
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 
 export default function Paginate(props) {
+  const [selected, setSelected] = useState(undefined);
+
+  useEffect(() => {
+    if (props.pageCount > 1) {
+      setSelected(0);
+    }
+  }, [props.pageCount]);
+
   const handlePageClick = (event) => {
     const newOffset = event.selected * props.perPage;
     props.handlePageClick(newOffset);
+    setSelected(event.selected);
   };
 
   return (
@@ -15,6 +25,7 @@ export default function Paginate(props) {
       onPageChange={handlePageClick}
       pageRangeDisplayed={props.perPage}
       pageCount={props.pageCount}
+      forcePage={selected}
       renderOnZeroPageCount={null}
       className="py-4 flex items-center justify-center"
       pageClassName="hover:bg-gray-100"
