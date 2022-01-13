@@ -36,11 +36,11 @@ export default async function handle(req, res) {
     body = { ...body, page_size: 5 };
   }
 
-  const response = await databaseNotion(id, body);
-  let blogs = transformBlogByYear(response);
+  const { results } = await databaseNotion(id, body);
+  let blogs = transformBlogByYear(results);
 
   if (req.query.page) {
-    blogs = response;
+    blogs = results;
   }
 
   return res.json({ blogs, code: 200 });

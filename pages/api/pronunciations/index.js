@@ -11,7 +11,7 @@ export default async function handle(req, res) {
     ],
   };
 
-  const pronunciations = await databaseNotion(id, body);
+  const { results } = await databaseNotion(id, body);
 
-  return res.json({ pronunciations, code: 200 });
+  return res.json({ pronunciations: results, code: 200 });
 }

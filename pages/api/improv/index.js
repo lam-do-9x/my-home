@@ -75,11 +75,11 @@ async function handleGET(req, res) {
     ...condition,
   }).get();
 
-  const response = await databaseNotion(id, {
+  const { results } = await databaseNotion(id, {
     page_size,
     start_cursor: start_cursor === "undefined" ? undefined : start_cursor,
     ...condition,
   });
 
-  return res.json({ improvisations: response.results, cursor, code: 200 });
+  return res.json({ improvisations: results, cursor, code: 200 });
 }
