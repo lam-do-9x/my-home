@@ -29,8 +29,18 @@ export default function Improvisation() {
     setLoading(false);
   }, [offset]);
 
-  async function close() {
-    await fetchImprovisations().then(() => setUpSet(false));
+  async function close(improvisation) {
+    if (Object.keys(improvisation).length !== 0) {
+      const index = improvisations.findIndex((i) => i.id === improvisation.id);
+
+      improvisations[index] = improvisation;
+
+      setImprovisations(improvisations);
+    } else {
+      await fetchImprovisations();
+    }
+
+    setUpSet(false);
   }
 
   async function fetchImprovisations(word) {
@@ -173,7 +183,10 @@ export default function Improvisation() {
             />
           )}
           {isUpSet && (
-            <UpSetImpov improvisation={improvisation} onClick={close} />
+            <UpSetImpov
+              improvisation={improvisation}
+              onClick={(improvisation) => close(improvisation)}
+            />
           )}
         </div>
       </div>
