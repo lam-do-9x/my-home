@@ -6,8 +6,8 @@ import MDE from "./MDE";
 export default function UpSetImpov(props) {
   const [content, setContent] = useState(props.improvisation.content);
 
-  function close(improvisation = {}) {
-    props.onClick(improvisation);
+  function close() {
+    props.onClick();
   }
 
   async function submit() {
@@ -16,19 +16,17 @@ export default function UpSetImpov(props) {
       display: content.substr(0, 100),
     });
 
-    let response = {};
-
     if (Object.keys(props.improvisation).length !== 0) {
-      response = await fetchClient(
+      await fetchClient(
         `/api/improvisations/${props.improvisation.id}`,
         body,
         "PATCH"
       );
     } else {
-      response = await fetchClient("/api/improvisations", body);
+      await fetchClient("/api/improvisations", body);
     }
 
-    close(response.improvisation);
+    close();
   }
 
   return (
@@ -46,10 +44,7 @@ export default function UpSetImpov(props) {
             <button className="border p-3 mx-2 rounded-full" onClick={submit}>
               <SaveIcon className="h-5 w-5" />
             </button>
-            <button
-              className="border p-3 mx-2 rounded-full"
-              onClick={() => close()}
-            >
+            <button className="border p-3 mx-2 rounded-full" onClick={close}>
               <XCircleIcon className="h-5 w-5" />
             </button>
           </div>

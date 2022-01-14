@@ -27,7 +27,11 @@ async function handleGET(req, res) {
   const skip = Number(req.query.skip);
   const take = Number(req.query.take);
 
-  let operate = {};
+  let operate = {
+    orderBy: {
+      createdAt: "desc",
+    },
+  };
 
   if (req.query.q) {
     operate = {
@@ -36,10 +40,13 @@ async function handleGET(req, res) {
           contains: req.query.q,
         },
       },
+      ...operate,
     };
   }
 
   const totalPage = await prisma.improvisation.count(operate);
+
+  const pageCount = Math.ceil(totalPage / take);
 
   const improvisations = await prisma.improvisation.findMany({
     skip,
@@ -47,5 +54,5 @@ async function handleGET(req, res) {
     ...operate,
   });
 
-  return res.json({ improvisations, totalPage, code: 200 });
+  return res.json({ improvisations, pageCount, code: 200 });
 }

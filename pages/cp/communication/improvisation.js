@@ -29,20 +29,8 @@ export default function Improvisation() {
     setLoading(false);
   }, [offset]);
 
-  function close(improvisation) {
-    if (Object.keys(improvisation).length !== 0) {
-      const isExist = improvisations.findIndex(
-        (i) => i.id === improvisation.id
-      );
-      if (isExist !== -1) {
-        improvisations[isExist] = improvisation;
-        setImprovisations(improvisations);
-      } else {
-        setImprovisations([improvisation, ...improvisations]);
-      }
-    }
-
-    setUpSet(false);
+  async function close() {
+    await fetchImprovisations().then(() => setUpSet(false));
   }
 
   async function fetchImprovisations(word) {
@@ -52,11 +40,10 @@ export default function Improvisation() {
       url = `${url}&q=${word || keyword}`;
     }
 
-    const { improvisations, totalPage } = await fetch(url).then((res) =>
+    const { improvisations, pageCount } = await fetch(url).then((res) =>
       res.json()
     );
 
-    const pageCount = Math.ceil(totalPage / 5);
     setPageCount(pageCount > 1 ? pageCount : 0);
 
     setImprovisations(improvisations);
@@ -186,10 +173,7 @@ export default function Improvisation() {
             />
           )}
           {isUpSet && (
-            <UpSetImpov
-              improvisation={improvisation}
-              onClick={(improvisation) => close(improvisation)}
-            />
+            <UpSetImpov improvisation={improvisation} onClick={close} />
           )}
         </div>
       </div>
