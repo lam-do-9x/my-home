@@ -27,7 +27,11 @@ async function handleGET(req, res) {
   const skip = Number(req.query.skip);
   const take = Number(req.query.take);
 
-  let operate = {};
+  let operate = {
+    orderBy: {
+      createdAt: "desc",
+    },
+  };
 
   if (req.query.q) {
     operate = {

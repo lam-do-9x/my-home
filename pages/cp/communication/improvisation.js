@@ -34,10 +34,14 @@ export default function Improvisation() {
       const isExist = improvisations.findIndex(
         (i) => i.id === improvisation.id
       );
+
       if (isExist !== -1) {
         improvisations[isExist] = improvisation;
         setImprovisations(improvisations);
-      } else {
+      }
+
+      if (offset === 0 && isExist === -1) {
+        improvisations.pop();
         setImprovisations([improvisation, ...improvisations]);
       }
     }
