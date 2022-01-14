@@ -9,8 +9,8 @@ export default function UpSetModal(props) {
   const [word, setWord] = useState(props.dictionary.word);
   const [response, setResponse] = useState({});
 
-  function close() {
-    props.onClick();
+  function close(dictionary = {}) {
+    props.onClick(dictionary);
   }
 
   async function submit() {
@@ -19,7 +19,9 @@ export default function UpSetModal(props) {
       content,
       contentAt: props.dictionary.contentAt ?? new Date(),
     });
+
     let response = {};
+
     if (Object.keys(props.dictionary).length !== 0) {
       response = await fetchClient(
         `/api/dictionaries/${props.dictionary.id}`,
@@ -32,13 +34,15 @@ export default function UpSetModal(props) {
 
     if (response.code === 400) {
       setResponse(response);
+
       setTimeout(() => {
         setResponse({});
       }, 3000);
+
       return;
     }
 
-    close();
+    close(response.dictionary);
   }
 
   return (
@@ -70,7 +74,10 @@ export default function UpSetModal(props) {
             <button className="border p-3 mx-2 rounded-full" onClick={submit}>
               <SaveIcon className="h-5 w-5" />
             </button>
-            <button className="border p-3 mx-2 rounded-full" onClick={close}>
+            <button
+              className="border p-3 mx-2 rounded-full"
+              onClick={() => close()}
+            >
               <XCircleIcon className="h-5 w-5" />
             </button>
           </div>

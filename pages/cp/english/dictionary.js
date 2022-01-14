@@ -25,35 +25,26 @@ function Dictionary() {
   const [keyword, setKeyword] = useState("");
 
   useEffect(async () => {
-    await getDictionaries();
+    await fetchDictionaries();
     setLoading(false);
   }, [offset]);
 
-  async function getDictionary(id) {
-    const { dictionary } = await fetch(`/api/dictionaries/${id}`).then((res) =>
-      res.json()
-    );
-
-    setDictionary(dictionary);
-  }
-
-  async function getDictionaries(word) {
+  async function fetchDictionaries(word) {
     let url = `/api/dictionaries?take=10&skip=${offset}`;
 
     if (word || keyword !== "") {
       url = `${url}&q=${word || keyword}`;
     }
 
-    const { dictionaries, totalPage } = await fetchClient(url);
+    const { dictionaries, pageCount } = await fetchClient(url);
 
-    const pageCount = Math.ceil(totalPage / 10);
     setPageCount(pageCount > 1 ? pageCount : 0);
 
     setDictionaries(dictionaries);
   }
 
   async function fetchDicByQuery(word) {
-    await getDictionaries(word);
+    await fetchDictionaries(word);
     setLoading(false);
   }
 
@@ -71,14 +62,32 @@ function Dictionary() {
   }
 
   const show = async (id) => {
-    await getDictionary(id);
+    const dictionary = dictionaries.find((d) => d.id === id);
+
+    setDictionary(dictionary);
+
     setShow(true);
   };
 
   const edit = async (id) => {
-    await getDictionary(id);
+    const dictionary = dictionaries.find((d) => d.id === id);
+
+    setDictionary(dictionary);
+
     setUpSet(true);
   };
+
+  async function close(dictionary) {
+    if (Object.keys(dictionary).length !== 0) {
+      const index = dictionaries.findIndex((d) => d.id === dictionary.id);
+
+      dictionaries[index] = dictionary;
+
+      setDictionaries(dictionaries);
+    }
+
+    setUpSet(false);
+  }
 
   return (
     <Layout>
@@ -184,7 +193,7 @@ function Dictionary() {
               {isUpSet && (
                 <UpSetModal
                   dictionary={dictionary}
-                  onClick={() => setUpSet(false)}
+                  onClick={(dictionary) => close(dictionary)}
                 />
               )}
               <Paginate

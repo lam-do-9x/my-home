@@ -44,10 +44,13 @@ export default async function handle(req, res) {
           contains: req.query.q,
         },
       },
+      ...operate,
     };
   }
 
   const totalPage = await prisma.dictionary.count(operate);
+
+  const pageCount = Math.ceil(totalPage / take);
 
   const dictionaries = await prisma.dictionary.findMany({
     skip,
@@ -55,5 +58,5 @@ export default async function handle(req, res) {
     ...operate,
   });
 
-  return res.json({ dictionaries, totalPage, code: 200 });
+  return res.json({ dictionaries, pageCount, code: 200 });
 }
