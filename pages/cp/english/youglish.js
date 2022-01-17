@@ -56,11 +56,12 @@ function Youglish() {
 
   async function clickWordInDay(show, id) {
     setShow(show);
+
     if (id) {
-      const { dictionary } = await fetch(`/api/dictionaries/${id}`).then(
-        (res) => res.json()
-      );
+      const dictionary = dictionaries.find((d) => d.id === id);
+
       setDictionary(dictionary);
+
       setShowModal(true);
     }
   }
