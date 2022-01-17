@@ -96,13 +96,13 @@ export default function Improvisation() {
 
   return (
     <Layout>
-      <div className="flex mx-6 my-6">
-        <h2 className="mr-4 text-lg font-large uppercase rounded border p-4">
+      <div className="flex mx-6 mt-6">
+        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-fit">
           Improvisation
         </h2>
       </div>
       <div className="w-full">
-        <div className="flex mx-6 my-2">
+        <div className="flex mx-6">
           <RandomWord />
           <div className="w-2/3">
             <div className="flex justify-between my-2">

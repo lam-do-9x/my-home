@@ -42,8 +42,8 @@ function Pronunciation() {
 
   return (
     <Layout>
-      <div className="flex items-center mx-6 my-6">
-        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-4 max-w-min">
+      <div className="flex items-center mx-6 mt-6">
+        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-min">
           Pronunciation
         </h2>
       </div>

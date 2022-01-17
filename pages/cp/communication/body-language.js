@@ -19,7 +19,7 @@ export default function BodyLanguage() {
   return (
     <Layout>
       <div className="flex mx-6 my-6">
-        <h2 className="mr-4 text-lg font-large uppercase rounded border p-4">
+        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-fit">
           Body Language
         </h2>
       </div>

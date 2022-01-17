@@ -24,8 +24,8 @@ function Receipts() {
 
   return (
     <Layout>
-      <div className="w-full h-full">
-        <h2 className="mx-10 text-lg font-bold uppercase rounded p-4">
+      <div className="w-full h-full mx-6 mt-6">
+        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-min">
           Receipts
         </h2>
         {isLoading ? (
@@ -34,7 +34,7 @@ function Receipts() {
           </div>
         ) : (
           <div className="overflow-hidden">
-            <div className="flex flex-wrap mx-10 w-full">
+            <div className="flex flex-wrap w-full">
               {receipts
                 .filter((id) => id !== 0)
                 .map((block) => (

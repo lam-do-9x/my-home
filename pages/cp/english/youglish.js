@@ -68,30 +68,16 @@ function Youglish() {
 
   return (
     <Layout>
-      <div className="flex p-4">
-        <h2 className="mx-2 text-lg font-bold uppercase rounded p-2 flex justify-center items-center">
+      <div className="flex py-4">
+        <h2 className="flex text-lg font-large uppercase rounded border p-2 max-w-min">
           Youglish
-          <div className="flex mx-2">
-            <InformationCircleIcon
-              className="h-5 w-5 mx-2"
-              onClick={showWords}
-            />
-
-            <RefreshIcon className="h-5 w-5" onClick={changeYg} />
-          </div>
         </h2>
-        {showModal && (
-          <Modal dictionary={dictionary} onClick={() => setShowModal(false)} />
-        )}
-        {show && (
-          <WordInDays
-            words={dictionaries}
-            showModal={showModal}
-            onClick={(show, id = null) => clickWordInDay(show, id)}
-          />
-        )}
+        <div className="flex mx-2 justify-center items-center">
+          <InformationCircleIcon className="h-5 w-5 mx-1" onClick={showWords} />
+          <RefreshIcon className="h-5 w-5 mx-1" onClick={changeYg} />
+        </div>
         <a
-          className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"
+          className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2 mx-2 flex justify-center items-center"
           href={`https://youglish.com/lesson/video/${formatDate("dd-mm-yyyy")}`}
           target="_blank"
           rel="noreferrer"
@@ -107,6 +93,16 @@ function Youglish() {
           <VideoCameraIcon className="h-5 w-5 mx-2" />
           Youtube
         </a>
+        {showModal && (
+          <Modal dictionary={dictionary} onClick={() => setShowModal(false)} />
+        )}
+        {show && (
+          <WordInDays
+            words={dictionaries}
+            showModal={showModal}
+            onClick={(show, id = null) => clickWordInDay(show, id)}
+          />
+        )}
       </div>
       <div id="yg-widget"></div>
     </Layout>
