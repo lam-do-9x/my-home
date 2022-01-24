@@ -137,7 +137,7 @@ export default function Improvisation() {
               </thead>
               <tbody className="text-gray-600 text-sm font-light">
                 {isLoading ? (
-                  <tr>
+                  <tr className="border-b border-gray-200">
                     <td colSpan="2">
                       <Loader />
                     </td>
