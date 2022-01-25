@@ -38,7 +38,7 @@ function Youglish() {
   function fetchYg(word) {
     /* eslint-disable no-undef */
     YG.Widget("yg-widget", {
-      width: 800,
+      width: 880,
     }).fetch(word, "english");
   }
 
