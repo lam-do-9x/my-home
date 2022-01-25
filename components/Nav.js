@@ -4,20 +4,20 @@ export default function Nav({ page = {} }) {
   return (
     <nav
       className={`${
-        Object.keys(page).length !== 0 ? "absolute z-30" : "shadow mb-4"
-      } py-4 px-6 w-full`}
+        Object.keys(page).length !== 0 ? "absolute z-30" : "mb-4 shadow"
+      } w-full py-4 px-6`}
     >
-      <div className="flex justify-between items-center container mx-auto">
+      <div className="container mx-auto flex items-center justify-between">
         <Link href="/">
           <div
             className={`${
               Object.keys(page).length !== 0 ? "text-white" : ""
-            } text-4xl uppercase font-bold cursor-pointer`}
+            } cursor-pointer text-4xl font-bold uppercase`}
           >
             Leo Do
           </div>
         </Link>
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <Link href="/blog">
             <p
               className={`my-1 mx-4 ${

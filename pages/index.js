@@ -12,8 +12,8 @@ export default function Index({ blogs }) {
   return (
     <Main>
       <Nav />
-      <div className="px-6 flex flex-col items-center justify-center py-8">
-        <h1 className="text-5xl	uppercase font-bold text-gray-700 mb-2">
+      <div className="flex flex-col items-center justify-center px-6 py-8">
+        <h1 className="mb-2	text-5xl font-bold uppercase text-gray-700">
           Latest Blog
         </h1>
         {blogs.map((blog, index) => (
@@ -25,7 +25,7 @@ export default function Index({ blogs }) {
         ))}
         {blogs.length === 5 && (
           <Link href="/blog">
-            <button className="uppercase text-2xl text-bold border border-gray-600 p-4 mt-2">
+            <button className="text-bold mt-2 border border-gray-600 p-4 text-2xl uppercase">
               See all blog
             </button>
           </Link>

@@ -69,15 +69,15 @@ function Youglish() {
   return (
     <Layout>
       <div className="flex py-4">
-        <h2 className="flex text-lg font-large uppercase rounded border p-2 max-w-min">
+        <h2 className="font-large flex max-w-min rounded border p-2 text-lg uppercase">
           Youglish
         </h2>
-        <div className="flex mx-2 justify-center items-center">
-          <InformationCircleIcon className="h-5 w-5 mx-1" onClick={showWords} />
-          <RefreshIcon className="h-5 w-5 mx-1" onClick={changeYg} />
+        <div className="mx-2 flex items-center justify-center">
+          <InformationCircleIcon className="mx-1 h-5 w-5" onClick={showWords} />
+          <RefreshIcon className="mx-1 h-5 w-5" onClick={changeYg} />
         </div>
         <a
-          className="bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2 mx-2 flex justify-center items-center"
+          className="mx-2 flex items-center justify-center rounded bg-gray-100 p-2 text-center font-bold text-gray-500 hover:bg-gray-200"
           href={`https://youglish.com/lesson/video/${formatDate("dd-mm-yyyy")}`}
           target="_blank"
           rel="noreferrer"
@@ -85,12 +85,12 @@ function Youglish() {
           Daily Lesson
         </a>
         <a
-          className="bg-gray-100 hover:bg-gray-200 text-gray-500 font-bold rounded p-2 mx-2 flex justify-center items-center"
+          className="mx-2 flex items-center justify-center rounded bg-gray-100 p-2 font-bold text-gray-500 hover:bg-gray-200"
           href="https://www.youtube.com/playlist?list=WL"
           target="_blank"
           rel="noreferrer"
         >
-          <VideoCameraIcon className="h-5 w-5 mx-2" />
+          <VideoCameraIcon className="mx-2 h-5 w-5" />
           Youtube
         </a>
         {showModal && (

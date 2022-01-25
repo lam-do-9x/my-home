@@ -8,7 +8,7 @@ export default function Slug({ blocks, page }) {
     <Main>
       <div className="pb-8">
         <Nav page={page} />
-        <div className="h-screen justify-center items-center flex flex-col mb-16 bg-black">
+        <div className="mb-16 flex h-screen flex-col items-center justify-center bg-black">
           <style jsx>{`
             .art-cover {
               background-image: url(${page.cover
@@ -16,8 +16,8 @@ export default function Slug({ blocks, page }) {
                 : "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"});
             }
           `}</style>
-          <div className="art-cover bg-no-repeat bg-center bg-cover w-full h-screen opacity-30 absolute z-10"></div>
-          <div className="mx-20 px-56 container justify-center flex flex-col text-white z-20">
+          <div className="art-cover absolute z-10 h-screen w-full bg-cover bg-center bg-no-repeat opacity-30"></div>
+          <div className="container z-20 mx-20 flex flex-col justify-center px-56 text-white">
             <div className="text-5xl uppercase">
               {page.properties.title.title[0].text.content}
             </div>
@@ -27,7 +27,7 @@ export default function Slug({ blocks, page }) {
           </div>
         </div>
         <div
-          className="mx-20 px-56 container w-full"
+          className="container mx-20 w-full px-56"
           key={page.properties.slug.rich_text[0]?.plain_text}
         >
           <div className="prose lg:prose-xl">

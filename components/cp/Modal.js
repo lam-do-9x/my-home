@@ -8,19 +8,19 @@ export default function Modal(props) {
   }
 
   return (
-    <div className="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full z-50 transition-opacity duration-300 opacity-200">
-      <div className="bg-white flex flex-col rounded-lg max-w-xl shadow-2xl">
-        <div className="px-7 flex items-center w-full mt-2">
-          <div className="text-yellow-500 font-bold w-full text-center">
+    <div className="opacity-200 fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center p-7 transition-opacity duration-300">
+      <div className="flex max-w-xl flex-col rounded-lg bg-white shadow-2xl">
+        <div className="mt-2 flex w-full items-center px-7">
+          <div className="w-full text-center font-bold text-yellow-500">
             {props.dictionary.word}
           </div>
           <XIcon
-            className="fill-current text-gray-700 w-5 h-5 cursor-pointer"
+            className="h-5 w-5 cursor-pointer fill-current text-gray-700"
             onClick={close}
           />
         </div>
         <div
-          className={`px-7 my-2 ${styles["max-h-modal"]} overflow-x-hidden prose`}
+          className={`my-2 px-7 ${styles["max-h-modal"]} prose overflow-x-hidden`}
         >
           <MDRender content={props.dictionary.content} />
         </div>

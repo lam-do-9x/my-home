@@ -24,22 +24,22 @@ function Receipts() {
 
   return (
     <Layout>
-      <div className="w-full h-full mx-6 mt-6">
-        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-min">
+      <div className="mx-6 mt-6 h-full w-full">
+        <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Receipts
         </h2>
         {isLoading ? (
-          <div className="h-full flex justify-center items-center">
+          <div className="flex h-full items-center justify-center">
             <Loader />
           </div>
         ) : (
           <div className="overflow-hidden">
-            <div className="flex flex-wrap w-full">
+            <div className="flex w-full flex-wrap">
               {receipts
                 .filter((id) => id !== 0)
                 .map((block) => (
                   <div
-                    className="flex flex-col justify-center items-center border border-gray-200 shadow-md rounded w-1/5 m-5 cursor-pointer"
+                    className="m-5 flex w-1/5 cursor-pointer flex-col items-center justify-center rounded border border-gray-200 shadow-md"
                     key={block.id}
                     onClick={() => openPage(block)}
                   >

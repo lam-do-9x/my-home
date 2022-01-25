@@ -36,7 +36,7 @@ const renderBlock = (block) => {
     case "image":
       return <Picture value={value} />;
     case "divider":
-      return <hr className="bg-gray-200 my-4 !important" />;
+      return <hr className="!important my-4 bg-gray-200" />;
     case "bookmark":
       return <Bookmarks value={value} />;
     case "callout":

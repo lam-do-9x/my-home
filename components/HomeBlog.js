@@ -9,7 +9,7 @@ export default function HomeBlog(props) {
       href={`${props.blog.properties.slug.rich_text[0]?.plain_text}-${props.blog.id}`}
     >
       <div
-        className={`max-w-4xl w-full px-10 mt-4 pb-4 ${
+        className={`mt-4 w-full max-w-4xl px-10 pb-4 ${
           props?.last ? "" : "border-b border-gray-300"
         } flex cursor-pointer`}
       >
@@ -23,17 +23,17 @@ export default function HomeBlog(props) {
           width={200}
           height={200}
         />
-        <div className="flex flex-col items-center justify-center w-1/3">
+        <div className="flex w-1/3 flex-col items-center justify-center">
           <span className="font-bold text-gray-600">Date:</span>
-          <span className="flex items-center justify-center font-light text-gray-600 w-full">
+          <span className="flex w-full items-center justify-center font-light text-gray-600">
             {formatDate(
               "dd-mm-yyyy",
               props.blog.properties.publishedDate?.date.start
             )}
           </span>
         </div>
-        <div className="mt-2 w-2/3 flex flex-col items-start justify-center">
-          <p className="text-2xl text-gray-700 font-bold">
+        <div className="mt-2 flex w-2/3 flex-col items-start justify-center">
+          <p className="text-2xl font-bold text-gray-700">
             {props.blog.properties.title.title[0].text.content}
           </p>
           <Dotdotdot clamp={4}>

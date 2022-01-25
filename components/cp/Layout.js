@@ -4,14 +4,14 @@ import Nav from "./Nav";
 
 export default function Layout(props) {
   return (
-    <div className="h-screen overflow-hidden flex flex-col w-full">
+    <div className="flex h-screen w-full flex-col overflow-hidden">
       <Head>
         <title>Leo Do</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
-      <div className="flex-1 flex overflow-x-auto">
+      <div className="flex flex-1 overflow-x-auto">
         <Nav />
         <main className="w-full">{props.children}</main>
       </div>

@@ -44,17 +44,17 @@ export default function Nav() {
   return (
     <div className="w-64 p-6">
       <div
-        className={`-mx-3 p-3 text-sm font-medium flex flex-col rounded-lg cursor-pointer ${
+        className={`-mx-3 flex cursor-pointer flex-col rounded-lg p-3 text-sm font-medium ${
           show && section === "english" ? "" : "hover:bg-gray-300"
         }`}
       >
-        <div className="flex flex-col rounded-lg justify-center items-center">
+        <div className="flex flex-col items-center justify-center rounded-lg">
           <div
-            className="flex w-full justify-center items-center"
+            className="flex w-full items-center justify-center"
             onClick={() => dropdown("english")}
           >
             <GlobeIcon className="h-6 w-6" />
-            <span className="text-gray-900 mx-4">English</span>
+            <span className="mx-4 text-gray-900">English</span>
             {show && section === "english" ? (
               <ChevronUpIcon className="h-4 w-4" />
             ) : (
@@ -62,7 +62,7 @@ export default function Nav() {
             )}
           </div>
           <div
-            className={`w-full mt-2 ${
+            className={`mt-2 w-full ${
               show && section === "english" ? "" : "hidden"
             }`}
           >
@@ -70,8 +70,8 @@ export default function Nav() {
               activeClassName="bg-gray-100"
               href="/cp/english/dictionary"
             >
-              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
-                <BookmarkAltIcon className="h-6 w-6 mr-2" />
+              <p className="flex items-center justify-center rounded-lg p-3 leading-6 text-gray-900 hover:bg-gray-100">
+                <BookmarkAltIcon className="mr-2 h-6 w-6" />
                 Dictionary
               </p>
             </ActiveLink>
@@ -79,8 +79,8 @@ export default function Nav() {
               activeClassName="bg-gray-100"
               href="/cp/english/youglish"
             >
-              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
-                <FilmIcon className="h-6 w-6 mr-2" />
+              <p className="flex items-center justify-center rounded-lg p-3 leading-6 text-gray-900 hover:bg-gray-100">
+                <FilmIcon className="mr-2 h-6 w-6" />
                 Youglish
               </p>
             </ActiveLink>
@@ -88,8 +88,8 @@ export default function Nav() {
               activeClassName="bg-gray-100"
               href="/cp/english/pronunciation"
             >
-              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
-                <VolumeUpIcon className="h-6 w-6 mr-2" />
+              <p className="flex items-center justify-center rounded-lg p-3 leading-6 text-gray-900 hover:bg-gray-100">
+                <VolumeUpIcon className="mr-2 h-6 w-6" />
                 Pronunciation
               </p>
             </ActiveLink>
@@ -98,25 +98,25 @@ export default function Nav() {
       </div>
       <ActiveLink activeClassName="bg-gray-100" href="/cp/receipts">
         <div
-          className="-mx-3 p-3 text-sm font-medium flex rounded-lg justify-center items-center cursor-pointer hover:bg-gray-100"
+          className="-mx-3 flex cursor-pointer items-center justify-center rounded-lg p-3 text-sm font-medium hover:bg-gray-100"
           onClick={() => setShow(false)}
         >
           <ReceiptTaxIcon className="h-6 w-6" />
-          <span className="text-gray-900 ml-4">Receipts</span>
+          <span className="ml-4 text-gray-900">Receipts</span>
         </div>
       </ActiveLink>
       <div
-        className={`-mx-3 p-3 text-sm font-medium flex flex-col rounded-lg cursor-pointer ${
+        className={`-mx-3 flex cursor-pointer flex-col rounded-lg p-3 text-sm font-medium ${
           show && section === "communication" ? "" : "hover:bg-gray-100"
         }`}
       >
-        <div className="flex flex-col rounded-lg justify-center items-center">
+        <div className="flex flex-col items-center justify-center rounded-lg">
           <div
-            className="flex w-full justify-center items-center"
+            className="flex w-full items-center justify-center"
             onClick={() => dropdown("communication")}
           >
             <ChatAlt2Icon className="h-6 w-6" />
-            <span className="text-gray-900 mx-4">Communication</span>
+            <span className="mx-4 text-gray-900">Communication</span>
             {show && section === "communication" ? (
               <ChevronUpIcon className="h-4 w-4" />
             ) : (
@@ -124,7 +124,7 @@ export default function Nav() {
             )}
           </div>
           <div
-            className={`w-full mt-2 ${
+            className={`mt-2 w-full ${
               show && section === "communication" ? "" : "hidden"
             }`}
           >
@@ -132,7 +132,7 @@ export default function Nav() {
               activeClassName="bg-gray-100"
               href="/cp/communication/body-language"
             >
-              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
+              <p className="flex items-center justify-center rounded-lg p-3 leading-6 text-gray-900 hover:bg-gray-100">
                 <UserIcon className="h-6 w-6" />
                 Body Language
               </p>
@@ -141,8 +141,8 @@ export default function Nav() {
               activeClassName="bg-gray-100"
               href="/cp/communication/improvisation"
             >
-              <p className="leading-6 text-gray-900 p-3 flex items-center justify-center hover:bg-gray-100 rounded-lg">
-                <ChatIcon className="h-6 w-6 mr-2" />
+              <p className="flex items-center justify-center rounded-lg p-3 leading-6 text-gray-900 hover:bg-gray-100">
+                <ChatIcon className="mr-2 h-6 w-6" />
                 Improvisation
               </p>
             </ActiveLink>

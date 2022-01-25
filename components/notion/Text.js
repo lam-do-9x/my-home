@@ -12,7 +12,7 @@ const renderText = (value, type) => {
     <span
       className={[
         bold ? "font-bold" : "",
-        code ? "font-mono bg-gray-200 rounded-sm" : "",
+        code ? "rounded-sm bg-gray-200 font-mono" : "",
         italic ? "italic" : "",
         strikethrough ? "line-through" : "",
         underline ? "underline" : "",

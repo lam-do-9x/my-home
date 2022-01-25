@@ -44,12 +44,12 @@ export default function WordInDays(props) {
 
   return (
     <div
-      className={`flex items-center fixed right-0 top-0 ${
+      className={`fixed right-0 top-0 flex items-center ${
         props.words.length !== 0 ? "" : "hidden"
       }`}
       ref={nodeRef}
     >
-      <div className="bg-white rounded shadow-lg">
+      <div className="rounded bg-white shadow-lg">
         <div className="flex p-1">
           {wordInWeek.map((word) => (
             <div key={word.dateMonth} className="mx-2 text-center">
@@ -57,7 +57,7 @@ export default function WordInDays(props) {
               {word.data.map((w) => (
                 <p
                   key={w.word}
-                  className="cursor-pointer hover:bg-gray-200 rounded-lg"
+                  className="cursor-pointer rounded-lg hover:bg-gray-200"
                   onClick={() => onClickWord(w.id)}
                 >
                   {w.word}

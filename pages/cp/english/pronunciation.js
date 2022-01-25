@@ -42,24 +42,24 @@ function Pronunciation() {
 
   return (
     <Layout>
-      <div className="flex items-center mx-6 mt-6">
-        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-min">
+      <div className="mx-6 mt-6 flex items-center">
+        <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Pronunciation
         </h2>
       </div>
       <div className="overflow-x-auto">
-        <div className="flex items-center justify-center font-sans overflow-hidden shadow">
-          <div className="w-full mx-6">
-            <div className="bg-white shadow-md rounded my-6">
-              <table className="min-w-min w-full table-auto">
+        <div className="flex items-center justify-center overflow-hidden font-sans shadow">
+          <div className="mx-6 w-full">
+            <div className="my-6 rounded bg-white shadow-md">
+              <table className="w-full min-w-min table-auto">
                 <thead>
-                  <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal text-center">
+                  <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">
                     <th className="py-3 px-6 text-center">ipa</th>
                     <th className="py-3 px-6 text-center">pronunciation</th>
                     <th className="py-3 px-6 text-center">type</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-600 text-sm font-light">
+                <tbody className="text-sm font-light text-gray-600">
                   {isLoading ? (
                     <tr className="border-b border-gray-200">
                       <td colSpan="4">
@@ -69,7 +69,7 @@ function Pronunciation() {
                   ) : (
                     currentItems.map((pronunciation) => (
                       <tr
-                        className="border-b border-gray-200 hover:bg-gray-100 cursor-pointer text-center font-medium"
+                        className="cursor-pointer border-b border-gray-200 text-center font-medium hover:bg-gray-100"
                         key={pronunciation.id}
                         onClick={() =>
                           show(pronunciation.properties.ipa.title[0].plain_text)
@@ -84,9 +84,9 @@ function Pronunciation() {
                               .plain_text
                           }
                         </td>
-                        <td className="py-3 px-6 flex justify-center">
+                        <td className="flex justify-center py-3 px-6">
                           <div
-                            className={`max-w-min px-4 py-2 border rounded bg-${pronunciation.properties.type.select.color}-200`}
+                            className={`max-w-min rounded border px-4 py-2 bg-${pronunciation.properties.type.select.color}-200`}
                           >
                             {pronunciation.properties.type.select.name}
                           </div>

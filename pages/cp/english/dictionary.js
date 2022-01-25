@@ -91,30 +91,30 @@ function Dictionary() {
 
   return (
     <Layout>
-      <div className="flex items-center mx-6 mt-6">
-        <h2 className="flex mr-4 text-lg font-large uppercase rounded border p-2 max-w-min">
+      <div className="mx-6 mt-6 flex items-center">
+        <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Dictionary
         </h2>
         <a
-          className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-500 text-center font-bold rounded p-2"
+          className="flex items-center rounded bg-gray-100 p-2 text-center font-bold text-gray-500 hover:bg-gray-200"
           href="https://notevibes.com/cabinet.php"
           target="_blank"
           rel="noreferrer"
         >
-          <AnnotationIcon className="h-5 w-5 mx-2" />
+          <AnnotationIcon className="mx-2 h-5 w-5" />
           Text to speech
         </a>
       </div>
       <div className="overflow-x-auto">
-        <div className="flex items-center justify-center font-sans overflow-hidden shadow">
-          <div className="w-full mx-6">
-            <div className="flex justify-end mb-2">
+        <div className="flex items-center justify-center overflow-hidden font-sans shadow">
+          <div className="mx-6 w-full">
+            <div className="mb-2 flex justify-end">
               <label className="relative block">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                   <SearchIcon className="h-5 w-5 fill-gray-300" />
                 </span>
                 <input
-                  className="placeholder:italic placeholder:text-gray-400 block bg-white w-full border border-gray-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none sm:text-sm"
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-9 pr-3 shadow-sm placeholder:italic placeholder:text-gray-400 focus:outline-none sm:text-sm"
                   placeholder="Search for word..."
                   type="text"
                   name="search"
@@ -123,18 +123,18 @@ function Dictionary() {
                 />
               </label>
             </div>
-            <table className="min-w-max w-full table-auto shadow-md rounded">
+            <table className="w-full min-w-max table-auto rounded shadow-md">
               <thead>
-                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal text-center">
+                <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">
                   <th className="py-3 px-6 text-left">word</th>
                   <th className="py-3 px-6 text-center">ipa</th>
                   <th className="py-3 px-6 text-center">pronunciation</th>
-                  <th className="py-3 px-6 flex justify-center">
+                  <th className="flex justify-center py-3 px-6">
                     <AdjustmentsIcon className="h-6 w-6" />
                   </th>
                 </tr>
               </thead>
-              <tbody className="text-gray-600 text-sm font-light">
+              <tbody className="text-sm font-light text-gray-600">
                 {isLoading ? (
                   <tr className="border-b border-gray-200">
                     <td colSpan="4">
@@ -148,7 +148,7 @@ function Dictionary() {
                       key={dictionary.id}
                     >
                       <td
-                        className="flex my-4 py-3 px-6 cursor-pointer"
+                        className="my-4 flex cursor-pointer py-3 px-6"
                         onClick={() => show(dictionary.id)}
                       >
                         <span className="font-medium">{dictionary.word}</span>
@@ -157,12 +157,12 @@ function Dictionary() {
                         )}
                       </td>
                       <td className="py-3 px-6 text-center">
-                        <div className="flex items-center justify-center text-bold">
+                        <div className="text-bold flex items-center justify-center">
                           {dictionary.ipa}
                         </div>
                       </td>
                       <td className="py-3 px-6 text-center">
-                        <div className="flex item-center justify-center">
+                        <div className="item-center flex justify-center">
                           <audio id={dictionary.id} controls>
                             <source
                               src={`https://www.oxfordlearnersdictionaries.com${dictionary.pronunciation}`}
@@ -172,9 +172,9 @@ function Dictionary() {
                         </div>
                       </td>
                       <td className="py-3 px-6">
-                        <div className="flex item-center justify-center">
+                        <div className="item-center flex justify-center">
                           <div
-                            className="w-4 mr-2 transform hover:text-yellow-500 hover:scale-110 cursor-pointer"
+                            className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500"
                             onClick={() => edit(dictionary.id)}
                           >
                             <PencilIcon className="h-5 w-5" />

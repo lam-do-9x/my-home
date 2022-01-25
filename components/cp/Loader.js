@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Loader() {
   return (
-    <div className="flex justify-center my-4">
+    <div className="my-4 flex justify-center">
       <Image
         className="rounded-full"
         src="/loading-spin.svg"

@@ -12,18 +12,18 @@ export default function PronunciationModal(props) {
   }
 
   return (
-    <div className="p-7 flex justify-center items-center fixed left-0 top-0 w-full h-full z-50 transition-opacity duration-300 opacity-100">
-      <div className="bg-white flex flex-col rounded-lg h-1/2 max-w-fit overflow-x-hidden shadow-2xl">
-        <div className="px-7 flex items-center w-full my-2 border-b">
-          <div className="text-yellow-500 font-bold w-full text-center">
+    <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center p-7 opacity-100 transition-opacity duration-300">
+      <div className="flex h-1/2 max-w-fit flex-col overflow-x-hidden rounded-lg bg-white shadow-2xl">
+        <div className="my-2 flex w-full items-center border-b px-7">
+          <div className="w-full text-center font-bold text-yellow-500">
             {props.ipa}
           </div>
           <XIcon
-            className="fill-current text-gray-700 w-5 h-5 cursor-pointer"
+            className="h-5 w-5 cursor-pointer fill-current text-gray-700"
             onClick={close}
           />
         </div>
-        <div className="px-7 my-4">
+        <div className="my-4 px-7">
           <style jsx>{`
             .columns-4 {
               column-count: 4;

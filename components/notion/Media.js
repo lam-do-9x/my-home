@@ -2,7 +2,7 @@ export const Bookmarks = ({ value }) => {
   return (
     <a
       href={value.url}
-      className="no-underline !important mb-4"
+      className="!important mb-4 no-underline"
       target="_blank"
       rel="noreferrer"
     >

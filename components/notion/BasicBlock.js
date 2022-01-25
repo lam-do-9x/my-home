@@ -75,7 +75,7 @@ export const BulletBox = ({ value }) => {
 
   return (
     <div
-      className="border border-gray-300 p-8 mb-4"
+      className="mb-4 border border-gray-300 p-8"
       key={`${value.text[0].plain_text}`}
     >
       <div className="bg-gray-200 p-4">
@@ -102,7 +102,7 @@ export const ContentBox = ({ value }) => {
       {value.text.map((item, i) => {
         if (i === 0) {
           return (
-            <div className="bg-gray-200 p-4 mb-4">
+            <div className="mb-4 bg-gray-200 p-4">
               <Text text={item} />
             </div>
           );
@@ -115,7 +115,7 @@ export const ContentBox = ({ value }) => {
 
 export const Callout = ({ value }) => {
   return (
-    <div className="p-8 bg-gray-100" key={`${value.icon.emoji}`}>
+    <div className="bg-gray-100 p-8" key={`${value.icon.emoji}`}>
       {value.text.map((item, i) => {
         if (i === 0) {
           return (

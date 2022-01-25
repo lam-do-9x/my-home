@@ -6,11 +6,11 @@ export default function Blog({ blogs }) {
   return (
     <Main>
       <Nav />
-      <div className="px-6 flex flex-col items-center justify-center py-8">
-        <h1 className="text-5xl	uppercase font-bold text-gray-700 mb-8">
+      <div className="flex flex-col items-center justify-center px-6 py-8">
+        <h1 className="mb-8	text-5xl font-bold uppercase text-gray-700">
           All Blog
         </h1>
-        <div className="max-w-4xl w-full">
+        <div className="w-full max-w-4xl">
           {blogs.map(({ year, data }) => {
             return (
               <div className="flex flex-col items-center" key={year}>

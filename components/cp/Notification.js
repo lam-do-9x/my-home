@@ -3,12 +3,12 @@ import { ShieldExclamationIcon } from "@heroicons/react/outline";
 export default function Notification({ response }) {
   return (
     <div
-      className={`flex items-center fixed right-0 top-3 ${
+      className={`fixed right-0 top-3 flex items-center ${
         Object.keys(response).length !== 0 ? "" : "hidden"
       }`}
     >
       <div
-        className={`space-x-2 bg-white rounded flex items-start ${
+        className={`flex items-start space-x-2 rounded bg-white ${
           response.code === 400 || response.code === 401
             ? "text-red-600"
             : "text-green-600"
@@ -28,7 +28,7 @@ export default function Notification({ response }) {
               response.code === 400 || response.code === 401
                 ? "text-red-800"
                 : "text-green-800"
-            } tracking-wider flex-1`}
+            } flex-1 tracking-wider`}
           >
             {response.message}
           </h3>
