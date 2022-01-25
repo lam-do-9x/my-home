@@ -23,6 +23,7 @@ export default async function handle(req, res) {
       select: {
         id: true,
         word: true,
+        ipa: true,
         content: true,
         contentAt: true,
       },
