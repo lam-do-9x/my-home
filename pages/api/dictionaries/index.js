@@ -20,22 +20,10 @@ export default async function handle(req, res) {
           gte: workDays,
         },
       },
-      select: {
-        id: true,
-        word: true,
-        ipa: true,
-        content: true,
-        contentAt: true,
-      },
       orderBy: {
         contentAt: "desc",
       },
-      take: 25,
     };
-
-    const dictionaries = await prisma.dictionary.findMany(operate);
-
-    return res.json({ dictionaries, code: 200 });
   }
 
   if (req.query.q) {
