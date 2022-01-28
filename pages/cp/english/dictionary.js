@@ -61,23 +61,23 @@ function Dictionary() {
     debounceDropDown(value);
   }
 
-  const show = async (id) => {
+  function show(id) {
     const dictionary = dictionaries.find((d) => d.id === id);
 
     setDictionary(dictionary);
 
     setShow(true);
-  };
+  }
 
-  const edit = async (id) => {
+  function edit(id) {
     const dictionary = dictionaries.find((d) => d.id === id);
 
     setDictionary(dictionary);
 
     setUpSet(true);
-  };
+  }
 
-  async function close(dictionary) {
+  function close(dictionary) {
     if (Object.keys(dictionary).length !== 0) {
       const index = dictionaries.findIndex((d) => d.id === dictionary.id);
 

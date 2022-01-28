@@ -5,11 +5,13 @@ import { formatDate } from "../../../lib/dateTime";
 import Layout from "../../../components/cp/Layout";
 import WordLearn from "../../../components/cp/WordLearn";
 import Modal from "../../../components/cp/Modal";
+import UpSetModal from "../../../components/cp/UpSetModal";
 
 function Youglish() {
   const [dictionaries, setDictionaries] = useState([]);
   const [dictionary, setDictionary] = useState({});
   const [show, setShow] = useState(false);
+  const [isUpSet, setUpSet] = useState(false);
 
   function fetchYg(word) {
     /* eslint-disable no-undef */
@@ -46,6 +48,26 @@ function Youglish() {
     setShow(true);
   }
 
+  function setEdit(id) {
+    const dictionary = dictionaries.find((d) => d.id === id);
+
+    setDictionary(dictionary);
+
+    setUpSet(true);
+  }
+
+  function close(dictionary) {
+    if (Object.keys(dictionary).length !== 0) {
+      const index = dictionaries.findIndex((d) => d.id === dictionary.id);
+
+      dictionaries[index] = dictionary;
+
+      setDictionaries(dictionaries);
+    }
+
+    setUpSet(false);
+  }
+
   return (
     <Layout>
       <div className="flex py-4">
@@ -76,11 +98,18 @@ function Youglish() {
       <div className="flex w-full">
         <WordLearn
           onView={(id) => setView(id)}
+          onEdit={(id) => setEdit(id)}
           onSearch={(word) => fetchYg(word)}
         />
         <div id="yg-widget"></div>
       </div>
       {show && <Modal dictionary={dictionary} onClick={() => setShow(false)} />}
+      {isUpSet && (
+        <UpSetModal
+          dictionary={dictionary}
+          onClick={(dictionary) => close(dictionary)}
+        />
+      )}
     </Layout>
   );
 }

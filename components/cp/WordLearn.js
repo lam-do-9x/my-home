@@ -76,7 +76,7 @@ export default function WordLearn(props) {
                     </div>
                     <div
                       className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500"
-                      onClick={() => edit(dictionary.id)}
+                      onClick={() => props.onEdit(dictionary.id)}
                     >
                       <PencilIcon className="h-5 w-5" />
                     </div>

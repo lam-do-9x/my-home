@@ -3,6 +3,7 @@ import { XIcon, XCircleIcon, SaveIcon } from "@heroicons/react/outline";
 import fetchClient from "../../lib/fetchClient";
 import MDE from "./MDE";
 import Notification from "./Notification";
+import styles from "./CP.module.css";
 
 export default function UpSetModal(props) {
   const [content, setContent] = useState(props.dictionary.content);
@@ -46,8 +47,12 @@ export default function UpSetModal(props) {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center p-7 opacity-100 transition-opacity duration-300">
-      <div className="mx-auto w-3/4 max-w-xl rounded-xl border bg-white p-5 shadow-lg">
+    <div
+      className={`fixed left-0 top-0 right-0 bottom-0 ${styles["modal"]} flex h-full w-screen items-center justify-center`}
+    >
+      <div
+        className={`mx-auto w-3/4 max-w-xl rounded-xl ${styles["max-h-modal"]} border bg-white p-5 shadow-lg`}
+      >
         <div className="overflow-hidden rounded-md">
           <Notification response={response} />
           <div className="mb-2 flex justify-between font-semibold">
