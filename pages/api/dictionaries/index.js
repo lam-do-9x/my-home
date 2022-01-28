@@ -42,8 +42,8 @@ export default async function handle(req, res) {
   const pageCount = Math.ceil(totalPage / take);
 
   const dictionaries = await prisma.dictionary.findMany({
-    skip,
-    take,
+    skip: !Number.isNaN(skip) ? skip : undefined,
+    take: !Number.isNaN(take) ? take : undefined,
     ...operate,
   });
 

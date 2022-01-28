@@ -8,8 +8,12 @@ export default function Modal(props) {
   }
 
   return (
-    <div className="opacity-200 fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center p-7 transition-opacity duration-300">
-      <div className="flex max-w-xl flex-col rounded-lg bg-white shadow-2xl">
+    <div
+      className={`fixed left-0 top-0 right-0 bottom-0 ${styles["modal"]} flex h-full w-screen items-center justify-center`}
+    >
+      <div
+        className={`relative flex w-full  max-w-fit ${styles["max-h-modal"]} flex-col overflow-hidden rounded-lg bg-white shadow-2xl`}
+      >
         <div className="mt-2 flex w-full items-center px-7">
           <div className="w-full text-center font-bold text-yellow-500">
             {props.dictionary.word}
@@ -19,9 +23,7 @@ export default function Modal(props) {
             onClick={close}
           />
         </div>
-        <div
-          className={`my-2 px-7 ${styles["max-h-modal"]} prose overflow-x-hidden`}
-        >
+        <div className="prose my-2 overflow-x-hidden px-7">
           <MDRender content={props.dictionary.content} />
         </div>
       </div>

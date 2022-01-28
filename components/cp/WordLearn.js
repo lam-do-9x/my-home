@@ -6,15 +6,12 @@ import {
 } from "@heroicons/react/outline";
 import Loader from "./Loader";
 import Paginate from "./Paginate";
-import Modal from "./Modal";
 
-export default function WordLearn() {
+export default function WordLearn(props) {
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
   const [dictionaries, setDictionaries] = useState([]);
-  const [dictionary, setDictionary] = useState([]);
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     fetchRandom();
@@ -31,14 +28,6 @@ export default function WordLearn() {
     setPageCount(pageCount > 1 ? pageCount : 0);
 
     return dictionaries;
-  }
-
-  async function view(id) {
-    const dictionary = dictionaries.find((d) => d.id === id);
-
-    setDictionary(dictionary);
-
-    setShow(true);
   }
 
   return (
@@ -68,7 +57,7 @@ export default function WordLearn() {
               >
                 <td
                   className="my-4 flex cursor-pointer py-3 px-6"
-                  onClick={() => view(dictionary.id)}
+                  onClick={() => props.onView(dictionary.id)}
                 >
                   <span className="font-medium">{dictionary.word}</span>
                 </td>
@@ -103,7 +92,6 @@ export default function WordLearn() {
         pageCount={pageCount}
         handlePageClick={(offset) => setOffset(offset)}
       />
-      {show && <Modal dictionary={dictionary} onClick={() => setShow(false)} />}
     </div>
   );
 }

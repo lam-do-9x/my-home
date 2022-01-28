@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { RefreshIcon, VideoCameraIcon } from "@heroicons/react/outline";
-import Layout from "../../../components/cp/Layout";
-import WordLearn from "../../../components/cp/WordLearn";
 import { AuthMiddleware } from "../../../middleware/auth";
 import { formatDate } from "../../../lib/dateTime";
+import Layout from "../../../components/cp/Layout";
+import WordLearn from "../../../components/cp/WordLearn";
+import Modal from "../../../components/cp/Modal";
 
 function Youglish() {
   const [dictionaries, setDictionaries] = useState([]);
+  const [dictionary, setDictionary] = useState({});
+  const [show, setShow] = useState(false);
 
   function fetchYg(word) {
     /* eslint-disable no-undef */
@@ -21,9 +24,9 @@ function Youglish() {
   }
 
   useEffect(async () => {
-    const { dictionaries } = await fetch(
-      `/api/dictionaries?page=yg&take=5&skip=0`
-    ).then((res) => res.json());
+    const { dictionaries } = await fetch(`/api/dictionaries?page=yg`).then(
+      (res) => res.json()
+    );
 
     setDictionaries(dictionaries);
 
@@ -34,6 +37,14 @@ function Youglish() {
 
     document.body.appendChild(script);
   }, []);
+
+  function setView(id) {
+    YG.Widget("yg-widget").pause();
+
+    const dictionary = dictionaries.find((d) => d.id === id);
+    setDictionary(dictionary);
+    setShow(true);
+  }
 
   return (
     <Layout>
@@ -63,9 +74,10 @@ function Youglish() {
         </a>
       </div>
       <div className="flex w-full">
-        <WordLearn />
+        <WordLearn onView={(id) => setView(id)} />
         <div id="yg-widget"></div>
       </div>
+      {show && <Modal dictionary={dictionary} onClick={() => setShow(false)} />}
     </Layout>
   );
 }
