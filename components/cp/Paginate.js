@@ -27,7 +27,7 @@ export default function Paginate(props) {
       pageCount={props.pageCount}
       forcePage={selected}
       renderOnZeroPageCount={null}
-      className="flex items-center justify-center py-4"
+      className="mt-4 flex items-center justify-center"
       pageClassName="hover:bg-gray-100"
       pageLinkClassName="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium"
       breakLinkClassName="inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 text-sm font-medium"

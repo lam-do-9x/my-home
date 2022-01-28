@@ -107,7 +107,7 @@ function Dictionary() {
       </div>
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center overflow-hidden font-sans shadow">
-          <div className="mx-6 w-full">
+          <div className="mx-6 mb-6 w-full">
             <div className="mb-2 flex justify-end">
               <label className="relative block">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
