@@ -74,7 +74,10 @@ function Youglish() {
         </a>
       </div>
       <div className="flex w-full">
-        <WordLearn onView={(id) => setView(id)} />
+        <WordLearn
+          onView={(id) => setView(id)}
+          onSearch={(word) => fetchYg(word)}
+        />
         <div id="yg-widget"></div>
       </div>
       {show && <Modal dictionary={dictionary} onClick={() => setShow(false)} />}

@@ -12,7 +12,7 @@ export default function Modal(props) {
       className={`fixed left-0 top-0 right-0 bottom-0 ${styles["modal"]} flex h-full w-screen items-center justify-center`}
     >
       <div
-        className={`relative flex w-full  max-w-fit ${styles["max-h-modal"]} flex-col overflow-hidden rounded-lg bg-white shadow-2xl`}
+        className={`relative flex w-full max-w-fit ${styles["max-h-modal"]} flex-col overflow-hidden rounded-lg bg-white shadow-2xl`}
       >
         <div className="mt-2 flex w-full items-center px-7">
           <div className="w-full text-center font-bold text-yellow-500">
