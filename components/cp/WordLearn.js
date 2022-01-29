@@ -31,8 +31,16 @@ export default function WordLearn(props) {
   }
 
   return (
-    <div>
-      <table className="mr-4 h-fit table-auto rounded shadow-md">
+    <div className="mr-4">
+      <div className="mb-2 flex justify-end">
+        <select className="rounded-l border py-2 px-4 focus:outline-none">
+          <option value={7}>Week</option>
+          <option value={30}>Month</option>
+          <option value={365}>Year</option>
+          <option>All</option>
+        </select>
+      </div>
+      <table className="h-fit table-auto rounded shadow-md">
         <thead>
           <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">
             <th className="py-3 px-6 text-left">word</th>
