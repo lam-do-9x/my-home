@@ -11,16 +11,17 @@ export default function WordLearn(props) {
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [time, setTime] = useState(7);
   const [dictionaries, setDictionaries] = useState([]);
 
   useEffect(() => {
     fetchRandom();
     setLoading(false);
-  }, [offset]);
+  }, [offset, time]);
 
   async function fetchRandom() {
     const { dictionaries, pageCount } = await fetch(
-      `/api/dictionaries?page=yg&take=5&skip=${offset}`
+      `/api/dictionaries?page=yg&take=5&skip=${offset}&time=${time}`
     ).then((res) => res.json());
 
     setDictionaries(dictionaries);
@@ -33,7 +34,10 @@ export default function WordLearn(props) {
   return (
     <div className="mr-4">
       <div className="mb-2 flex justify-end">
-        <select className="rounded-l border py-2 px-4 focus:outline-none">
+        <select
+          className="rounded-l border py-2 px-4 focus:outline-none"
+          onChange={(e) => setTime(e.target.value)}
+        >
           <option value={7}>Week</option>
           <option value={30}>Month</option>
           <option value={365}>Year</option>

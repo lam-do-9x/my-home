@@ -10,16 +10,37 @@ export default async function handle(req, res) {
     },
   };
 
+  let where = {
+    where: {
+      NOT: { contentAt: null },
+    },
+  };
+
   if (req.query.page) {
+    operate = {
+      ...where,
+      orderBy: {
+        contentAt: "desc",
+      },
+    };
+  }
+
+  if (req.query.page && req.query.time) {
     const now = new Date();
-    const workDays = new Date(now.setDate(now.getDate() - 5));
+    const time = Number(req.query.time);
+    if (!Number.isNaN(time)) {
+      const workDays = new Date(now.setDate(now.getDate() - time));
+      where = {
+        where: {
+          contentAt: {
+            gte: workDays,
+          },
+        },
+      };
+    }
 
     operate = {
-      where: {
-        contentAt: {
-          gte: workDays,
-        },
-      },
+      ...where,
       orderBy: {
         contentAt: "desc",
       },
