@@ -32,7 +32,7 @@ export default function WordLearn(props) {
   }
 
   return (
-    <div className="mr-4">
+    <div className="mr-4 w-1/3">
       <div className="mb-2 flex justify-end">
         <select
           className="rounded-l border py-2 px-4 focus:outline-none"
@@ -44,7 +44,7 @@ export default function WordLearn(props) {
           <option>All</option>
         </select>
       </div>
-      <table className="h-fit table-auto rounded shadow-md">
+      <table className="h-fit w-full table-auto rounded shadow-md">
         <thead>
           <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">
             <th className="py-3 px-6 text-left">word</th>
@@ -57,7 +57,7 @@ export default function WordLearn(props) {
         <tbody className="text-sm font-light text-gray-600">
           {isLoading ? (
             <tr className="border-b border-gray-200">
-              <td colSpan="4">
+              <td colSpan="3">
                 <Loader />
               </td>
             </tr>
@@ -100,7 +100,7 @@ export default function WordLearn(props) {
         </tbody>
       </table>
       <Paginate
-        perPage={5}
+        perPage={3}
         pageCount={pageCount}
         handlePageClick={(offset) => setOffset(offset)}
       />
