@@ -1,42 +1,35 @@
 import { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
 import Layout from "../../../components/cp/Layout";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 import PronunciationModal from "../../../components/cp/PronunciationModal";
 
 function Pronunciation() {
-  const [itemsLength, setItemsLength] = useState(0);
   const [isLoading, setLoading] = useState(true);
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
   const [isShow, setShow] = useState(false);
   const [pronunciations, setPronunciation] = useState([]);
+  const [sounds, setSounds] = useState([]);
   const [ipa, setIpa] = useState(null);
 
   useEffect(async () => {
     const { pronunciations } = await fetch("/api/pronunciations").then((res) =>
       res.json()
     );
-    setItemsLength(pronunciations.length);
-    setCurrentItems(pronunciations.slice(itemOffset, itemOffset + 10));
-    setPageCount(Math.ceil(pronunciations.length / 10));
+
+    setPronunciation(pronunciations);
 
     setLoading(false);
-  }, [itemOffset, 10]);
-
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * 10) % itemsLength;
-    setItemOffset(newOffset);
-  };
+  }, []);
 
   const show = async (ipa) => {
     const { pronunciations } = await fetch(`/api/pronunciations/${ipa}`).then(
       (res) => res.json()
     );
-    setPronunciation(pronunciations);
+
+    setSounds(pronunciations);
+
     setIpa(ipa);
+
     setShow(true);
   };
 
@@ -67,7 +60,7 @@ function Pronunciation() {
                       </td>
                     </tr>
                   ) : (
-                    currentItems.map((pronunciation) => (
+                    pronunciations.map((pronunciation) => (
                       <tr
                         className="cursor-pointer border-b border-gray-200 text-center font-medium hover:bg-gray-100"
                         key={pronunciation.id}
@@ -98,31 +91,11 @@ function Pronunciation() {
               </table>
               {isShow && (
                 <PronunciationModal
-                  pronunciations={pronunciations}
+                  pronunciations={sounds}
                   ipa={ipa}
                   onClick={() => setShow(false)}
                 />
               )}
-              <ReactPaginate
-                breakLabel="..."
-                nextLabel="next"
-                previousLabel="previous"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={10}
-                pageCount={pageCount}
-                renderOnZeroPageCount={null}
-                className="flex justify-center p-4"
-                pageClassName="border"
-                pageLinkClassName="px-3 py-6"
-                breakClassName="border"
-                breakLinkClassName="px-3 py-6"
-                activeClassName="bg-gray-200"
-                previousClassName="mr-3 border"
-                previousLinkClassName="px-3 py-6"
-                nextClassName="ml-3 border"
-                nextLinkClassName="px-3 py-6"
-                disabledLinkClassName="text-gray-100"
-              />
             </div>
           </div>
         </div>
