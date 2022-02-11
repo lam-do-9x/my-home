@@ -11,6 +11,7 @@ import {
   VolumeUpIcon,
   ChatAlt2Icon,
   ChatIcon,
+  TemplateIcon,
 } from "@heroicons/react/outline";
 import ActiveLink from "./ActiveLink";
 
@@ -103,6 +104,15 @@ export default function Nav() {
         >
           <ReceiptTaxIcon className="h-6 w-6" />
           <span className="ml-4 text-gray-900">Receipts</span>
+        </div>
+      </ActiveLink>
+      <ActiveLink activeClassName="bg-gray-100" href="/cp/fashion">
+        <div
+          className="-mx-3 flex cursor-pointer items-center justify-center rounded-lg p-3 text-sm font-medium hover:bg-gray-100"
+          onClick={() => setShow(false)}
+        >
+          <TemplateIcon className="h-6 w-6" />
+          <span className="ml-4 text-gray-900">Fashion</span>
         </div>
       </ActiveLink>
       <div
