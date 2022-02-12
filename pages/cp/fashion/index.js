@@ -34,7 +34,7 @@ function Fashion() {
           </div>
         ) : (
           <div className="w-full overflow-hidden">
-            <div className="my-6 mr-6 grid grid-cols-4 gap-x-4 gap-y-12">
+            <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
               {receipts
                 .filter((id) => id !== 0)
                 .map((block) => (
