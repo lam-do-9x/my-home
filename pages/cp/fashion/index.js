@@ -8,7 +8,7 @@ import Loader from "../../../components/cp/Loader";
 function Fashion() {
   const [modal, setModal] = useState(false);
   const [block, setBlock] = useState(null);
-  const [receipts, setReceipts] = useState([]);
+  const [fashions, setFashions] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   function openPage(block) {
@@ -17,8 +17,8 @@ function Fashion() {
   }
 
   useEffect(async () => {
-    const { receipts } = await fetch("/api/receipts").then((res) => res.json());
-    setReceipts(receipts);
+    const { fashions } = await fetch("/api/fashions").then((res) => res.json());
+    setFashions(fashions);
     setLoading(false);
   }, []);
 
@@ -35,7 +35,7 @@ function Fashion() {
         ) : (
           <div className="w-full overflow-hidden">
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
-              {receipts
+              {fashions
                 .filter((id) => id !== 0)
                 .map((block) => (
                   <div
@@ -44,21 +44,23 @@ function Fashion() {
                     onClick={() => openPage(block)}
                   >
                     <Image
-                      className="object-fit"
+                      className="object-cover"
                       src={
-                        block.cover ??
+                        block.properties.images.files[0].file.url ??
                         "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
                       }
                       width={250}
                       height={250}
                     />
-                    <div className="pt-2 font-medium uppercase">
-                      {block.properties.name.title[0].plain_text}
-                    </div>
-                    <div
-                      className={`mb-2 rounded p-2 bg-${block.properties.type.select.color}-200`}
-                    >
-                      {block.properties.type.select.name}
+                    <div className="flex p-2">
+                      {block.properties.clothes.multi_select.map((clothe) => (
+                        <div
+                          key={clothe.id}
+                          className={`bg-${clothe.color}-200 mx-2 rounded p-2`}
+                        >
+                          {clothe.name}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
