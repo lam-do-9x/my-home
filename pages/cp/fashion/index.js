@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Layout from "../../../components/cp/Layout";
-import ReceiptModal from "../../../components/cp/ReceiptModal";
+import ImageModal from "../../../components/cp/ImageModal";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 
@@ -11,7 +11,7 @@ function Fashion() {
   const [fashions, setFashions] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  function openPage(block) {
+  function openImage(block) {
     setBlock(block);
     setModal(true);
   }
@@ -41,7 +41,7 @@ function Fashion() {
                   <div
                     className="flex flex w-fit cursor-pointer flex-col flex-col items-center justify-start rounded border border-gray-200 shadow-md"
                     key={block.id}
-                    onClick={() => openPage(block)}
+                    onClick={() => openImage(block)}
                   >
                     <Image
                       className="object-cover"
@@ -65,7 +65,7 @@ function Fashion() {
                   </div>
                 ))}
               {modal && (
-                <ReceiptModal block={block} onClick={() => setModal(false)} />
+                <ImageModal block={block} onClick={() => setModal(false)} />
               )}
             </div>
           </div>
