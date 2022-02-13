@@ -9,6 +9,7 @@ function Fashion() {
   const [modal, setModal] = useState(false);
   const [block, setBlock] = useState(null);
   const [fashions, setFashions] = useState([]);
+  const [nextCursor, setNextCursor] = useState(undefined);
   const [isLoading, setLoading] = useState(true);
 
   function openImage(block) {
@@ -16,11 +17,24 @@ function Fashion() {
     setModal(true);
   }
 
+  async function getFashions(startCursor) {
+    return await fetch(
+      `/api/fashions?page_size=8&start_cursor=${startCursor}`
+    ).then((res) => res.json());
+  }
+
   useEffect(async () => {
-    const { fashions } = await fetch("/api/fashions").then((res) => res.json());
+    const { fashions, next_cursor } = await getFashions(nextCursor);
     setFashions(fashions);
+    setNextCursor(next_cursor);
     setLoading(false);
   }, []);
+
+  async function handleClick() {
+    const fhs = await getFashions(nextCursor);
+    setFashions([...fashions, ...fhs.fashions]);
+    setNextCursor(fhs.next_cursor);
+  }
 
   return (
     <Layout>
@@ -68,6 +82,16 @@ function Fashion() {
                 <ImageModal block={block} onClick={() => setModal(false)} />
               )}
             </div>
+            {nextCursor && (
+              <div className="mb-4 flex justify-center">
+                <button
+                  className=" rounded border p-2 uppercase"
+                  onClick={handleClick}
+                >
+                  load more
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
