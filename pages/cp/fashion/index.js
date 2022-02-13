@@ -17,21 +17,21 @@ function Fashion() {
     setModal(true);
   }
 
-  async function getFashions(startCursor) {
+  async function getFashions() {
     return await fetch(
-      `/api/fashions?page_size=8&start_cursor=${startCursor}`
+      `/api/fashions?page_size=8&start_cursor=${nextCursor}`
     ).then((res) => res.json());
   }
 
   useEffect(async () => {
-    const { fashions, next_cursor } = await getFashions(nextCursor);
+    const { fashions, next_cursor } = await getFashions();
     setFashions(fashions);
     setNextCursor(next_cursor);
     setLoading(false);
   }, []);
 
   async function handleClick() {
-    const fhs = await getFashions(nextCursor);
+    const fhs = await getFashions();
     setFashions([...fashions, ...fhs.fashions]);
     setNextCursor(fhs.next_cursor);
   }
