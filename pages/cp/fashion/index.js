@@ -1,9 +1,32 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Select from "react-select";
 import Layout from "../../../components/cp/Layout";
 import ImageModal from "../../../components/cp/ImageModal";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
+
+const options = [
+  { value: "jean", label: "Jean" },
+  { value: "kaki", label: "Kaki" },
+  { value: "shirt", label: "Shirt" },
+  { value: "polo", label: "Polo" },
+  { value: "cardigan", label: "Cardigan" },
+  { value: "t-shirt", label: "T-shirt" },
+  { value: "trouser", label: "Trouser" },
+  { value: "sweater", label: "Sweater" },
+  { value: "short", label: "Short" },
+  { value: "hoodie", label: "Hoodie" },
+  { value: "henley", label: "Henley" },
+  { value: "jacket", label: "Jacket" },
+  { value: "blazer", label: "Blazer" },
+  { value: "leather", label: "Leather" },
+  { value: "coat", label: "Coat" },
+  { value: "overcoat", label: "Overcoat" },
+  { value: "sweatsuit", label: "Sweatsuit" },
+  { value: "outerwear", label: "Outerwear" },
+  { value: "suit", label: "Suit" },
+];
 
 function Fashion() {
   const [modal, setModal] = useState(false);
@@ -48,6 +71,15 @@ function Fashion() {
           </div>
         ) : (
           <div className="w-full overflow-hidden">
+            <div
+              className="flex items-center justify-start border-b-2 py-2"
+              style={{
+                marginRight: "4.5rem",
+              }}
+            >
+              <p className="mr-2">Clothes:</p>
+              <Select options={options} isMulti={true} />
+            </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
               {fashions
                 .filter((id) => id !== 0)
