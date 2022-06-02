@@ -20,9 +20,6 @@ export default function ImageModal(props) {
           className="object-contain pb-14"
           src={props.block.properties.images.files[0].file.url}
           layout="fill"
-          onLoadingComplete={(e) => {
-            handleLoad(e);
-          }}
         />
       </div>
     </div>
