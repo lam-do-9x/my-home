@@ -27,9 +27,11 @@ model Improvisation {
     updatedAt       DateTime @updatedAt
 }
 
-model Selected {
+model Fashion {
     id              Int      @id @default (autoincrement())
-    name            String   @unique
+    image           String
+    clothes         Json?
+    type            Json?
     createdAt       DateTime @default (now())
     updatedAt       DateTime @updatedAt
 }

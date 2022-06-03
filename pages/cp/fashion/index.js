@@ -32,7 +32,8 @@ function Fashion() {
   const [modal, setModal] = useState(false);
   const [block, setBlock] = useState(null);
   const [fashions, setFashions] = useState([]);
-  const [nextCursor, setNextCursor] = useState(undefined);
+  const [hasLoadMore, setHasLoadMore] = useState(false);
+  const [lastId, setLastId] = useState(undefined);
   const [isLoading, setLoading] = useState(true);
 
   function openImage(block) {
@@ -41,22 +42,28 @@ function Fashion() {
   }
 
   async function getFashions() {
-    return await fetch(
-      `/api/fashions?page_size=8&start_cursor=${nextCursor}`
-    ).then((res) => res.json());
+    return await fetch(`/api/fashions?take=8&id=${lastId}`).then((res) =>
+      res.json()
+    );
   }
 
   useEffect(async () => {
-    const { fashions, next_cursor } = await getFashions();
+    const { fashions, hasLoadMore } = await getFashions();
     setFashions(fashions);
-    setNextCursor(next_cursor);
+    if (hasLoadMore) {
+      setLastId(fashions[7].id - 1);
+    }
+    setHasLoadMore(hasLoadMore);
     setLoading(false);
   }, []);
 
   async function handleClick() {
     const fhs = await getFashions();
+    if (fhs.hasLoadMore) {
+      setLastId(fhs.fashions[7].id - 1);
+    }
     setFashions([...fashions, ...fhs.fashions]);
-    setNextCursor(fhs.next_cursor);
+    setHasLoadMore(fhs.hasLoadMore);
   }
 
   return (
@@ -81,40 +88,37 @@ function Fashion() {
               <Select options={options} isMulti={true} />
             </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
-              {fashions
-                .filter((id) => id !== 0)
-                .map((block) => (
-                  <div
-                    className="flex flex w-fit cursor-pointer flex-col flex-col items-center justify-start rounded border border-gray-200 shadow-md"
-                    key={block.id}
-                    onClick={() => openImage(block)}
-                  >
-                    <Image
-                      className="object-cover"
-                      src={
-                        block.properties.images.files[0].file.url ??
-                        "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
-                      }
-                      width={250}
-                      height={250}
-                    />
-                    <div className="flex p-2">
-                      {block.properties.clothes.multi_select.map((clothe) => (
-                        <div
-                          key={clothe.id}
-                          className={`bg-${clothe.color}-200 mx-2 rounded p-2`}
-                        >
-                          {clothe.name}
-                        </div>
-                      ))}
-                    </div>
+              {fashions.map((block) => (
+                <div
+                  className="flex flex w-fit cursor-pointer flex-col flex-col items-center justify-start rounded border border-gray-200 shadow-md"
+                  key={block.id}
+                  onClick={() => openImage(block)}
+                >
+                  <Image
+                    className="object-cover"
+                    src={
+                      block.image ?? "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
+                    }
+                    width={250}
+                    height={250}
+                  />
+                  <div className="flex p-2">
+                    {block.clothes?.map((clothe) => (
+                      <div
+                        key={clothe.id}
+                        className={`bg-${clothe.color}-200 mx-2 rounded p-2`}
+                      >
+                        {clothe.name}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              ))}
               {modal && (
                 <ImageModal block={block} onClick={() => setModal(false)} />
               )}
             </div>
-            {nextCursor && (
+            {hasLoadMore && (
               <div className="mb-4 flex justify-center">
                 <button
                   className=" rounded border p-2 uppercase"
