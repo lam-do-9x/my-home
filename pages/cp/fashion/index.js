@@ -53,7 +53,7 @@ function Fashion() {
 
   return (
     <Layout>
-      <div className="mx-6 mt-6 h-full w-full">
+      <div className="mx-6 my-6 h-full w-full">
         <div className="flex">
           <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
             Fashion
@@ -70,7 +70,7 @@ function Fashion() {
             <Loader />
           </div>
         ) : (
-          <div className="w-full">
+          <div className="w-full pb-2">
             <div
               className="flex items-center justify-start border-b-2 py-2"
               style={{
@@ -96,12 +96,22 @@ function Fashion() {
                     height={250}
                   />
                   <div className="flex p-2">
-                    {block.clothes?.map((clothe) => (
+                    {block.clothes?.map((clothe, index) => (
                       <div
-                        key={clothe.id}
-                        className={`bg-${clothe.color}-200 mx-2 rounded p-2`}
+                        key={`${clothe.value}-${index}`}
+                        className={`mx-2 rounded border p-2`}
                       >
-                        {clothe.name}
+                        {clothe.label}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex p-2">
+                    {block.type?.map((type, index) => (
+                      <div
+                        key={`${type.value}-${index}`}
+                        className={`mx-2 rounded border p-2`}
+                      >
+                        {type.label}
                       </div>
                     ))}
                   </div>
