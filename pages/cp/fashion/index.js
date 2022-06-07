@@ -1,47 +1,28 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
+import { PencilAltIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
 import ImageModal from "../../../components/cp/ImageModal";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
-
-const options = [
-  { value: "jean", label: "Jean" },
-  { value: "kaki", label: "Kaki" },
-  { value: "shirt", label: "Shirt" },
-  { value: "polo", label: "Polo" },
-  { value: "cardigan", label: "Cardigan" },
-  { value: "t-shirt", label: "T-shirt" },
-  { value: "trouser", label: "Trouser" },
-  { value: "sweater", label: "Sweater" },
-  { value: "short", label: "Short" },
-  { value: "hoodie", label: "Hoodie" },
-  { value: "henley", label: "Henley" },
-  { value: "jacket", label: "Jacket" },
-  { value: "blazer", label: "Blazer" },
-  { value: "leather", label: "Leather" },
-  { value: "coat", label: "Coat" },
-  { value: "overcoat", label: "Overcoat" },
-  { value: "sweatsuit", label: "Sweatsuit" },
-  { value: "outerwear", label: "Outerwear" },
-  { value: "suit", label: "Suit" },
-];
+import InsertFashion from "../../../components/cp/InsertFashion";
+import { selectClothesOptions } from "../../../lib/helper";
 
 function Fashion() {
   const [modal, setModal] = useState(false);
   const [block, setBlock] = useState(null);
   const [fashions, setFashions] = useState([]);
   const [hasLoadMore, setHasLoadMore] = useState(false);
-  const [lastId, setLastId] = useState(undefined);
   const [isLoading, setLoading] = useState(true);
+  const [isUpSet, setUpSet] = useState(false);
 
   function openImage(block) {
     setBlock(block);
     setModal(true);
   }
 
-  async function getFashions() {
+  async function getFashions(lastId = undefined) {
     return await fetch(`/api/fashions?take=8&id=${lastId}`).then((res) =>
       res.json()
     );
@@ -50,34 +31,46 @@ function Fashion() {
   useEffect(async () => {
     const { fashions, hasLoadMore } = await getFashions();
     setFashions(fashions);
-    if (hasLoadMore) {
-      setLastId(fashions[7].id - 1);
-    }
     setHasLoadMore(hasLoadMore);
     setLoading(false);
   }, []);
 
   async function handleClick() {
-    const fhs = await getFashions();
-    if (fhs.hasLoadMore) {
-      setLastId(fhs.fashions[7].id - 1);
-    }
+    const lastId = fashions[7].id - 1;
+    const fhs = await getFashions(lastId);
     setFashions([...fashions, ...fhs.fashions]);
     setHasLoadMore(fhs.hasLoadMore);
+  }
+
+  async function handleInsert(fhs) {
+    if (Object.keys(fhs).length > 0) {
+      const { fashions, hasLoadMore } = await getFashions();
+      setFashions(fashions);
+      setHasLoadMore(hasLoadMore);
+    }
+    setUpSet(false);
   }
 
   return (
     <Layout>
       <div className="mx-6 mt-6 h-full w-full">
-        <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
-          Fashion
-        </h2>
+        <div className="flex">
+          <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
+            Fashion
+          </h2>
+          <div
+            className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
+            onClick={() => setUpSet(true)}
+          >
+            <PencilAltIcon className="h-5 w-5" />
+          </div>
+        </div>
         {isLoading ? (
           <div className="flex h-full items-center justify-center">
             <Loader />
           </div>
         ) : (
-          <div className="w-full overflow-hidden">
+          <div className="w-full">
             <div
               className="flex items-center justify-start border-b-2 py-2"
               style={{
@@ -85,7 +78,7 @@ function Fashion() {
               }}
             >
               <p className="mr-2">Clothes:</p>
-              <Select options={options} isMulti={true} />
+              <Select options={selectClothesOptions} isMulti={true} />
             </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
               {fashions.map((block) => (
@@ -129,6 +122,9 @@ function Fashion() {
               </div>
             )}
           </div>
+        )}
+        {isUpSet && (
+          <InsertFashion onClick={(fashion) => handleInsert(fashion)} />
         )}
       </div>
     </Layout>
