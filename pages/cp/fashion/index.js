@@ -51,6 +51,23 @@ function Fashion() {
     setUpSet(false);
   }
 
+  async function getFilterClothesFashions(selected) {
+    return await fetch(`/api/fashions?take=8&clothes=${selected}`).then((res) =>
+      res.json()
+    );
+  }
+
+  async function handleFilterClothes(selected) {
+    const clothesSelected = selected.map((select) => {
+      return select.value;
+    });
+    const { fashions } = await getFilterClothesFashions(
+      clothesSelected.join(",")
+    );
+    setFashions(fashions);
+    setHasLoadMore(false);
+  }
+
   return (
     <Layout>
       <div className="mx-6 my-6 h-full w-full">
@@ -78,7 +95,11 @@ function Fashion() {
               }}
             >
               <p className="mr-2">Clothes:</p>
-              <Select options={selectClothesOptions} isMulti={true} />
+              <Select
+                options={selectClothesOptions}
+                isMulti={true}
+                onChange={handleFilterClothes}
+              />
             </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
               {fashions.map((block) => (
@@ -96,22 +117,22 @@ function Fashion() {
                     height={250}
                   />
                   <div className="flex p-2">
-                    {block.clothes?.map((clothe, index) => (
+                    {block.clothes?.map((clothe) => (
                       <div
-                        key={`${clothe.value}-${index}`}
+                        key={clothe.selected.id}
                         className={`mx-2 rounded border p-2`}
                       >
-                        {clothe.label}
+                        {clothe.selected.name}
                       </div>
                     ))}
                   </div>
                   <div className="flex p-2">
-                    {block.type?.map((type, index) => (
+                    {block.types?.map((type) => (
                       <div
-                        key={`${type.value}-${index}`}
+                        key={type.selected.id}
                         className={`mx-2 rounded border p-2`}
                       >
-                        {type.label}
+                        {type.selected.name}
                       </div>
                     ))}
                   </div>

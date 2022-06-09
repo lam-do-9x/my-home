@@ -1,37 +1,66 @@
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native"]
 }
 
 model Dictionary {
-    id              Int      @id @default (autoincrement())
-    word            String   @unique
-    ipa             String?
-    pronunciation   String?
-    content         String?
-    createdAt       DateTime? @default (now())
-    updatedAt       DateTime? @updatedAt
-    contentAt       DateTime?
+  id            Int       @id @default(autoincrement())
+  word          String    @unique
+  ipa           String?
+  pronunciation String?
+  content       String?
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
+  contentAt     DateTime?
 }
 
 model Improvisation {
-    id              Int      @id @default (autoincrement())
-    content         String   @unique
-    display         String?
-    createdAt       DateTime @default (now())
-    updatedAt       DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  content   String   @unique
+  display   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Fashion {
-    id              Int      @id @default (autoincrement())
-    image           String
-    clothes         Json?
-    type            Json?
-    createdAt       DateTime @default (now())
-    updatedAt       DateTime @updatedAt
+  id        Int                      @id @default(autoincrement())
+  image     String
+  createdAt DateTime                 @default(now())
+  updatedAt DateTime                 @updatedAt
+  clothes   FashionClothesSelected[]
+  types     FashionTypesSelected[]
+}
+
+model Selected {
+  id              Int                      @id @default(autoincrement())
+  name            String                   @unique
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  clothesSelected FashionClothesSelected[]
+  typesSelected   FashionTypesSelected[]
+}
+
+model FashionClothesSelected {
+  fashion    Fashion  @relation(fields: [fashionId], references: [id])
+  fashionId  Int
+  selected   Selected @relation(fields: [selectedId], references: [id])
+  selectedId Int
+  assignedAt DateTime @default(now())
+
+  @@id([fashionId, selectedId])
+}
+
+model FashionTypesSelected {
+  fashion    Fashion  @relation(fields: [fashionId], references: [id])
+  fashionId  Int
+  selected   Selected @relation(fields: [selectedId], references: [id])
+  selectedId Int
+  assignedAt DateTime @default(now())
+
+  @@id([fashionId, selectedId])
 }

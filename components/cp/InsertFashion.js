@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Select from "react-select";
+import CreatableSelect from "react-select/creatable";
 import { XCircleIcon, SaveIcon } from "@heroicons/react/outline";
 import fetchClient from "../../lib/fetchClient";
 import { selectClothesOptions, selectTypesOptions } from "../../lib/helper";
@@ -7,12 +7,12 @@ import uploadToCloudinary from "../../lib/uploadToCloudinary";
 
 export default function InsertFashion(props) {
   const [clothes, setClothes] = useState([]);
-  const [type, setType] = useState([]);
+  const [types, setTypes] = useState([]);
   const [image, setImage] = useState([]);
 
   function close(fashion) {
     setClothes([]);
-    setType([]);
+    setTypes([]);
     props.onClick(fashion);
   }
 
@@ -29,7 +29,7 @@ export default function InsertFashion(props) {
     const body = JSON.stringify({
       image: uploadResponse.secure_url,
       clothes,
-      type,
+      types,
     });
 
     const fashion = await fetchClient("/api/fashions", body);
@@ -51,7 +51,7 @@ export default function InsertFashion(props) {
           </div>
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Clothes</p>
-            <Select
+            <CreatableSelect
               options={selectClothesOptions}
               isMulti={true}
               onChange={(clothe) => setClothes(clothe)}
@@ -59,10 +59,10 @@ export default function InsertFashion(props) {
           </div>
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Types</p>
-            <Select
+            <CreatableSelect
               options={selectTypesOptions}
               isMulti={true}
-              onChange={(type) => setType(type)}
+              onChange={(type) => setTypes(type)}
             />
           </div>
           <div className="flex justify-end">
