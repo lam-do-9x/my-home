@@ -38,7 +38,8 @@ model Fashion {
 
 model Selected {
   id              Int                      @id @default(autoincrement())
-  name            String                   @unique
+  value           String?                  @unique
+  label           String?                  @unique
   createdAt       DateTime                 @default(now())
   updatedAt       DateTime                 @updatedAt
   clothesSelected FashionClothesSelected[]

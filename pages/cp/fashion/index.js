@@ -7,7 +7,6 @@ import ImageModal from "../../../components/cp/ImageModal";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
 import InsertFashion from "../../../components/cp/InsertFashion";
-import { selectClothesOptions } from "../../../lib/helper";
 
 function Fashion() {
   const [modal, setModal] = useState(false);
@@ -16,6 +15,7 @@ function Fashion() {
   const [hasLoadMore, setHasLoadMore] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [isUpSet, setUpSet] = useState(false);
+  const [options, setOptions] = useState([]);
 
   function openImage(block) {
     setBlock(block);
@@ -27,11 +27,18 @@ function Fashion() {
       res.json()
     );
   }
+  async function getSelectedOption() {
+    const options = await fetch("/api/fashions/selected").then((res) =>
+      res.json()
+    );
+    setOptions(options);
+  }
 
   useEffect(async () => {
     const { fashions, hasLoadMore } = await getFashions();
     setFashions(fashions);
     setHasLoadMore(hasLoadMore);
+    await getSelectedOption();
     setLoading(false);
   }, []);
 
@@ -96,7 +103,7 @@ function Fashion() {
             >
               <p className="mr-2">Clothes:</p>
               <Select
-                options={selectClothesOptions}
+                options={options.clothesSelectedOptions}
                 isMulti={true}
                 onChange={handleFilterClothes}
               />
@@ -122,7 +129,7 @@ function Fashion() {
                         key={clothe.selected.id}
                         className={`mx-2 rounded border p-2`}
                       >
-                        {clothe.selected.name}
+                        {clothe.selected.label}
                       </div>
                     ))}
                   </div>
@@ -132,7 +139,7 @@ function Fashion() {
                         key={type.selected.id}
                         className={`mx-2 rounded border p-2`}
                       >
-                        {type.selected.name}
+                        {type.selected.label}
                       </div>
                     ))}
                   </div>

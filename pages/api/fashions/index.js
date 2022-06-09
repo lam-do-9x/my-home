@@ -1,4 +1,5 @@
 import { prisma } from "../../../lib/prisma";
+import { capitalizeFirstLetter } from "../../../lib/helper";
 
 export default async function handle(req, res) {
   switch (req.method) {
@@ -74,7 +75,8 @@ async function handlePOST(req, res) {
         assignedAt,
         selected: {
           create: {
-            name: clothe.value,
+            value: clothe.value,
+            label: capitalizeFirstLetter(clothe.value),
           },
         },
       };
@@ -84,7 +86,7 @@ async function handlePOST(req, res) {
       assignedAt,
       selected: {
         connect: {
-          id: 1,
+          id: clothe.id,
         },
       },
     };
@@ -96,7 +98,8 @@ async function handlePOST(req, res) {
         assignedAt,
         selected: {
           create: {
-            name: type.value,
+            value: type.value,
+            label: capitalizeFirstLetter(type.value),
           },
         },
       };
@@ -106,7 +109,7 @@ async function handlePOST(req, res) {
       assignedAt,
       selected: {
         connect: {
-          id: 2,
+          id: type.id,
         },
       },
     };

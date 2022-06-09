@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreatableSelect from "react-select/creatable";
 import { XCircleIcon, SaveIcon } from "@heroicons/react/outline";
 import fetchClient from "../../lib/fetchClient";
-import { selectClothesOptions, selectTypesOptions } from "../../lib/helper";
 import uploadToCloudinary from "../../lib/uploadToCloudinary";
 
 export default function InsertFashion(props) {
+  const [options, setOptions] = useState([]);
   const [clothes, setClothes] = useState([]);
   const [types, setTypes] = useState([]);
   const [image, setImage] = useState([]);
+
+  useEffect(async () => {
+    const options = await fetch("/api/fashions/selected").then((res) =>
+      res.json()
+    );
+    setOptions(options);
+  }, []);
 
   function close(fashion) {
     setClothes([]);
@@ -52,7 +59,7 @@ export default function InsertFashion(props) {
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Clothes</p>
             <CreatableSelect
-              options={selectClothesOptions}
+              options={options.clothesSelectedOptions}
               isMulti={true}
               onChange={(clothe) => setClothes(clothe)}
             />
@@ -60,7 +67,7 @@ export default function InsertFashion(props) {
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Types</p>
             <CreatableSelect
-              options={selectTypesOptions}
+              options={options.typesSelectedOptions}
               isMulti={true}
               onChange={(type) => setTypes(type)}
             />
