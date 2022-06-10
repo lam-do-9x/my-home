@@ -18,6 +18,7 @@ export default async function handle(req, res) {
 
 async function handleGET(req, res) {
   const selectedFashion = {
+    id: true,
     image: true,
     clothes: {
       select: {
@@ -34,13 +35,9 @@ async function handleGET(req, res) {
   const orderBy = {
     id: "desc",
   };
-
-  let operator = {
-    select: selectedFashion,
-    orderBy,
-  };
-
   const take = Number(req.query.take);
+
+  let operator = {};
 
   const clothes = req.query.clothes;
 
@@ -67,7 +64,7 @@ async function handleGET(req, res) {
     return res.json({ fashions, code: 200 });
   }
 
-  if (clothes === undefined) {
+  if (clothes === undefined || clothes === "") {
     let cursor = undefined;
     if (req.query.id !== "undefined") {
       cursor = { id: Number(req.query.id) };
@@ -82,7 +79,9 @@ async function handleGET(req, res) {
 
   const fashions = await prisma.fashion.findMany(operator);
 
-  const hasLoadMore = take === fashions.length;
+  const total = await prisma.fashion.count();
+
+  const hasLoadMore = total > take && take === fashions.length;
 
   return res.json({ fashions, hasLoadMore, code: 200 });
 }

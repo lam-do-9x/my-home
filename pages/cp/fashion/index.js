@@ -57,10 +57,10 @@ function Fashion() {
     setUpSet(false);
   }
 
-  async function getFilterClothesFashions(selected) {
-    return await fetch(`/api/fashions?take=8&clothes=${selected}`).then((res) =>
-      res.json()
-    );
+  async function getFilterClothesFashions(selected, lastId = undefined) {
+    return await fetch(
+      `/api/fashions?take=8&&id=${lastId}&clothes=${selected}`
+    ).then((res) => res.json());
   }
 
   async function handleFilterClothes(selected) {
@@ -69,9 +69,13 @@ function Fashion() {
         return select.id;
       })
       .join(",");
-    const { fashions } = await getFilterClothesFashions(clothesSelected);
+    const { fashions, hasLoadMore } = await getFilterClothesFashions(
+      clothesSelected
+    );
     setFashions(fashions);
-    setHasLoadMore(false);
+    if (hasLoadMore) {
+      setHasLoadMore(true);
+    }
   }
 
   async function handleFocusSelected() {
@@ -116,7 +120,7 @@ function Fashion() {
               {fashions.map((block) => (
                 <div
                   className="flex flex w-fit cursor-pointer flex-col flex-col items-center justify-start rounded border border-gray-200 shadow-md"
-                  key={block.image}
+                  key={block.id}
                   onClick={() => openImage(block)}
                 >
                   <Image
