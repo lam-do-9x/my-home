@@ -116,7 +116,7 @@ function Fashion() {
               {fashions.map((block) => (
                 <div
                   className="flex flex w-fit cursor-pointer flex-col flex-col items-center justify-start rounded border border-gray-200 shadow-md"
-                  key={block.id}
+                  key={block.image}
                   onClick={() => openImage(block)}
                 >
                   <Image
