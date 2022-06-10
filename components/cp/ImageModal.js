@@ -18,7 +18,7 @@ export default function ImageModal(props) {
       <div className="relative h-screen w-screen">
         <Image
           className="object-contain pb-14"
-          src={props.block.properties.images.files[0].file.url}
+          src={props.block.image}
           layout="fill"
         />
       </div>
