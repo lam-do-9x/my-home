@@ -120,7 +120,7 @@ function Fashion() {
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
               {fashions.map((block) => (
                 <div
-                  className="flex flex w-fit cursor-pointer flex-col flex-col items-center justify-start rounded border border-gray-200 shadow-md"
+                  className="flex flex w-fit cursor-pointer flex-col items-center justify-start rounded border border-gray-200 shadow-md"
                   key={block.id}
                   onClick={() => openImage(block)}
                 >
@@ -132,17 +132,17 @@ function Fashion() {
                     width={250}
                     height={250}
                   />
-                  <div className="flex p-2">
+                  <div className="flex w-64 flex-wrap justify-center p-2">
                     {block.clothes?.map((clothe) => (
                       <div
                         key={clothe.selected.id}
-                        className={`mx-2 rounded border p-2`}
+                        className={`mx-2 mb-2 rounded border p-2`}
                       >
                         {clothe.selected.label}
                       </div>
                     ))}
                   </div>
-                  <div className="flex p-2">
+                  <div className="flex w-64 flex-wrap justify-center p-2">
                     {block.types?.map((type) => (
                       <div
                         key={type.selected.id}
