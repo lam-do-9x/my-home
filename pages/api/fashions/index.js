@@ -81,9 +81,7 @@ async function handleGET(req, res) {
 
   const total = await prisma.fashion.count();
 
-  const hasLoadMore = total > take && take === fashions.length;
-
-  return res.json({ fashions, hasLoadMore, code: 200 });
+  return res.json({ fashions, total, code: 200 });
 }
 
 async function handlePOST(req, res) {

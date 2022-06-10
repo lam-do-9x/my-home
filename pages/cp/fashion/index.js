@@ -34,25 +34,30 @@ function Fashion() {
     setOptions(options);
   }
 
+  function checkLoadMore(total, fashions) {
+    const isLoadMore = Math.ceil(total / fashions) > 1;
+    setHasLoadMore(isLoadMore);
+  }
+
   useEffect(async () => {
-    const { fashions, hasLoadMore } = await getFashions();
+    const { fashions, total } = await getFashions();
     setFashions(fashions);
-    setHasLoadMore(hasLoadMore);
+    checkLoadMore(total, fashions.length);
     setLoading(false);
   }, []);
 
   async function handleClick() {
-    const lastId = fashions[7].id - 1;
+    const lastId = fashions[fashions.length - 1].id - 1;
     const fhs = await getFashions(lastId);
     setFashions([...fashions, ...fhs.fashions]);
-    setHasLoadMore(fhs.hasLoadMore);
+    checkLoadMore(fhs.total, fashions.length + fhs.fashions.length);
   }
 
   async function handleInsert(fhs) {
     if (Object.keys(fhs).length > 0) {
-      const { fashions, hasLoadMore } = await getFashions();
+      const { fashions, total } = await getFashions();
       setFashions(fashions);
-      setHasLoadMore(hasLoadMore);
+      checkLoadMore(total, fashions.length);
     }
     setUpSet(false);
   }
@@ -69,13 +74,9 @@ function Fashion() {
         return select.id;
       })
       .join(",");
-    const { fashions, hasLoadMore } = await getFilterClothesFashions(
-      clothesSelected
-    );
+    const { fashions, total } = await getFilterClothesFashions(clothesSelected);
     setFashions(fashions);
-    if (hasLoadMore) {
-      setHasLoadMore(true);
-    }
+    checkLoadMore(total, fashions.length);
   }
 
   async function handleFocusSelected() {
