@@ -17,21 +17,55 @@ export default async function handle(req, res) {
 }
 
 async function handleGET(req, res) {
-  let operator = {};
-
-  const take = Number(req.query.take);
-
-  const clothes = req.query.clothes?.split(",");
-
-  operator = {
-    take,
-    where: {
-      clothes: {
-        path: ["value"],
-        equals: clothes,
+  const selectedFashion = {
+    image: true,
+    clothes: {
+      select: {
+        selected: true,
+      },
+    },
+    types: {
+      select: {
+        selected: true,
       },
     },
   };
+
+  const orderBy = {
+    id: "desc",
+  };
+
+  let operator = {
+    select: selectedFashion,
+    orderBy,
+  };
+
+  const take = Number(req.query.take);
+
+  const clothes = req.query.clothes;
+
+  if (clothes) {
+    const clothesSelected = clothes?.split(",").map((clothe) => Number(clothe));
+
+    operator = {
+      select: {
+        fashion: {
+          select: selectedFashion,
+        },
+      },
+      where: {
+        selected: {
+          id: { in: clothesSelected },
+        },
+      },
+    };
+
+    const rawFashions = await prisma.fashionClothesSelected.findMany(operator);
+    const fashions = rawFashions.map((fsh) => {
+      return fsh.fashion;
+    });
+    return res.json({ fashions, code: 200 });
+  }
 
   if (clothes === undefined) {
     let cursor = undefined;
@@ -41,22 +75,8 @@ async function handleGET(req, res) {
     operator = {
       take,
       cursor,
-      orderBy: {
-        id: "desc",
-      },
-      select: {
-        image: true,
-        clothes: {
-          select: {
-            selected: true,
-          },
-        },
-        types: {
-          select: {
-            selected: true,
-          },
-        },
-      },
+      orderBy,
+      select: selectedFashion,
     };
   }
 

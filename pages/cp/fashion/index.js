@@ -38,7 +38,6 @@ function Fashion() {
     const { fashions, hasLoadMore } = await getFashions();
     setFashions(fashions);
     setHasLoadMore(hasLoadMore);
-    await getSelectedOption();
     setLoading(false);
   }, []);
 
@@ -65,14 +64,18 @@ function Fashion() {
   }
 
   async function handleFilterClothes(selected) {
-    const clothesSelected = selected.map((select) => {
-      return select.value;
-    });
-    const { fashions } = await getFilterClothesFashions(
-      clothesSelected.join(",")
-    );
+    const clothesSelected = selected
+      ?.map((select) => {
+        return select.id;
+      })
+      .join(",");
+    const { fashions } = await getFilterClothesFashions(clothesSelected);
     setFashions(fashions);
     setHasLoadMore(false);
+  }
+
+  async function handleFocusSelected() {
+    await getSelectedOption();
   }
 
   return (
@@ -106,6 +109,7 @@ function Fashion() {
                 options={options.clothesSelectedOptions}
                 isMulti={true}
                 onChange={handleFilterClothes}
+                onFocus={handleFocusSelected}
               />
             </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
