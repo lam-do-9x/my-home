@@ -1,47 +1,64 @@
+import { PencilAltIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
-import { colorByEmotion } from "../../../components/cp/Emotion";
+import { getColor } from "../../../components/cp/Emotion";
 import Image from "next/image";
 
 export default function BodyLanguage() {
-  function _renderObject() {
-    return Object.keys(colorByEmotion).map((emotion) => {
-      return (
-        <button
-          className={`border-1 my-2 rounded-full border p-3 uppercase ${colorByEmotion[emotion]}`}
-          key={emotion}
-        >
-          {emotion}
-        </button>
-      );
-    });
-  }
-
   return (
     <Layout>
-      <div className="mx-6 my-6 flex">
-        <h2 className="font-large mr-4 flex max-w-fit rounded border p-2 text-lg uppercase">
-          Body Language
-        </h2>
-      </div>
-      <div className="align-center mx-6 my-6 flex justify-center">
-        <div className="flex flex-col border border-2 p-2">
-          {_renderObject()}
-          <div className="my-2 border-t">
-            <button className="border-1 mx-1 my-2 rounded-full border p-3 uppercase">
-              Start
-            </button>
-            <button className="border-1 mx-1 my-2 rounded-full border p-3 uppercase">
-              Reset
-            </button>
+      <div className="mx-6 my-6 h-full w-full">
+        <div className="flex items-center">
+          <h2 className="font-large mr-4 flex rounded border p-2 text-lg uppercase">
+            Body Language
+          </h2>
+          <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100">
+            <PencilAltIcon className="h-5 w-5" />
           </div>
         </div>
-        <div className="m-8">
-          <Image
-            className="rounded-lg"
-            src="https://res.cloudinary.com/leno/image/upload/v1611064712/body%20language/Practice/AnyConv.com__30bSAD_vdmhmd.jpg"
-            width={500}
-            height={500}
-          />
+        <div className="w-full pb-2">
+          <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
+            <div
+              className="flex flex w-fit cursor-pointer flex-col items-center justify-start rounded border border-gray-200 shadow-md"
+              key={1}
+            >
+              <Image
+                className="object-cover"
+                src={"/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"}
+                width={250}
+                height={250}
+              />
+              <div className="flex w-64 flex-wrap justify-center p-2">
+                {[
+                  {
+                    selected: { id: 1, value: "surprise", label: "Surprise" },
+                  },
+                ]?.map((emotion) => (
+                  <div
+                    key={emotion.selected.id}
+                    className={`mx-2 mb-2 rounded border p-2 ${getColor(
+                      emotion.selected.value
+                    )}`}
+                  >
+                    {emotion.selected.label}
+                  </div>
+                ))}
+              </div>
+              <div className="flex w-64 flex-wrap justify-center p-2">
+                {[
+                  {
+                    selected: { id: 1, value: "practice", label: "Practice" },
+                  },
+                ]?.map((type) => (
+                  <div
+                    key={type.selected.id}
+                    className={`mx-2 rounded border p-2`}
+                  >
+                    {type.selected.label}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>
