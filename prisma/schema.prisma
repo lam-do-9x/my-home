@@ -37,13 +37,15 @@ model Fashion {
 }
 
 model Selected {
-  id              Int                      @id @default(autoincrement())
-  value           String?                  @unique
-  label           String?                  @unique
-  createdAt       DateTime                 @default(now())
-  updatedAt       DateTime                 @updatedAt
-  clothesSelected FashionClothesSelected[]
-  typesSelected   FashionTypesSelected[]
+  id                           Int                            @id @default(autoincrement())
+  value                        String?                        @unique
+  label                        String?                        @unique
+  createdAt                    DateTime                       @default(now())
+  updatedAt                    DateTime                       @updatedAt
+  fashionClothesSelected       FashionClothesSelected[]
+  fashionTypesSelected         FashionTypesSelected[]
+  bodyLanguageEmotionsSelected BodyLanguageEmotionsSelected[]
+  bodyLanguageTypesSelected    BodyLanguageTypesSelected[]
 }
 
 model FashionClothesSelected {
@@ -64,4 +66,33 @@ model FashionTypesSelected {
   assignedAt DateTime @default(now())
 
   @@id([fashionId, selectedId])
+}
+
+model BodyLanguage {
+  id        Int                            @id @default(autoincrement())
+  media     String
+  createdAt DateTime                       @default(now())
+  updatedAt DateTime                       @updatedAt
+  emotions  BodyLanguageEmotionsSelected[]
+  types     BodyLanguageTypesSelected[]
+}
+
+model BodyLanguageEmotionsSelected {
+  bodyLanguage   BodyLanguage @relation(fields: [bodyLanguageId], references: [id])
+  bodyLanguageId Int
+  selected       Selected     @relation(fields: [selectedId], references: [id])
+  selectedId     Int
+  assignedAt     DateTime     @default(now())
+
+  @@id([bodyLanguageId, selectedId])
+}
+
+model BodyLanguageTypesSelected {
+  bodyLanguage   BodyLanguage @relation(fields: [bodyLanguageId], references: [id])
+  bodyLanguageId Int
+  selected       Selected     @relation(fields: [selectedId], references: [id])
+  selectedId     Int
+  assignedAt     DateTime     @default(now())
+
+  @@id([bodyLanguageId, selectedId])
 }
