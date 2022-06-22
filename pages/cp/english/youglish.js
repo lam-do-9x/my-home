@@ -25,6 +25,17 @@ function Youglish() {
     fetchYg(dictionaries[index].word);
   }
 
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      let script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(script);
+      script.onerror = () => reject(new Error(`Script load error for ${src}`));
+
+      document.head.append(script);
+    });
+  }
+
   useEffect(async () => {
     const { dictionaries } = await fetch(`/api/dictionaries?page=yg`).then(
       (res) => res.json()
@@ -32,12 +43,9 @@ function Youglish() {
 
     setDictionaries(dictionaries);
 
-    const script = document.createElement("script");
-    script.src = "https://youglish.com/public/emb/widget.js";
-    script.async = true;
-    script.onload = () => fetchYg(dictionaries[0].word);
-
-    document.body.appendChild(script);
+    loadScript("https://youglish.com/public/emb/widget.js").then(() =>
+      fetchYg(dictionaries[0].word)
+    );
   }, []);
 
   function setView(id) {
