@@ -1,9 +1,22 @@
+import { useEffect, useState } from "react";
 import { PencilAltIcon } from "@heroicons/react/outline";
+import Image from "next/image";
 import Layout from "../../../components/cp/Layout";
 import { getColor } from "../../../components/cp/Emotion";
-import Image from "next/image";
+import InsertBodyLanguage from "../../../components/cp/InsertBodyLanguage";
 
 export default function BodyLanguage() {
+  const [isUpSet, setUpSet] = useState(false);
+
+  async function handleInsert(bodyLanguage) {
+    // if (Object.keys(bodyLanguage).length > 0) {
+    //   const { fashions, total } = await getFashions();
+    //   setFashions(fashions);
+    //   checkLoadMore(total, fashions.length);
+    // }
+    setUpSet(false);
+  }
+
   return (
     <Layout>
       <div className="mx-6 my-6 h-full w-full">
@@ -11,7 +24,10 @@ export default function BodyLanguage() {
           <h2 className="font-large mr-4 flex rounded border p-2 text-lg uppercase">
             Body Language
           </h2>
-          <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100">
+          <div
+            className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
+            onClick={() => setUpSet(true)}
+          >
             <PencilAltIcon className="h-5 w-5" />
           </div>
         </div>
@@ -60,6 +76,11 @@ export default function BodyLanguage() {
             </div>
           </div>
         </div>
+        {isUpSet && (
+          <InsertBodyLanguage
+            onClick={(bodyLanguage) => handleInsert(bodyLanguage)}
+          />
+        )}
       </div>
     </Layout>
   );
