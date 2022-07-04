@@ -17,10 +17,10 @@ export default async function handle(req, res) {
 }
 
 async function handleGET(req, res) {
-  const selectedFashion = {
+  const selectedBodyLanguage = {
     id: true,
-    image: true,
-    clothes: {
+    media: true,
+    emotions: {
       select: {
         selected: true,
       },
@@ -32,56 +32,27 @@ async function handleGET(req, res) {
     },
   };
 
-  const orderBy = {
-    id: "desc",
-  };
   const take = Number(req.query.take);
+  const skip = Number(req.query.skip);
 
-  let operator = {};
+  let operator = {
+    orderBy: {
+      id: "desc",
+    },
+  };
 
-  const clothes = req.query.clothes;
+  const total = await prisma.bodyLanguage.count(operator);
 
-  if (clothes) {
-    const clothesSelected = clothes?.split(",").map((clothe) => Number(clothe));
+  const pageCount = Math.ceil(total / take);
 
-    operator = {
-      select: {
-        fashion: {
-          select: selectedFashion,
-        },
-      },
-      where: {
-        selected: {
-          id: { in: clothesSelected },
-        },
-      },
-    };
+  const bodyLanguages = await prisma.bodyLanguage.findMany({
+    take,
+    skip,
+    ...operator,
+    select: selectedBodyLanguage,
+  });
 
-    const rawFashions = await prisma.fashionClothesSelected.findMany(operator);
-    const fashions = rawFashions.map((fsh) => {
-      return fsh.fashion;
-    });
-    return res.json({ fashions, code: 200 });
-  }
-
-  if (clothes === undefined || clothes === "") {
-    let cursor = undefined;
-    if (req.query.id !== "undefined") {
-      cursor = { id: Number(req.query.id) };
-    }
-    operator = {
-      take,
-      cursor,
-      orderBy,
-      select: selectedFashion,
-    };
-  }
-
-  const fashions = await prisma.fashion.findMany(operator);
-
-  const total = await prisma.fashion.count();
-
-  return res.json({ fashions, total, code: 200 });
+  return res.json({ bodyLanguages, pageCount, code: 200 });
 }
 
 async function handlePOST(req, res) {
