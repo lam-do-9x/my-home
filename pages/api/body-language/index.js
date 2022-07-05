@@ -41,6 +41,44 @@ async function handleGET(req, res) {
     },
   };
 
+  const emotions = req.query.emotions;
+
+  if (emotions && emotions !== "undefined") {
+    const emotionsSelected = emotions
+      ?.split(",")
+      .map((emotion) => Number(emotion));
+
+    operator = {
+      where: {
+        selected: {
+          id: { in: emotionsSelected },
+        },
+      },
+    };
+
+    const bodyLanguagesRaw = await prisma.bodyLanguageEmotionsSelected.findMany(
+      {
+        take,
+        skip,
+        select: {
+          bodyLanguage: {
+            select: selectedBodyLanguage,
+          },
+        },
+        ...operator,
+      }
+    );
+    const bodyLanguages = bodyLanguagesRaw.map((bl) => {
+      return bl.bodyLanguage;
+    });
+
+    const total = await prisma.bodyLanguageEmotionsSelected.count(operator);
+
+    const pageCount = Math.ceil(total / take);
+
+    return res.json({ bodyLanguages, pageCount, code: 200 });
+  }
+
   const total = await prisma.bodyLanguage.count(operator);
 
   const pageCount = Math.ceil(total / take);

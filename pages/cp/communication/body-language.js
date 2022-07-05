@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PencilAltIcon } from "@heroicons/react/outline";
 import Image from "next/image";
+import Select from "react-select";
 import Layout from "../../../components/cp/Layout";
 import { getColor } from "../../../components/cp/Emotion";
 import InsertBodyLanguage from "../../../components/cp/InsertBodyLanguage";
@@ -13,11 +14,16 @@ export default function BodyLanguage() {
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [options, setOptions] = useState([]);
+  const [selected, setSelected] = useState("");
 
-  async function getBodyLanguages() {
-    return await fetch(`/api/body-language?take=8&skip=${offset}`).then((res) =>
-      res.json()
-    );
+  async function getBodyLanguages(selecting) {
+    let url = `/api/body-language?take=8&skip=${offset}`;
+    if (selecting || selected !== "") {
+      url = `${url}&emotions=${selecting || selected}`;
+    }
+
+    return await fetch(url).then((res) => res.json());
   }
 
   useEffect(async () => {
@@ -34,6 +40,27 @@ export default function BodyLanguage() {
       setBodyLanguages(bodyLanguages);
     }
     setUpSet(false);
+  }
+
+  async function getSelectedOption() {
+    const options = await fetch("/api/body-language/selected").then((res) =>
+      res.json()
+    );
+    setOptions(options);
+  }
+
+  async function handleFilterEmotion(selected) {
+    const emotionsSelected = selected
+      ?.map((select) => {
+        return select.id;
+      })
+      .join(",");
+    const { bodyLanguages, pageCount } = await getBodyLanguages(
+      emotionsSelected !== "" ? emotionsSelected : "undefined"
+    );
+    setPageCount(pageCount > 1 ? pageCount : 0);
+    setBodyLanguages(bodyLanguages);
+    setSelected(emotionsSelected);
   }
 
   return (
@@ -56,6 +83,20 @@ export default function BodyLanguage() {
           </div>
         ) : (
           <div className="w-full pb-4">
+            <div
+              className="flex items-center justify-start border-b-2 py-2"
+              style={{
+                marginRight: "4.5rem",
+              }}
+            >
+              <p className="mr-2">Emotions:</p>
+              <Select
+                options={options.bodyLanguageEmotionSelectedOptions}
+                isMulti={true}
+                onFocus={getSelectedOption}
+                onChange={handleFilterEmotion}
+              />
+            </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-y-10">
               {bodyLanguages?.map((bodyLanguage) => (
                 <div
