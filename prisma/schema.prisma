@@ -69,12 +69,13 @@ model FashionTypesSelected {
 }
 
 model BodyLanguage {
-  id        Int                            @id @default(autoincrement())
-  media     String
-  createdAt DateTime                       @default(now())
-  updatedAt DateTime                       @updatedAt
-  emotions  BodyLanguageEmotionsSelected[]
-  types     BodyLanguageTypesSelected[]
+  id               Int                            @id @default(autoincrement())
+  media            String
+  createdAt        DateTime                       @default(now())
+  updatedAt        DateTime                       @updatedAt
+  emotions         BodyLanguageEmotionsSelected[]
+  types            BodyLanguageTypesSelected[]
+  BodyLanguageExam BodyLanguageExam[]
 }
 
 model BodyLanguageEmotionsSelected {
@@ -95,4 +96,14 @@ model BodyLanguageTypesSelected {
   assignedAt     DateTime     @default(now())
 
   @@id([bodyLanguageId, selectedId])
+}
+
+model BodyLanguageExam {
+  id           Int          @id @default(autoincrement())
+  bodyLanguage BodyLanguage @relation(fields: [question], references: [id])
+  question     Int
+  answer       String
+  examDate     DateTime
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
 }
