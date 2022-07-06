@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
-import { PencilAltIcon } from "@heroicons/react/outline";
+import Link from "next/link";
+import {
+  PencilAltIcon,
+  PresentationChartBarIcon,
+} from "@heroicons/react/outline";
 import Image from "next/image";
 import Select from "react-select";
-import Layout from "../../../components/cp/Layout";
-import { getColor } from "../../../components/cp/Emotion";
-import InsertBodyLanguage from "../../../components/cp/InsertBodyLanguage";
-import Loader from "../../../components/cp/Loader";
-import Paginate from "../../../components/cp/Paginate";
+import Layout from "../../../../components/cp/Layout";
+import { getColor } from "../../../../components/cp/Emotion";
+import InsertBodyLanguage from "../../../../components/cp/InsertBodyLanguage";
+import Loader from "../../../../components/cp/Loader";
+import Paginate from "../../../../components/cp/Paginate";
 
 export default function BodyLanguage() {
   const [isUpSet, setUpSet] = useState(false);
@@ -71,11 +75,16 @@ export default function BodyLanguage() {
             Body Language
           </h2>
           <div
-            className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
+            className="mx-1 cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
             onClick={() => setUpSet(true)}
           >
             <PencilAltIcon className="h-5 w-5" />
           </div>
+          <Link href="/cp/communication/body-language/training">
+            <div className="mx-1 cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100">
+              <PresentationChartBarIcon className="h-5 w-5" />
+            </div>
+          </Link>
         </div>
         {isLoading ? (
           <div className="flex h-full items-center justify-center">
