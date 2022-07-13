@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { LightningBoltIcon, ArrowRightIcon } from "@heroicons/react/outline";
 import Layout from "../../../../components/cp/Layout";
 import BodyLanguageTrainingStart from "../../../../components/cp/BodyLanguageTrainingStart";
+import BodyLanguageTrainingQA from "../../../../components/cp/BodyLanguageTrainingQA";
 
 export default function BodyLanguage() {
-  function nextStep() {}
+  const [hideQa, setHideQa] = useState(true);
 
   return (
     <Layout>
@@ -40,7 +42,8 @@ export default function BodyLanguage() {
               <h6 className="mb-2 text-xl font-bold">Finish</h6>
             </div>
           </div>
-          <BodyLanguageTrainingStart onClick={nextStep} />
+          <BodyLanguageTrainingStart onClick={() => setHideQa(false)} />
+          <BodyLanguageTrainingQA hide={hideQa} />
         </div>
       </div>
     </Layout>

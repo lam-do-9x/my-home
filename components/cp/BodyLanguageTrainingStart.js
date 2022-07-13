@@ -18,7 +18,7 @@ export default function BodyLanguageTrainingStart(props) {
       <p className="my-2 text-center text-xl font-bold">
         Welcome to Body Language Training
       </p>
-      <div className="my-2" onClick={nextStep}>
+      <div className="my-2 cursor-pointer" onClick={nextStep}>
         <ArrowCircleRightIcon className="h-10 w-10" />
       </div>
     </div>

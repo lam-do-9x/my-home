@@ -1,5 +1,6 @@
 import { prisma } from "../../../lib/prisma";
 import { capitalizeFirstLetter } from "../../../lib/helper";
+import { getRandomIds } from "../../../lib/randomWord";
 
 export default async function handle(req, res) {
   switch (req.method) {
@@ -79,13 +80,35 @@ async function handleGET(req, res) {
     return res.json({ bodyLanguages, pageCount, code: 200 });
   }
 
+  if (req.query.page) {
+    const itemCount = await prisma.bodyLanguage.count();
+    const randomIds = getRandomIds(itemCount, take);
+
+    const questions = await prisma.bodyLanguage.findMany({
+      where: {
+        id: { in: randomIds },
+      },
+      select: {
+        id: true,
+        media: true,
+        emotions: {
+          select: {
+            selected: true,
+          },
+        },
+      },
+    });
+
+    return res.json({ questions, code: 200 });
+  }
+
   const total = await prisma.bodyLanguage.count(operator);
 
   const pageCount = Math.ceil(total / take);
 
   const bodyLanguages = await prisma.bodyLanguage.findMany({
     take,
-    skip,
+    skip: !Number.isNaN(skip) ? skip : undefined,
     ...operator,
     select: selectedBodyLanguage,
   });

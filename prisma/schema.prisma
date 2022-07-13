@@ -104,6 +104,7 @@ model BodyLanguageExam {
   question     Int
   answer       String
   examDate     DateTime
+  correct      Boolean      @default(false)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
