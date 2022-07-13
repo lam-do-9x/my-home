@@ -55,6 +55,8 @@ export default function BodyLanguageTrainingQA(props) {
       JSON.stringify(qa),
       "POST"
     );
+
+    props.onClick(qa);
   }
 
   function onChangeRadioInput(input, index) {
