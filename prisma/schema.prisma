@@ -46,6 +46,9 @@ model Selected {
   fashionTypesSelected         FashionTypesSelected[]
   bodyLanguageEmotionsSelected BodyLanguageEmotionsSelected[]
   bodyLanguageTypesSelected    BodyLanguageTypesSelected[]
+  receiptIngredientsSelected   ReceiptIngredientsSelected[]
+  receiptSessionsSelected      ReceiptSessionsSelected[]
+  receiptMethodsSelected       ReceiptMethodsSelected[]
 }
 
 model FashionClothesSelected {
@@ -107,4 +110,46 @@ model BodyLanguageExam {
   correct      Boolean      @default(false)
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+}
+
+model Receipt {
+  id          Int                          @id @default(autoincrement())
+  name        String
+  cover       String?
+  notes       String?
+  ingredients ReceiptIngredientsSelected[]
+  sessions    ReceiptSessionsSelected[]
+  methods     ReceiptMethodsSelected[]
+  createdAt   DateTime                     @default(now())
+  updatedAt   DateTime                     @updatedAt
+}
+
+model ReceiptIngredientsSelected {
+  receipt    Receipt  @relation(fields: [receiptId], references: [id])
+  receiptId  Int
+  selected   Selected @relation(fields: [selectedId], references: [id])
+  selectedId Int
+  assignedAt DateTime @default(now())
+
+  @@id([receiptId, selectedId])
+}
+
+model ReceiptSessionsSelected {
+  receipt    Receipt  @relation(fields: [receiptId], references: [id])
+  receiptId  Int
+  selected   Selected @relation(fields: [selectedId], references: [id])
+  selectedId Int
+  assignedAt DateTime @default(now())
+
+  @@id([receiptId, selectedId])
+}
+
+model ReceiptMethodsSelected {
+  receipt    Receipt  @relation(fields: [receiptId], references: [id])
+  receiptId  Int
+  selected   Selected @relation(fields: [selectedId], references: [id])
+  selectedId Int
+  assignedAt DateTime @default(now())
+
+  @@id([receiptId, selectedId])
 }
