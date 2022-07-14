@@ -115,8 +115,9 @@ model BodyLanguageExam {
 model Receipt {
   id          Int                          @id @default(autoincrement())
   name        String
+  reference   String?
   cover       String?
-  notes       String?
+  note        String?
   ingredients ReceiptIngredientsSelected[]
   sessions    ReceiptSessionsSelected[]
   methods     ReceiptMethodsSelected[]
