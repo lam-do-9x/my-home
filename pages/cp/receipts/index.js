@@ -4,21 +4,31 @@ import Layout from "../../../components/cp/Layout";
 import ReceiptModal from "../../../components/cp/ReceiptModal";
 import { AuthMiddleware } from "../../../middleware/auth";
 import Loader from "../../../components/cp/Loader";
+import Paginate from "../../../components/cp/Paginate";
 
 function Receipts() {
   const [modal, setModal] = useState(false);
   const [block, setBlock] = useState(null);
   const [receipts, setReceipts] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
+  const [offset, setOffset] = useState(0);
 
   function openPage(block) {
     setBlock(block);
     setModal(true);
   }
 
+  async function getReceipts() {
+    let url = `/api/receipts?take=8&skip=${offset}`;
+
+    return await fetch(url).then((res) => res.json());
+  }
+
   useEffect(async () => {
-    const { receipts } = await fetch("/api/receipts").then((res) => res.json());
+    const { receipts, pageCount } = await getReceipts();
     setReceipts(receipts);
+    setPageCount(pageCount > 1 ? pageCount : 0);
     setLoading(false);
   }, []);
 
@@ -35,36 +45,51 @@ function Receipts() {
         ) : (
           <div className="overflow-hidden">
             <div className="flex w-full flex-wrap">
-              {receipts
-                .filter((id) => id !== 0)
-                .map((block) => (
-                  <div
-                    className="m-5 flex w-1/5 cursor-pointer flex-col items-center justify-center rounded border border-gray-200 shadow-md"
-                    key={block.id}
-                    onClick={() => openPage(block)}
-                  >
-                    <Image
-                      className="object-fit"
-                      src={
-                        block.cover ??
-                        "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
-                      }
-                      width={300}
-                      height={300}
-                    />
-                    <div className="pt-2 font-medium uppercase">
-                      {block.properties.name.title[0].plain_text}
-                    </div>
-                    <div
-                      className={`mb-2 rounded p-2 bg-${block.properties.type.select.color}-200`}
-                    >
-                      {block.properties.type.select.name}
-                    </div>
+              {receipts.map((receipt) => (
+                <div
+                  className="m-5 flex w-1/5 cursor-pointer flex-col items-center justify-center rounded border border-gray-200 shadow-md"
+                  key={receipt.id}
+                  onClick={() => openPage(receipt)}
+                >
+                  <Image
+                    className="object-fit"
+                    src={
+                      receipt.cover ??
+                      "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
+                    }
+                    width={300}
+                    height={300}
+                  />
+                  <div className="flex w-64 flex-wrap justify-center p-2">
+                    {receipt.sessions?.map((session) => (
+                      <div
+                        key={session.selected.id}
+                        className={`mx-2 mb-2 rounded border p-2`}
+                      >
+                        {session.selected.label}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                  <div className="flex w-64 flex-wrap justify-center p-2">
+                    {receipt.methods?.map((method) => (
+                      <div
+                        key={method.selected.id}
+                        className={`mx-2 mb-2 rounded border p-2`}
+                      >
+                        {method.selected.label}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
               {modal && (
                 <ReceiptModal block={block} onClick={() => setModal(false)} />
               )}
+              <Paginate
+                perPage={8}
+                pageCount={pageCount}
+                handlePageClick={(offset) => setOffset(offset)}
+              />
             </div>
           </div>
         )}

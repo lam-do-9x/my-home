@@ -1,7 +1,54 @@
-import { databaseNotion } from "../../../lib/notion";
+import { prisma } from "../../../lib/prisma";
 
 export default async function handle(req, res) {
-  const id = process.env.NOTION_RECEIPT_ID;
-  const { results } = await databaseNotion(id, {});
-  return res.json({ receipts: results, code: 200 });
+  switch (req.method) {
+    case "GET":
+      handleGET(req, res);
+      break;
+    default:
+      throw new Error(
+        `The HTTP ${req.method} method is not supported at this route.`
+      );
+  }
+}
+
+async function handleGET(req, res) {
+  const selectedReceipt = {
+    id: true,
+    name: true,
+    cover: true,
+    notes: true,
+    sessions: {
+      select: {
+        selected: true,
+      },
+    },
+    methods: {
+      select: {
+        selected: true,
+      },
+    },
+  };
+
+  const take = Number(req.query.take);
+  const skip = Number(req.query.skip);
+
+  let operator = {
+    orderBy: {
+      id: "desc",
+    },
+  };
+
+  const total = await prisma.receipt.count(operator);
+
+  const pageCount = Math.ceil(total / take);
+
+  const receipts = await prisma.receipt.findMany({
+    take,
+    skip,
+    ...operator,
+    select: selectedReceipt,
+  });
+
+  return res.json({ receipts, pageCount, code: 200 });
 }
