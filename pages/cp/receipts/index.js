@@ -11,14 +11,14 @@ import InsertReceipt from "../../../components/cp/InsertReceipt";
 function Receipts() {
   const [modal, setModal] = useState(false);
   const [upset, setUpSet] = useState(false);
-  const [block, setBlock] = useState(null);
+  const [receipt, setReceipt] = useState({});
   const [receipts, setReceipts] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
 
-  function openPage(block) {
-    setBlock(block);
+  function openPage(receipt) {
+    setReceipt(receipt);
     setModal(true);
   }
 
@@ -106,7 +106,10 @@ function Receipts() {
                 </div>
               ))}
               {modal && (
-                <ReceiptModal block={block} onClick={() => setModal(false)} />
+                <ReceiptModal
+                  receipt={receipt}
+                  onClick={() => setModal(false)}
+                />
               )}
               {upset && (
                 <InsertReceipt onClick={(receipt) => handleInsert(receipt)} />

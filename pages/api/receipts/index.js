@@ -23,6 +23,11 @@ async function handleGET(req, res) {
     cover: true,
     note: true,
     reference: true,
+    ingredients: {
+      select: {
+        selected: true,
+      },
+    },
     sessions: {
       select: {
         selected: true,
