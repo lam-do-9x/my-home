@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Select from "react-select";
 import { PencilAltIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
 import ReceiptModal from "../../../components/cp/ReceiptModal";
@@ -16,14 +17,22 @@ function Receipts() {
   const [isLoading, setLoading] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [offset, setOffset] = useState(0);
+  const [options, setOptions] = useState([]);
+  const [selected, setSelected] = useState("");
+  const [selectIngredients, setSelectIngredients] = useState(null);
+  const [selectSessions, setSelectSessions] = useState(null);
 
   function openPage(receipt) {
     setReceipt(receipt);
     setModal(true);
   }
 
-  async function getReceipts() {
+  async function getReceipts(selecting) {
     let url = `/api/receipts?take=8&skip=${offset}`;
+
+    if (selecting || selected !== "") {
+      url = `${url}${selecting || selected}`;
+    }
 
     return await fetch(url).then((res) => res.json());
   }
@@ -33,6 +42,10 @@ function Receipts() {
     setReceipts(receipts);
     setPageCount(pageCount > 1 ? pageCount : 0);
     setLoading(false);
+    const options = await fetch("/api/receipts/selected").then((res) =>
+      res.json()
+    );
+    setOptions(options);
   }, [offset]);
 
   async function handleInsert(receipt) {
@@ -42,6 +55,46 @@ function Receipts() {
       setPageCount(pageCount > 1 ? pageCount : 0);
     }
     setUpSet(false);
+  }
+
+  async function handleOnChangeIngredient(selected) {
+    setSelectSessions(null);
+    setSelectIngredients(selected);
+    const ingredientSelected = selected
+      ?.map((select) => {
+        return select.id;
+      })
+      .join(",");
+
+    const ingredientQuery = `&ingredients=${ingredientSelected}`;
+
+    const { receipts, pageCount } = await getReceipts(
+      ingredientQuery !== "" ? ingredientQuery : "undefined"
+    );
+
+    setPageCount(pageCount > 1 ? pageCount : 0);
+    setReceipts(receipts);
+    setSelected(ingredientQuery);
+  }
+
+  async function handleOnChangeSession(selected) {
+    setSelectIngredients(null);
+    setSelectSessions(selected);
+    const sessionsSelected = selected
+      ?.map((select) => {
+        return select.id;
+      })
+      .join(",");
+
+    const sessionQuery = `&sessions=${sessionsSelected}`;
+
+    const { receipts, pageCount } = await getReceipts(
+      sessionQuery !== "" ? sessionQuery : "undefined"
+    );
+
+    setPageCount(pageCount > 1 ? pageCount : 0);
+    setReceipts(receipts);
+    setSelected(sessionQuery);
   }
 
   return (
@@ -64,6 +117,26 @@ function Receipts() {
           </div>
         ) : (
           <div className="overflow-hidden">
+            <div className="flex border-b-2">
+              <div className="mr-2 flex items-center justify-start py-2">
+                <p className="mr-2">Ingredients:</p>
+                <Select
+                  options={options.receiptIngredients}
+                  isMulti={true}
+                  onChange={handleOnChangeIngredient}
+                  value={selectIngredients}
+                />
+              </div>
+              <div className="flex items-center justify-start py-2">
+                <p className="mr-2">Sessions:</p>
+                <Select
+                  options={options.receiptSessions}
+                  isMulti={true}
+                  onChange={handleOnChangeSession}
+                  value={selectSessions}
+                />
+              </div>
+            </div>
             <div className="my-6 mr-6 grid grid-cols-4 gap-10">
               {receipts.map((receipt) => (
                 <div

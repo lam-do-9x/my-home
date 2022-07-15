@@ -1,5 +1,6 @@
 import { prisma } from "../../../lib/prisma";
 import { capitalizeFirstLetter } from "../../../lib/helper";
+import { removeDuplicateArrayObject } from "../../../lib/helper";
 
 export default async function handle(req, res) {
   switch (req.method) {
@@ -48,6 +49,80 @@ async function handleGET(req, res) {
       id: "desc",
     },
   };
+
+  const ingredients = req.query.ingredients;
+
+  if (ingredients && ingredients !== "undefined") {
+    const ingredientSelected = ingredients
+      ?.split(",")
+      .map((ingredient) => Number(ingredient));
+
+    operator = {
+      where: {
+        selected: {
+          id: { in: ingredientSelected },
+        },
+      },
+    };
+
+    const receiptsRaw = await prisma.receiptIngredientsSelected.findMany({
+      take,
+      skip,
+      select: {
+        receipt: {
+          select: selectedReceipt,
+        },
+      },
+      ...operator,
+    });
+
+    const receipts = removeDuplicateArrayObject(
+      receiptsRaw.map((r) => {
+        return r.receipt;
+      })
+    );
+
+    const pageCount = Math.ceil(receipts.length / take);
+
+    return res.json({ receipts, pageCount, code: 200 });
+  }
+
+  const sessions = req.query.sessions;
+
+  if (sessions && sessions !== "undefined") {
+    const sessionSelected = sessions
+      ?.split(",")
+      .map((session) => Number(session));
+
+    operator = {
+      where: {
+        selected: {
+          id: { in: sessionSelected },
+        },
+      },
+    };
+
+    const receiptsRaw = await prisma.receiptSessionsSelected.findMany({
+      take,
+      skip,
+      select: {
+        receipt: {
+          select: selectedReceipt,
+        },
+      },
+      ...operator,
+    });
+
+    const receipts = removeDuplicateArrayObject(
+      receiptsRaw.map((r) => {
+        return r.receipt;
+      })
+    );
+
+    const pageCount = Math.ceil(receipts.length / take);
+
+    return res.json({ receipts, pageCount, code: 200 });
+  }
 
   const total = await prisma.receipt.count(operator);
 
