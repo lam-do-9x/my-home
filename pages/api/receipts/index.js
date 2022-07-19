@@ -152,7 +152,7 @@ async function handlePOST(req, res) {
         assignedAt,
         selected: {
           create: {
-            value: ingredient.value,
+            value: ingredient.value.toLowerCase(),
             label: capitalizeFirstLetter(ingredient.value),
           },
         },
@@ -175,7 +175,7 @@ async function handlePOST(req, res) {
         assignedAt,
         selected: {
           create: {
-            value: session.value,
+            value: session.value.toLowerCase(),
             label: capitalizeFirstLetter(session.value),
           },
         },
@@ -198,7 +198,7 @@ async function handlePOST(req, res) {
         assignedAt,
         selected: {
           create: {
-            value: method.value,
+            value: method.value.toLowerCase(),
             label: capitalizeFirstLetter(method.value),
           },
         },
