@@ -16,6 +16,14 @@ export default async function handle(req, res) {
       receipt: {
         select: {
           name: true,
+          cover: true,
+          note: true,
+          reference: true,
+          ingredients: {
+            select: {
+              selected: true,
+            },
+          },
         },
       },
     },

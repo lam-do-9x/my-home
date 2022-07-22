@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Select from "react-select";
-import { PencilAltIcon } from "@heroicons/react/outline";
+import { PencilAltIcon, RefreshIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/cp/Layout";
 import ReceiptModal from "../../../components/cp/ReceiptModal";
 import { AuthMiddleware } from "../../../middleware/auth";
@@ -21,6 +21,7 @@ function Receipts() {
   const [selected, setSelected] = useState("");
   const [selectIngredients, setSelectIngredients] = useState(null);
   const [selectSessions, setSelectSessions] = useState(null);
+  const [suggestSession, setSuggestSession] = useState(null);
 
   function openPage(receipt) {
     setReceipt(receipt);
@@ -97,18 +98,34 @@ function Receipts() {
     setSelected(sessionQuery);
   }
 
+  async function suggest() {
+    const { receipt } = await fetch(`/api/receipts/${suggestSession}`).then(
+      (res) => res.json()
+    );
+    setReceipt(receipt);
+    setModal(true);
+  }
+
   return (
     <Layout>
       <div className="mx-6 mt-6 h-full w-full">
         <div className="flex">
-          <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
+          <h2 className="font-large my-auto mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
             Receipts
           </h2>
           <div
-            className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
+            className="my-auto mr-4 cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
             onClick={() => setUpSet(true)}
           >
             <PencilAltIcon className="h-5 w-5" />
+          </div>
+          <div className="flex cursor-pointer items-center rounded-md border p-3 shadow">
+            <Select
+              options={options.receiptSessions}
+              onChange={(selected) => setSuggestSession(selected.value)}
+              instanceId
+            />
+            <RefreshIcon className="ml-2 h-5 w-5" onClick={suggest} />
           </div>
         </div>
         {isLoading ? (

@@ -24,7 +24,7 @@ export default function ReceiptModal(props) {
               <div>
                 <p className="text-xl font-bold">Ingredients</p>
                 <ul className="flex flex-wrap">
-                  {props.receipt.ingredients.map((ingredient) => (
+                  {props.receipt.ingredients?.map((ingredient) => (
                     <li
                       key={ingredient.selected.id}
                       className="my-2 mr-2 border p-2"
@@ -34,32 +34,36 @@ export default function ReceiptModal(props) {
                   ))}
                 </ul>
               </div>
-              <div>
-                <p className="text-xl font-bold">Sessions</p>
-                <ul className="flex flex-wrap">
-                  {props.receipt.sessions.map((session) => (
-                    <li
-                      key={session.selected.id}
-                      className="my-2 mr-2 border p-2"
-                    >
-                      {session.selected.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="text-xl font-bold">Methods</p>
-                <ul className="flex flex-wrap">
-                  {props.receipt.methods.map((method) => (
-                    <li
-                      key={method.selected.id}
-                      className="my-2 mr-2 border p-2"
-                    >
-                      {method.selected.label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {props.receipt.sessions && (
+                <div>
+                  <p className="text-xl font-bold">Sessions</p>
+                  <ul className="flex flex-wrap">
+                    {props.receipt.sessions.map((session) => (
+                      <li
+                        key={session.selected.id}
+                        className="my-2 mr-2 border p-2"
+                      >
+                        {session.selected.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {props.receipt.methods && (
+                <div>
+                  <p className="text-xl font-bold">Methods</p>
+                  <ul className="flex flex-wrap">
+                    {props.receipt.methods.map((method) => (
+                      <li
+                        key={method.selected.id}
+                        className="my-2 mr-2 border p-2"
+                      >
+                        {method.selected.label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               {props.receipt.note.length > 0 && (
                 <div>
                   <p className="text-xl font-bold">Note</p>
