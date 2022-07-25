@@ -1,70 +1,70 @@
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import {
   PencilAltIcon,
   PresentationChartBarIcon,
-} from "@heroicons/react/outline";
-import Image from "next/image";
-import Select from "react-select";
-import Layout from "../../../../components/cp/Layout";
-import { getColor } from "../../../../components/cp/Emotion";
-import InsertBodyLanguage from "../../../../components/cp/InsertBodyLanguage";
-import Loader from "../../../../components/cp/Loader";
-import Paginate from "../../../../components/cp/Paginate";
+} from '@heroicons/react/outline'
+import Image from 'next/image'
+import Select from 'react-select'
+import Layout from '@components/cp/Layout'
+import { getColor } from '@components/cp/Emotion'
+import InsertBodyLanguage from '@components/cp/InsertBodyLanguage'
+import Loader from '@components/cp/Loader'
+import Paginate from '@components/cp/Paginate'
 
 export default function BodyLanguage() {
-  const [isUpSet, setUpSet] = useState(false);
-  const [bodyLanguages, setBodyLanguages] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [options, setOptions] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [isUpSet, setUpSet] = useState(false)
+  const [bodyLanguages, setBodyLanguages] = useState([])
+  const [isLoading, setLoading] = useState(true)
+  const [pageCount, setPageCount] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [options, setOptions] = useState([])
+  const [selected, setSelected] = useState('')
 
   async function getBodyLanguages(selecting) {
-    let url = `/api/body-language?take=8&skip=${offset}`;
-    if (selecting || selected !== "") {
-      url = `${url}&emotions=${selecting || selected}`;
+    let url = `/api/body-language?take=8&skip=${offset}`
+    if (selecting || selected !== '') {
+      url = `${url}&emotions=${selecting || selected}`
     }
 
-    return await fetch(url).then((res) => res.json());
+    return await fetch(url).then((res) => res.json())
   }
 
   useEffect(async () => {
-    const { bodyLanguages, pageCount } = await getBodyLanguages();
-    setPageCount(pageCount > 1 ? pageCount : 0);
-    setBodyLanguages(bodyLanguages);
-    setLoading(false);
-  }, [offset]);
+    const { bodyLanguages, pageCount } = await getBodyLanguages()
+    setPageCount(pageCount > 1 ? pageCount : 0)
+    setBodyLanguages(bodyLanguages)
+    setLoading(false)
+  }, [offset])
 
   async function handleInsert(bodyLanguage) {
     if (Object.keys(bodyLanguage).length > 0) {
-      const { bodyLanguages, pageCount } = await getBodyLanguages();
-      setPageCount(pageCount > 1 ? pageCount : 0);
-      setBodyLanguages(bodyLanguages);
+      const { bodyLanguages, pageCount } = await getBodyLanguages()
+      setPageCount(pageCount > 1 ? pageCount : 0)
+      setBodyLanguages(bodyLanguages)
     }
-    setUpSet(false);
+    setUpSet(false)
   }
 
   async function getSelectedOption() {
-    const options = await fetch("/api/body-language/selected").then((res) =>
+    const options = await fetch('/api/body-language/selected').then((res) =>
       res.json()
-    );
-    setOptions(options);
+    )
+    setOptions(options)
   }
 
   async function handleFilterEmotion(selected) {
     const emotionsSelected = selected
       ?.map((select) => {
-        return select.id;
+        return select.id
       })
-      .join(",");
+      .join(',')
     const { bodyLanguages, pageCount } = await getBodyLanguages(
-      emotionsSelected !== "" ? emotionsSelected : "undefined"
-    );
-    setPageCount(pageCount > 1 ? pageCount : 0);
-    setBodyLanguages(bodyLanguages);
-    setSelected(emotionsSelected);
+      emotionsSelected !== '' ? emotionsSelected : 'undefined'
+    )
+    setPageCount(pageCount > 1 ? pageCount : 0)
+    setBodyLanguages(bodyLanguages)
+    setSelected(emotionsSelected)
   }
 
   return (
@@ -95,7 +95,7 @@ export default function BodyLanguage() {
             <div
               className="flex items-center justify-start border-b-2 py-2"
               style={{
-                marginRight: "4.5rem",
+                marginRight: '4.5rem',
               }}
             >
               <p className="mr-2">Emotions:</p>
@@ -112,20 +112,20 @@ export default function BodyLanguage() {
                   className="flex flex w-fit cursor-pointer flex-col items-center justify-start rounded border border-gray-200 shadow-md"
                   key={bodyLanguage.id}
                 >
-                  {bodyLanguage.media.includes("image") && (
+                  {bodyLanguage.media.includes('image') && (
                     <Image
                       className="object-cover"
                       src={
                         bodyLanguage.media ??
-                        "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
+                        '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'
                       }
                       width={250}
                       height={250}
                     />
                   )}
-                  {bodyLanguage.media.includes("video") && (
+                  {bodyLanguage.media.includes('video') && (
                     <video
-                      style={{ width: "250px", height: "250px" }}
+                      style={{ width: '250px', height: '250px' }}
                       controls={true}
                     >
                       <source src={bodyLanguage.media} />
@@ -168,5 +168,5 @@ export default function BodyLanguage() {
         )}
       </div>
     </Layout>
-  );
+  )
 }

@@ -1,109 +1,109 @@
-import { useEffect, useState } from "react";
-import Image from "next/image";
-import Select from "react-select";
-import { PencilAltIcon, RefreshIcon } from "@heroicons/react/outline";
-import Layout from "../../../components/cp/Layout";
-import ReceiptModal from "../../../components/cp/ReceiptModal";
-import { AuthMiddleware } from "../../../middleware/auth";
-import Loader from "../../../components/cp/Loader";
-import Paginate from "../../../components/cp/Paginate";
-import InsertReceipt from "../../../components/cp/InsertReceipt";
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
+import Select from 'react-select'
+import { PencilAltIcon, RefreshIcon } from '@heroicons/react/outline'
+import Layout from '@components/cp/Layout'
+import ReceiptModal from '@components/cp/ReceiptModal'
+import { AuthMiddleware } from '../../../middleware/auth'
+import Loader from '@components/cp/Loader'
+import Paginate from '@components/cp/Paginate'
+import InsertReceipt from '@components/cp/InsertReceipt'
 
 function Receipts() {
-  const [modal, setModal] = useState(false);
-  const [upset, setUpSet] = useState(false);
-  const [receipt, setReceipt] = useState({});
-  const [receipts, setReceipts] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [options, setOptions] = useState([]);
-  const [selected, setSelected] = useState("");
-  const [selectIngredients, setSelectIngredients] = useState(null);
-  const [selectSessions, setSelectSessions] = useState(null);
-  const [suggestSession, setSuggestSession] = useState(null);
+  const [modal, setModal] = useState(false)
+  const [upset, setUpSet] = useState(false)
+  const [receipt, setReceipt] = useState({})
+  const [receipts, setReceipts] = useState([])
+  const [isLoading, setLoading] = useState(true)
+  const [pageCount, setPageCount] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [options, setOptions] = useState([])
+  const [selected, setSelected] = useState('')
+  const [selectIngredients, setSelectIngredients] = useState(null)
+  const [selectSessions, setSelectSessions] = useState(null)
+  const [suggestSession, setSuggestSession] = useState(null)
 
   function openPage(receipt) {
-    setReceipt(receipt);
-    setModal(true);
+    setReceipt(receipt)
+    setModal(true)
   }
 
   async function getReceipts(selecting) {
-    let url = `/api/receipts?take=8&skip=${offset}`;
+    let url = `/api/receipts?take=8&skip=${offset}`
 
-    if (selecting || selected !== "") {
-      url = `${url}${selecting || selected}`;
+    if (selecting || selected !== '') {
+      url = `${url}${selecting || selected}`
     }
 
-    return await fetch(url).then((res) => res.json());
+    return await fetch(url).then((res) => res.json())
   }
 
   useEffect(async () => {
-    const { receipts, pageCount } = await getReceipts();
-    setReceipts(receipts);
-    setPageCount(pageCount > 1 ? pageCount : 0);
-    setLoading(false);
-    const options = await fetch("/api/receipts/selected").then((res) =>
+    const { receipts, pageCount } = await getReceipts()
+    setReceipts(receipts)
+    setPageCount(pageCount > 1 ? pageCount : 0)
+    setLoading(false)
+    const options = await fetch('/api/receipts/selected').then((res) =>
       res.json()
-    );
-    setOptions(options);
-  }, [offset]);
+    )
+    setOptions(options)
+  }, [offset])
 
   async function handleInsert(receipt) {
     if (Object.keys(receipt).length > 0) {
-      const { receipts, pageCount } = await getReceipts();
-      setReceipts(receipts);
-      setPageCount(pageCount > 1 ? pageCount : 0);
+      const { receipts, pageCount } = await getReceipts()
+      setReceipts(receipts)
+      setPageCount(pageCount > 1 ? pageCount : 0)
     }
-    setUpSet(false);
+    setUpSet(false)
   }
 
   async function handleOnChangeIngredient(selected) {
-    setSelectSessions(null);
-    setSelectIngredients(selected);
+    setSelectSessions(null)
+    setSelectIngredients(selected)
     const ingredientSelected = selected
       ?.map((select) => {
-        return select.id;
+        return select.id
       })
-      .join(",");
+      .join(',')
 
-    const ingredientQuery = `&ingredients=${ingredientSelected}`;
+    const ingredientQuery = `&ingredients=${ingredientSelected}`
 
     const { receipts, pageCount } = await getReceipts(
-      ingredientQuery !== "" ? ingredientQuery : "undefined"
-    );
+      ingredientQuery !== '' ? ingredientQuery : 'undefined'
+    )
 
-    setPageCount(pageCount > 1 ? pageCount : 0);
-    setReceipts(receipts);
-    setSelected(ingredientQuery);
+    setPageCount(pageCount > 1 ? pageCount : 0)
+    setReceipts(receipts)
+    setSelected(ingredientQuery)
   }
 
   async function handleOnChangeSession(selected) {
-    setSelectIngredients(null);
-    setSelectSessions(selected);
+    setSelectIngredients(null)
+    setSelectSessions(selected)
     const sessionsSelected = selected
       ?.map((select) => {
-        return select.id;
+        return select.id
       })
-      .join(",");
+      .join(',')
 
-    const sessionQuery = `&sessions=${sessionsSelected}`;
+    const sessionQuery = `&sessions=${sessionsSelected}`
 
     const { receipts, pageCount } = await getReceipts(
-      sessionQuery !== "" ? sessionQuery : "undefined"
-    );
+      sessionQuery !== '' ? sessionQuery : 'undefined'
+    )
 
-    setPageCount(pageCount > 1 ? pageCount : 0);
-    setReceipts(receipts);
-    setSelected(sessionQuery);
+    setPageCount(pageCount > 1 ? pageCount : 0)
+    setReceipts(receipts)
+    setSelected(sessionQuery)
   }
 
   async function suggest() {
     const { receipt } = await fetch(`/api/receipts/${suggestSession}`).then(
       (res) => res.json()
-    );
-    setReceipt(receipt);
-    setModal(true);
+    )
+    setReceipt(receipt)
+    setModal(true)
   }
 
   return (
@@ -165,7 +165,7 @@ function Receipts() {
                     className="object-fit"
                     src={
                       receipt.cover ??
-                      "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
+                      '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'
                     }
                     width={300}
                     height={200}
@@ -216,7 +216,7 @@ function Receipts() {
         )}
       </div>
     </Layout>
-  );
+  )
 }
 
-export default AuthMiddleware(Receipts);
+export default AuthMiddleware(Receipts)

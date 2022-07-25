@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { LightningBoltIcon, ArrowRightIcon } from "@heroicons/react/outline";
-import Layout from "../../../../components/cp/Layout";
-import BodyLanguageTrainingStart from "../../../../components/cp/BodyLanguageTrainingStart";
-import BodyLanguageTrainingQA from "../../../../components/cp/BodyLanguageTrainingQA";
-import BodyLanguageTrainingFinish from "../../../../components/cp/BodyLanguageTrainingFinish";
+import { useState } from 'react'
+import { LightningBoltIcon, ArrowRightIcon } from '@heroicons/react/outline'
+import Layout from '@components/cp/Layout'
+import BodyLanguageTrainingStart from '@components/cp/BodyLanguageTrainingStart'
+import BodyLanguageTrainingQA from '@components/cp/BodyLanguageTrainingQA'
+import BodyLanguageTrainingFinish from '@components/cp/BodyLanguageTrainingFinish'
 
 export default function BodyLanguage() {
-  const [hideQa, setHideQa] = useState(true);
-  const [hideFinish, setHideFinish] = useState(true);
-  const [qa, setQa] = useState([]);
+  const [hideQa, setHideQa] = useState(true)
+  const [hideFinish, setHideFinish] = useState(true)
+  const [qa, setQa] = useState([])
 
   function showResult(qa) {
-    setQa(qa);
-    setHideQa(true);
-    setHideFinish(false);
+    setQa(qa)
+    setHideQa(true)
+    setHideFinish(false)
   }
 
   return (
@@ -60,5 +60,5 @@ export default function BodyLanguage() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }

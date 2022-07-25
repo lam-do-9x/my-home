@@ -1,92 +1,92 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from 'react'
 import {
   AdjustmentsIcon,
   PencilIcon,
   AnnotationIcon,
-} from "@heroicons/react/outline";
-import { SearchIcon, CheckIcon } from "@heroicons/react/solid";
-import Layout from "../../../components/cp/Layout";
-import { AuthMiddleware } from "../../../middleware/auth";
-import Loader from "../../../components/cp/Loader";
-import Modal from "../../../components/cp/Modal";
-import UpSetModal from "../../../components/cp/UpSetModal";
-import { debounce } from "../../../lib/helper";
-import fetchClient from "../../../lib/fetchClient";
-import Paginate from "../../../components/cp/Paginate";
+} from '@heroicons/react/outline'
+import { SearchIcon, CheckIcon } from '@heroicons/react/solid'
+import Layout from '@components/cp/Layout'
+import { AuthMiddleware } from '../../../middleware/auth'
+import Loader from '@components/cp/Loader'
+import Modal from '@components/cp/Modal'
+import UpSetModal from '@components/cp/UpSetModal'
+import { debounce } from '@lib/helper'
+import fetchClient from '@lib/fetchClient'
+import Paginate from '@components/cp/Paginate'
 
 function Dictionary() {
-  const [isLoading, setLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [dictionaries, setDictionaries] = useState([]);
-  const [dictionary, setDictionary] = useState({});
-  const [isShow, setShow] = useState(false);
-  const [isUpSet, setUpSet] = useState(false);
-  const [keyword, setKeyword] = useState("");
+  const [isLoading, setLoading] = useState(true)
+  const [pageCount, setPageCount] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [dictionaries, setDictionaries] = useState([])
+  const [dictionary, setDictionary] = useState({})
+  const [isShow, setShow] = useState(false)
+  const [isUpSet, setUpSet] = useState(false)
+  const [keyword, setKeyword] = useState('')
 
   useEffect(async () => {
-    await fetchDictionaries();
-    setLoading(false);
-  }, [offset]);
+    await fetchDictionaries()
+    setLoading(false)
+  }, [offset])
 
   async function fetchDictionaries(word) {
-    let url = `/api/dictionaries?take=10&skip=${offset}`;
+    let url = `/api/dictionaries?take=10&skip=${offset}`
 
-    if (word || keyword !== "") {
-      url = `${url}&q=${word || keyword}`;
+    if (word || keyword !== '') {
+      url = `${url}&q=${word || keyword}`
     }
 
-    const { dictionaries, pageCount } = await fetchClient(url);
+    const { dictionaries, pageCount } = await fetchClient(url)
 
-    setPageCount(pageCount > 1 ? pageCount : 0);
+    setPageCount(pageCount > 1 ? pageCount : 0)
 
-    setDictionaries(dictionaries);
+    setDictionaries(dictionaries)
   }
 
   async function fetchDicByQuery(word) {
-    await fetchDictionaries(word);
-    setLoading(false);
+    await fetchDictionaries(word)
+    setLoading(false)
   }
 
   const debounceDropDown = useRef(
     debounce((word) => fetchDicByQuery(word), 1000)
-  ).current;
+  ).current
 
   function search(e) {
-    setLoading(true);
-    setPageCount(0);
-    setOffset(0);
-    const { value } = e.target;
-    setKeyword(value);
-    debounceDropDown(value);
+    setLoading(true)
+    setPageCount(0)
+    setOffset(0)
+    const { value } = e.target
+    setKeyword(value)
+    debounceDropDown(value)
   }
 
   function show(id) {
-    const dictionary = dictionaries.find((d) => d.id === id);
+    const dictionary = dictionaries.find((d) => d.id === id)
 
-    setDictionary(dictionary);
+    setDictionary(dictionary)
 
-    setShow(true);
+    setShow(true)
   }
 
   function edit(id) {
-    const dictionary = dictionaries.find((d) => d.id === id);
+    const dictionary = dictionaries.find((d) => d.id === id)
 
-    setDictionary(dictionary);
+    setDictionary(dictionary)
 
-    setUpSet(true);
+    setUpSet(true)
   }
 
   function close(dictionary) {
     if (Object.keys(dictionary).length !== 0) {
-      const index = dictionaries.findIndex((d) => d.id === dictionary.id);
+      const index = dictionaries.findIndex((d) => d.id === dictionary.id)
 
-      dictionaries[index] = dictionary;
+      dictionaries[index] = dictionary
 
-      setDictionaries(dictionaries);
+      setDictionaries(dictionaries)
     }
 
-    setUpSet(false);
+    setUpSet(false)
   }
 
   return (
@@ -204,7 +204,7 @@ function Dictionary() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
-export default AuthMiddleware(Dictionary);
+export default AuthMiddleware(Dictionary)

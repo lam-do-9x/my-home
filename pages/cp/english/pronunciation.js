@@ -1,37 +1,37 @@
-import { useEffect, useState } from "react";
-import Layout from "../../../components/cp/Layout";
-import { AuthMiddleware } from "../../../middleware/auth";
-import Loader from "../../../components/cp/Loader";
-import PronunciationModal from "../../../components/cp/PronunciationModal";
+import { useEffect, useState } from 'react'
+import Layout from '@components/cp/Layout'
+import { AuthMiddleware } from '../../../middleware/auth'
+import Loader from '@components/cp/Loader'
+import PronunciationModal from '@components/cp/PronunciationModal'
 
 function Pronunciation() {
-  const [isLoading, setLoading] = useState(true);
-  const [isShow, setShow] = useState(false);
-  const [pronunciations, setPronunciation] = useState([]);
-  const [sounds, setSounds] = useState([]);
-  const [ipa, setIpa] = useState(null);
+  const [isLoading, setLoading] = useState(true)
+  const [isShow, setShow] = useState(false)
+  const [pronunciations, setPronunciation] = useState([])
+  const [sounds, setSounds] = useState([])
+  const [ipa, setIpa] = useState(null)
 
   useEffect(async () => {
-    const { pronunciations } = await fetch("/api/pronunciations").then((res) =>
+    const { pronunciations } = await fetch('/api/pronunciations').then((res) =>
       res.json()
-    );
+    )
 
-    setPronunciation(pronunciations);
+    setPronunciation(pronunciations)
 
-    setLoading(false);
-  }, []);
+    setLoading(false)
+  }, [])
 
   const show = async (ipa) => {
     const { pronunciations } = await fetch(`/api/pronunciations/${ipa}`).then(
       (res) => res.json()
-    );
+    )
 
-    setSounds(pronunciations);
+    setSounds(pronunciations)
 
-    setIpa(ipa);
+    setIpa(ipa)
 
-    setShow(true);
-  };
+    setShow(true)
+  }
 
   return (
     <Layout>
@@ -101,7 +101,7 @@ function Pronunciation() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
-export default AuthMiddleware(Pronunciation);
+export default AuthMiddleware(Pronunciation)

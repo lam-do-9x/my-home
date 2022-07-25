@@ -1,97 +1,97 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from 'react'
 import {
   AdjustmentsIcon,
   PencilAltIcon,
   PencilIcon,
-} from "@heroicons/react/outline";
-import { SearchIcon } from "@heroicons/react/solid";
-import Layout from "../../../components/cp/Layout";
-import UpSetImpov from "../../../components/cp/UpSetImpov";
-import MDRender from "../../../components/cp/MDR";
-import RandomWord from "../../../components/cp/RandomWord";
-import { debounce } from "../../../lib/helper";
-import Loader from "../../../components/cp/Loader";
-import Modal from "../../../components/cp/ImprovModal";
-import Paginate from "../../../components/cp/Paginate";
+} from '@heroicons/react/outline'
+import { SearchIcon } from '@heroicons/react/solid'
+import Layout from '@components/cp/Layout'
+import UpSetImpov from '@components/cp/UpSetImpov'
+import MDRender from '@components/cp/MDR'
+import RandomWord from '@components/cp/RandomWord'
+import { debounce } from '@lib/helper'
+import Loader from '@components/cp/Loader'
+import Modal from '@components/cp/ImprovModal'
+import Paginate from '@components/cp/Paginate'
 
 export default function Improvisation() {
-  const [isLoading, setLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [isUpSet, setUpSet] = useState(false);
-  const [isShow, setShow] = useState(false);
-  const [improvisations, setImprovisations] = useState([]);
-  const [improvisation, setImprovisation] = useState({});
-  const [keyword, setKeyword] = useState("");
+  const [isLoading, setLoading] = useState(true)
+  const [pageCount, setPageCount] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [isUpSet, setUpSet] = useState(false)
+  const [isShow, setShow] = useState(false)
+  const [improvisations, setImprovisations] = useState([])
+  const [improvisation, setImprovisation] = useState({})
+  const [keyword, setKeyword] = useState('')
 
   useEffect(async () => {
-    await fetchImprovisations();
-    setLoading(false);
-  }, [offset]);
+    await fetchImprovisations()
+    setLoading(false)
+  }, [offset])
 
   async function close(improvisation) {
     if (Object.keys(improvisation).length !== 0) {
-      const index = improvisations.findIndex((i) => i.id === improvisation.id);
+      const index = improvisations.findIndex((i) => i.id === improvisation.id)
 
-      improvisations[index] = improvisation;
+      improvisations[index] = improvisation
 
-      setImprovisations(improvisations);
+      setImprovisations(improvisations)
     } else {
-      await fetchImprovisations();
+      await fetchImprovisations()
     }
 
-    setUpSet(false);
+    setUpSet(false)
   }
 
   async function fetchImprovisations(word) {
-    let url = `/api/improvisations?take=5&skip=${offset}`;
+    let url = `/api/improvisations?take=5&skip=${offset}`
 
-    if (word || keyword !== "") {
-      url = `${url}&q=${word || keyword}`;
+    if (word || keyword !== '') {
+      url = `${url}&q=${word || keyword}`
     }
 
     const { improvisations, pageCount } = await fetch(url).then((res) =>
       res.json()
-    );
+    )
 
-    setPageCount(pageCount > 1 ? pageCount : 0);
+    setPageCount(pageCount > 1 ? pageCount : 0)
 
-    setImprovisations(improvisations);
+    setImprovisations(improvisations)
   }
 
   async function fetchImprovByQuery(word) {
-    await fetchImprovisations(word);
-    setLoading(false);
+    await fetchImprovisations(word)
+    setLoading(false)
   }
 
   const debounceDropDown = useRef(
     debounce((nextValue) => fetchImprovByQuery(nextValue), 1000)
-  ).current;
+  ).current
 
   function search(e) {
-    setLoading(true);
-    setPageCount(0);
-    setOffset(0);
-    const { value } = e.target;
-    setKeyword(value);
-    debounceDropDown(value);
+    setLoading(true)
+    setPageCount(0)
+    setOffset(0)
+    const { value } = e.target
+    setKeyword(value)
+    debounceDropDown(value)
   }
 
   function create() {
-    setImprovisation({});
-    setUpSet(true);
+    setImprovisation({})
+    setUpSet(true)
   }
 
   function edit(id) {
-    const improvisation = improvisations.find((i) => i.id === id);
-    setImprovisation(improvisation);
-    setUpSet(true);
+    const improvisation = improvisations.find((i) => i.id === id)
+    setImprovisation(improvisation)
+    setUpSet(true)
   }
 
   async function show(id) {
-    const improvisation = improvisations.find((i) => i.id === id);
-    setImprovisation(improvisation);
-    setShow(true);
+    const improvisation = improvisations.find((i) => i.id === id)
+    setImprovisation(improvisation)
+    setShow(true)
   }
 
   return (
@@ -154,7 +154,7 @@ export default function Improvisation() {
                       >
                         <MDRender
                           content={improvisation.display}
-                          className={"h-5 overflow-hidden"}
+                          className={'h-5 overflow-hidden'}
                         />
                       </td>
                       <td className="py-3 px-6">
@@ -191,5 +191,5 @@ export default function Improvisation() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
