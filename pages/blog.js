@@ -1,6 +1,6 @@
-import Main from "../components/Main";
-import AllBlog from "../components/AllBlog";
-import Nav from "../components/Nav";
+import Main from '@components/Main'
+import AllBlog from '@components/AllBlog'
+import Nav from '@components/Nav'
 
 export default function Blog({ blogs }) {
   return (
@@ -21,25 +21,25 @@ export default function Blog({ blogs }) {
                       blog={blog}
                       key={blog.properties.slug.rich_text[0]?.plain_text}
                     />
-                  );
+                  )
                 })}
               </div>
-            );
+            )
           })}
         </div>
       </div>
     </Main>
-  );
+  )
 }
 
 export async function getServerSideProps() {
   const { blogs } = await fetch(`${process.env.APP_URL}/api/blogs`).then(
     (res) => res.json()
-  );
+  )
 
   return {
     props: {
       blogs,
     },
-  };
+  }
 }

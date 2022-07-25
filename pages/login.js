@@ -1,29 +1,29 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/client";
-import Main from "../components/Main";
-import Login from "../components/Login";
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/client'
+import Main from '@components/Main'
+import Login from '@components/Login'
 
 export default function login() {
-  const router = useRouter();
-  const [redirectTo, setRedirectTo] = useState("/cp/english/youglish");
-  const [session, loading] = useSession();
+  const router = useRouter()
+  const [redirectTo, setRedirectTo] = useState('/cp/english/youglish')
+  const [session, loading] = useSession()
 
   useEffect(async () => {
-    if (!router.isReady) return;
-    const { redirect } = router.query;
+    if (!router.isReady) return
+    const { redirect } = router.query
     if (redirect) {
-      setRedirectTo(redirect);
+      setRedirectTo(redirect)
     }
-  }, [router.isReady]);
+  }, [router.isReady])
 
   if (loading && session) {
-    router.push(redirectTo);
+    router.push(redirectTo)
   }
 
   return (
     <Main>
       <Login redirectTo={redirectTo} />
     </Main>
-  );
+  )
 }

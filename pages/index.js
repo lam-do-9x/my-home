@@ -1,12 +1,12 @@
-import Link from "next/link";
-import Main from "../components/Main";
-import HomeBlog from "../components/HomeBlog";
-import Nav from "../components/Nav";
+import Link from 'next/link'
+import Main from '@components/Main'
+import HomeBlog from '@components/HomeBlog'
+import Nav from '@components/Nav'
 
 const isLast = (blogs, index) => {
-  const blogLength = blogs.length - 1;
-  return blogLength === index;
-};
+  const blogLength = blogs.length - 1
+  return blogLength === index
+}
 
 export default function Index({ blogs }) {
   return (
@@ -32,17 +32,17 @@ export default function Index({ blogs }) {
         )}
       </div>
     </Main>
-  );
+  )
 }
 
 export async function getServerSideProps() {
   const { blogs } = await fetch(
     `${process.env.APP_URL}/api/blogs?page=home`
-  ).then((res) => res.json());
+  ).then((res) => res.json())
 
   return {
     props: {
       blogs,
     },
-  };
+  }
 }

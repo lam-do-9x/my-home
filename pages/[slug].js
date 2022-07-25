@@ -1,7 +1,7 @@
-import Main from "../components/Main";
-import Nav from "../components/Nav";
-import NotionRender from "../components/notion/NotionRender";
-import { parsePageId } from "../lib/parsePageId";
+import Main from '@components/Main'
+import Nav from '@components/Nav'
+import NotionRender from '@components/notion/NotionRender'
+import { parsePageId } from '@lib/parsePageId'
 
 export default function Slug({ blocks, page }) {
   return (
@@ -13,7 +13,7 @@ export default function Slug({ blocks, page }) {
             .art-cover {
               background-image: url(${page.cover
                 ? page.cover[page.cover.type].url
-                : "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"});
+                : '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'});
             }
           `}</style>
           <div className="art-cover absolute z-10 h-screen w-full bg-cover bg-center bg-no-repeat opacity-30"></div>
@@ -36,13 +36,13 @@ export default function Slug({ blocks, page }) {
         </div>
       </div>
     </Main>
-  );
+  )
 }
 
 export const getServerSideProps = async ({ params }) => {
-  const id = parsePageId(params.slug, { uuid: false });
+  const id = parsePageId(params.slug, { uuid: false })
   const { blocks, page } = await fetch(
     `${process.env.APP_URL}/api/blogs/${id}`
-  ).then((res) => res.json());
-  return { props: { blocks, page } };
-};
+  ).then((res) => res.json())
+  return { props: { blocks, page } }
+}
