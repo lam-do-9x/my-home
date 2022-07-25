@@ -1,9 +1,9 @@
-import { prisma } from "../../../lib/prisma";
-import { removeDuplicateArrayObject } from "../../../lib/helper";
+import { prisma } from '@lib/prisma'
+import { removeDuplicateArrayObject } from '@lib/helper'
 
 function transformSelected(selected) {
-  const selectedSection = selected.map((clothe) => clothe.selected);
-  return removeDuplicateArrayObject(selectedSection);
+  const selectedSection = selected.map((clothe) => clothe.selected)
+  return removeDuplicateArrayObject(selectedSection)
 }
 
 export default async function handle(req, res) {
@@ -12,8 +12,8 @@ export default async function handle(req, res) {
       select: {
         selected: true,
       },
-    });
-  const receiptIngredients = transformSelected(receiptIngredientsSelected);
+    })
+  const receiptIngredients = transformSelected(receiptIngredientsSelected)
 
   const receiptSessionsSelected = await prisma.receiptSessionsSelected.findMany(
     {
@@ -21,15 +21,15 @@ export default async function handle(req, res) {
         selected: true,
       },
     }
-  );
-  const receiptSessions = transformSelected(receiptSessionsSelected);
+  )
+  const receiptSessions = transformSelected(receiptSessionsSelected)
 
   const receiptMethodsSelected = await prisma.receiptMethodsSelected.findMany({
     select: {
       selected: true,
     },
-  });
-  const receiptMethods = transformSelected(receiptMethodsSelected);
+  })
+  const receiptMethods = transformSelected(receiptMethodsSelected)
 
-  return res.json({ receiptIngredients, receiptSessions, receiptMethods });
+  return res.json({ receiptIngredients, receiptSessions, receiptMethods })
 }

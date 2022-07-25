@@ -1,4 +1,4 @@
-import { prisma, Prisma, prismaErrorCode } from "../../../lib/prisma";
+import { prisma, Prisma, prismaErrorCode } from '@lib/prisma'
 
 export default async function handle(req, res) {
   try {
@@ -7,15 +7,15 @@ export default async function handle(req, res) {
         id: Number(req.query.id),
       },
       data: req.body,
-    });
+    })
 
-    return res.json({ dictionary, code: 200 });
+    return res.json({ dictionary, code: 200 })
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       return res.json({
         message: prismaErrorCode(e.code, e.meta.target[0]),
         code: 400,
-      });
+      })
     }
   }
 }

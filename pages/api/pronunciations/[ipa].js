@@ -1,4 +1,4 @@
-import { prisma } from "../../../lib/prisma";
+import { prisma } from '@lib/prisma'
 
 export default async function handle(req, res) {
   const operate = {
@@ -11,8 +11,8 @@ export default async function handle(req, res) {
       word: true,
       pronunciation: true,
     },
-  };
+  }
 
-  const pronunciations = await prisma.dictionary.findMany(operate);
-  return res.json({ pronunciations, code: 200 });
+  const pronunciations = await prisma.dictionary.findMany(operate)
+  return res.json({ pronunciations, code: 200 })
 }

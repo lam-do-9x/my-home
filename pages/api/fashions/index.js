@@ -1,18 +1,18 @@
-import { prisma } from "../../../lib/prisma";
-import { capitalizeFirstLetter } from "../../../lib/helper";
+import { prisma } from '@lib/prisma'
+import { capitalizeFirstLetter } from '@lib/helper'
 
 export default async function handle(req, res) {
   switch (req.method) {
-    case "POST":
-      handlePOST(req, res);
-      break;
-    case "GET":
-      handleGET(req, res);
-      break;
+    case 'POST':
+      handlePOST(req, res)
+      break
+    case 'GET':
+      handleGET(req, res)
+      break
     default:
       throw new Error(
         `The HTTP ${req.method} method is not supported at this route.`
-      );
+      )
   }
 }
 
@@ -30,19 +30,19 @@ async function handleGET(req, res) {
         selected: true,
       },
     },
-  };
+  }
 
   const orderBy = {
-    id: "desc",
-  };
-  const take = Number(req.query.take);
+    id: 'desc',
+  }
+  const take = Number(req.query.take)
 
-  let operator = {};
+  let operator = {}
 
-  const clothes = req.query.clothes;
+  const clothes = req.query.clothes
 
   if (clothes) {
-    const clothesSelected = clothes?.split(",").map((clothe) => Number(clothe));
+    const clothesSelected = clothes?.split(',').map((clothe) => Number(clothe))
 
     operator = {
       select: {
@@ -55,37 +55,37 @@ async function handleGET(req, res) {
           id: { in: clothesSelected },
         },
       },
-    };
+    }
 
-    const rawFashions = await prisma.fashionClothesSelected.findMany(operator);
+    const rawFashions = await prisma.fashionClothesSelected.findMany(operator)
     const fashions = rawFashions.map((fsh) => {
-      return fsh.fashion;
-    });
-    return res.json({ fashions, code: 200 });
+      return fsh.fashion
+    })
+    return res.json({ fashions, code: 200 })
   }
 
-  if (clothes === undefined || clothes === "") {
-    let cursor = undefined;
-    if (req.query.id !== "undefined") {
-      cursor = { id: Number(req.query.id) };
+  if (clothes === undefined || clothes === '') {
+    let cursor = undefined
+    if (req.query.id !== 'undefined') {
+      cursor = { id: Number(req.query.id) }
     }
     operator = {
       take,
       cursor,
       orderBy,
       select: selectedFashion,
-    };
+    }
   }
 
-  const fashions = await prisma.fashion.findMany(operator);
+  const fashions = await prisma.fashion.findMany(operator)
 
-  const total = await prisma.fashion.count();
+  const total = await prisma.fashion.count()
 
-  return res.json({ fashions, total, code: 200 });
+  return res.json({ fashions, total, code: 200 })
 }
 
 async function handlePOST(req, res) {
-  const assignedAt = new Date();
+  const assignedAt = new Date()
   const createClothes = req.body.clothes?.map((clothe) => {
     if (clothe.__isNew__) {
       return {
@@ -96,7 +96,7 @@ async function handlePOST(req, res) {
             label: capitalizeFirstLetter(clothe.value),
           },
         },
-      };
+      }
     }
 
     return {
@@ -106,8 +106,8 @@ async function handlePOST(req, res) {
           id: clothe.id,
         },
       },
-    };
-  });
+    }
+  })
 
   const createTypes = req.body.types?.map((type) => {
     if (type.__isNew__) {
@@ -119,7 +119,7 @@ async function handlePOST(req, res) {
             label: capitalizeFirstLetter(type.value),
           },
         },
-      };
+      }
     }
 
     return {
@@ -129,8 +129,8 @@ async function handlePOST(req, res) {
           id: type.id,
         },
       },
-    };
-  });
+    }
+  })
 
   const fashion = await prisma.fashion.create({
     data: {
@@ -138,7 +138,7 @@ async function handlePOST(req, res) {
       clothes: { create: createClothes },
       types: { create: createTypes },
     },
-  });
+  })
 
-  return res.json({ fashion, code: 201 });
+  return res.json({ fashion, code: 201 })
 }

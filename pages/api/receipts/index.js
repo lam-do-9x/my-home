@@ -1,18 +1,18 @@
-import { prisma } from "../../../lib/prisma";
-import { capitalizeFirstLetter } from "../../../lib/helper";
+import { prisma } from '@lib/prisma'
+import { capitalizeFirstLetter } from '@lib/helper'
 
 export default async function handle(req, res) {
   switch (req.method) {
-    case "GET":
-      handleGET(req, res);
-      break;
-    case "POST":
-      handlePOST(req, res);
-      break;
+    case 'GET':
+      handleGET(req, res)
+      break
+    case 'POST':
+      handlePOST(req, res)
+      break
     default:
       throw new Error(
         `The HTTP ${req.method} method is not supported at this route.`
-      );
+      )
   }
 }
 
@@ -38,23 +38,23 @@ async function handleGET(req, res) {
         selected: true,
       },
     },
-  };
+  }
 
-  const take = Number(req.query.take);
-  const skip = Number(req.query.skip);
+  const take = Number(req.query.take)
+  const skip = Number(req.query.skip)
 
   let operator = {
     orderBy: {
-      id: "desc",
+      id: 'desc',
     },
-  };
+  }
 
-  const ingredients = req.query.ingredients;
+  const ingredients = req.query.ingredients
 
-  if (ingredients && ingredients !== "undefined") {
+  if (ingredients && ingredients !== 'undefined') {
     const ingredientSelected = ingredients
-      ?.split(",")
-      .map((ingredient) => Number(ingredient));
+      ?.split(',')
+      .map((ingredient) => Number(ingredient))
 
     operator = {
       where: {
@@ -62,8 +62,8 @@ async function handleGET(req, res) {
           id: { in: ingredientSelected },
         },
       },
-      distinct: ["receiptId"],
-    };
+      distinct: ['receiptId'],
+    }
 
     const receiptsRaw = await prisma.receiptIngredientsSelected.findMany({
       take,
@@ -74,27 +74,27 @@ async function handleGET(req, res) {
         },
       },
       ...operator,
-    });
+    })
 
     const receipts = receiptsRaw.map((r) => {
-      return r.receipt;
-    });
+      return r.receipt
+    })
 
     const total = await prisma.receiptIngredientsSelected.findMany({
       ...operator,
-    });
+    })
 
-    const pageCount = Math.ceil(total.length / take);
+    const pageCount = Math.ceil(total.length / take)
 
-    return res.json({ receipts, pageCount, code: 200 });
+    return res.json({ receipts, pageCount, code: 200 })
   }
 
-  const sessions = req.query.sessions;
+  const sessions = req.query.sessions
 
-  if (sessions && sessions !== "undefined") {
+  if (sessions && sessions !== 'undefined') {
     const sessionSelected = sessions
-      ?.split(",")
-      .map((session) => Number(session));
+      ?.split(',')
+      .map((session) => Number(session))
 
     operator = {
       where: {
@@ -102,8 +102,8 @@ async function handleGET(req, res) {
           id: { in: sessionSelected },
         },
       },
-      distinct: ["receiptId"],
-    };
+      distinct: ['receiptId'],
+    }
 
     const receiptsRaw = await prisma.receiptSessionsSelected.findMany({
       take,
@@ -114,37 +114,37 @@ async function handleGET(req, res) {
         },
       },
       ...operator,
-    });
+    })
 
     const receipts = receiptsRaw.map((r) => {
-      return r.receipt;
-    });
+      return r.receipt
+    })
 
     const total = await prisma.receiptSessionsSelected.findMany({
       ...operator,
-    });
+    })
 
-    const pageCount = Math.ceil(total.length / take);
+    const pageCount = Math.ceil(total.length / take)
 
-    return res.json({ receipts, pageCount, code: 200 });
+    return res.json({ receipts, pageCount, code: 200 })
   }
 
-  const total = await prisma.receipt.count(operator);
+  const total = await prisma.receipt.count(operator)
 
-  const pageCount = Math.ceil(total / take);
+  const pageCount = Math.ceil(total / take)
 
   const receipts = await prisma.receipt.findMany({
     take,
     skip,
     ...operator,
     select: selectedReceipt,
-  });
+  })
 
-  return res.json({ receipts, pageCount, code: 200 });
+  return res.json({ receipts, pageCount, code: 200 })
 }
 
 async function handlePOST(req, res) {
-  const assignedAt = new Date();
+  const assignedAt = new Date()
 
   const createIngredients = req.body.ingredients?.map((ingredient) => {
     if (ingredient.__isNew__) {
@@ -156,7 +156,7 @@ async function handlePOST(req, res) {
             label: capitalizeFirstLetter(ingredient.value),
           },
         },
-      };
+      }
     }
 
     return {
@@ -166,8 +166,8 @@ async function handlePOST(req, res) {
           id: ingredient.id,
         },
       },
-    };
-  });
+    }
+  })
 
   const createSessions = req.body.sessions?.map((session) => {
     if (session.__isNew__) {
@@ -179,7 +179,7 @@ async function handlePOST(req, res) {
             label: capitalizeFirstLetter(session.value),
           },
         },
-      };
+      }
     }
 
     return {
@@ -189,8 +189,8 @@ async function handlePOST(req, res) {
           id: session.id,
         },
       },
-    };
-  });
+    }
+  })
 
   const createMethods = req.body.methods?.map((method) => {
     if (method.__isNew__) {
@@ -202,7 +202,7 @@ async function handlePOST(req, res) {
             label: capitalizeFirstLetter(method.value),
           },
         },
-      };
+      }
     }
 
     return {
@@ -212,10 +212,10 @@ async function handlePOST(req, res) {
           id: method.id,
         },
       },
-    };
-  });
+    }
+  })
 
-  const { cover, name, reference, note } = req.body;
+  const { cover, name, reference, note } = req.body
 
   const receipt = await prisma.receipt.create({
     data: {
@@ -227,7 +227,7 @@ async function handlePOST(req, res) {
       reference,
       note,
     },
-  });
+  })
 
-  return res.json({ receipt, code: 201 });
+  return res.json({ receipt, code: 201 })
 }

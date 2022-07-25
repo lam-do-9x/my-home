@@ -1,4 +1,4 @@
-import { prisma } from "../../../lib/prisma";
+import { prisma } from '@lib/prisma'
 
 export default async function handle(req, res) {
   const improvisation = await prisma.improvisation.update({
@@ -6,7 +6,7 @@ export default async function handle(req, res) {
       id: Number(req.query.id),
     },
     data: req.body,
-  });
+  })
 
-  return res.json({ improvisation, code: 200 });
+  return res.json({ improvisation, code: 200 })
 }

@@ -1,9 +1,9 @@
-import { prisma } from "../../../lib/prisma";
-import { removeDuplicateArrayObject } from "../../../lib/helper";
+import { prisma } from '@lib/prisma'
+import { removeDuplicateArrayObject } from '@lib/helper'
 
 function transformSelected(selected) {
-  const selectedSection = selected.map((clothe) => clothe.selected);
-  return removeDuplicateArrayObject(selectedSection);
+  const selectedSection = selected.map((clothe) => clothe.selected)
+  return removeDuplicateArrayObject(selectedSection)
 }
 
 export default async function handle(req, res) {
@@ -11,15 +11,15 @@ export default async function handle(req, res) {
     select: {
       selected: true,
     },
-  });
-  const clothesSelectedOptions = transformSelected(fashionClothesSelected);
+  })
+  const clothesSelectedOptions = transformSelected(fashionClothesSelected)
 
   const fashionTypesSelected = await prisma.fashionTypesSelected.findMany({
     select: {
       selected: true,
     },
-  });
-  const typesSelectedOptions = transformSelected(fashionTypesSelected);
+  })
+  const typesSelectedOptions = transformSelected(fashionTypesSelected)
 
-  return res.json({ clothesSelectedOptions, typesSelectedOptions });
+  return res.json({ clothesSelectedOptions, typesSelectedOptions })
 }

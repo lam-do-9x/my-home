@@ -1,47 +1,47 @@
-import { databaseNotion } from "../../../lib/notion";
+import { databaseNotion } from '@lib/notion'
 
 const transformBlogByYear = (blogs) => {
   return blogs.reduce((transform, blog) => {
-    let year = new Date(blog.properties.publishedDate.date.start).getFullYear();
+    let year = new Date(blog.properties.publishedDate.date.start).getFullYear()
 
-    const isExist = transform.find((b) => b.year === year);
+    const isExist = transform.find((b) => b.year === year)
 
     if (!isExist) {
-      transform.push({ year, data: [blog] });
+      transform.push({ year, data: [blog] })
     } else {
-      isExist["data"].push(blog);
+      isExist['data'].push(blog)
     }
 
-    return transform;
-  }, []);
-};
+    return transform
+  }, [])
+}
 
 export default async function handle(req, res) {
-  const id = process.env.NOTION_BLOG_ID;
+  const id = process.env.NOTION_BLOG_ID
   let body = {
     filter: {
-      property: "isPublished",
+      property: 'isPublished',
       select: {
-        equals: "Yes",
+        equals: 'Yes',
       },
     },
     sorts: [
       {
-        property: "publishedDate",
-        direction: "descending",
+        property: 'publishedDate',
+        direction: 'descending',
       },
     ],
-  };
+  }
   if (req.query.page) {
-    body = { ...body, page_size: 5 };
+    body = { ...body, page_size: 5 }
   }
 
-  const { results } = await databaseNotion(id, body);
-  let blogs = transformBlogByYear(results);
+  const { results } = await databaseNotion(id, body)
+  let blogs = transformBlogByYear(results)
 
   if (req.query.page) {
-    blogs = results;
+    blogs = results
   }
 
-  return res.json({ blogs, code: 200 });
+  return res.json({ blogs, code: 200 })
 }
