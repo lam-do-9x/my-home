@@ -4,12 +4,11 @@ import Select from 'react-select'
 import { PencilAltIcon, RefreshIcon } from '@heroicons/react/outline'
 import Layout from '@components/cp/Layout'
 import ReceiptModal from '@components/cp/ReceiptModal'
-import { AuthMiddleware } from '../../../middleware/auth'
 import Loader from '@components/cp/Loader'
 import Paginate from '@components/cp/Paginate'
 import InsertReceipt from '@components/cp/InsertReceipt'
 
-function Receipts() {
+export default function Receipts() {
   const [modal, setModal] = useState(false)
   const [upset, setUpSet] = useState(false)
   const [receipt, setReceipt] = useState({})
@@ -218,5 +217,3 @@ function Receipts() {
     </Layout>
   )
 }
-
-export default AuthMiddleware(Receipts)

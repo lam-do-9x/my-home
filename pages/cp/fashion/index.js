@@ -4,11 +4,10 @@ import Select from 'react-select'
 import { PencilAltIcon } from '@heroicons/react/outline'
 import Layout from '@components/cp/Layout'
 import ImageModal from '@components/cp/ImageModal'
-import { AuthMiddleware } from '../../../middleware/auth'
 import Loader from '@components/cp/Loader'
 import InsertFashion from '@components/cp/InsertFashion'
 
-function Fashion() {
+export default function Fashion() {
   const [modal, setModal] = useState(false)
   const [block, setBlock] = useState(null)
   const [fashions, setFashions] = useState([])
@@ -177,5 +176,3 @@ function Fashion() {
     </Layout>
   )
 }
-
-export default AuthMiddleware(Fashion)

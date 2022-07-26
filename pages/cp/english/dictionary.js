@@ -6,7 +6,6 @@ import {
 } from '@heroicons/react/outline'
 import { SearchIcon, CheckIcon } from '@heroicons/react/solid'
 import Layout from '@components/cp/Layout'
-import { AuthMiddleware } from '../../../middleware/auth'
 import Loader from '@components/cp/Loader'
 import Modal from '@components/cp/Modal'
 import UpSetModal from '@components/cp/UpSetModal'
@@ -14,7 +13,7 @@ import { debounce } from '@lib/helper'
 import fetchClient from '@lib/fetchClient'
 import Paginate from '@components/cp/Paginate'
 
-function Dictionary() {
+export default function Dictionary() {
   const [isLoading, setLoading] = useState(true)
   const [pageCount, setPageCount] = useState(0)
   const [offset, setOffset] = useState(0)
@@ -206,5 +205,3 @@ function Dictionary() {
     </Layout>
   )
 }
-
-export default AuthMiddleware(Dictionary)

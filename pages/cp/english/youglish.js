@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import { RefreshIcon, VideoCameraIcon } from '@heroicons/react/outline'
-import { AuthMiddleware } from '../../../middleware/auth'
 import { formatDate } from '@lib/dateTime'
 import Layout from '@components/cp/Layout'
 import WordLearn from '@components/cp/WordLearn'
 import Modal from '@components/cp/Modal'
 import UpSetModal from '@components/cp/UpSetModal'
 
-function Youglish() {
+export default function Youglish() {
   const [dictionaries, setDictionaries] = useState([])
   const [dictionary, setDictionary] = useState({})
   const [show, setShow] = useState(false)
@@ -121,5 +120,3 @@ function Youglish() {
     </Layout>
   )
 }
-
-export default AuthMiddleware(Youglish)

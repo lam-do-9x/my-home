@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import Layout from '@components/cp/Layout'
-import { AuthMiddleware } from '../../../middleware/auth'
 import Loader from '@components/cp/Loader'
 import PronunciationModal from '@components/cp/PronunciationModal'
 
-function Pronunciation() {
+export default function Pronunciation() {
   const [isLoading, setLoading] = useState(true)
   const [isShow, setShow] = useState(false)
   const [pronunciations, setPronunciation] = useState([])
@@ -103,5 +102,3 @@ function Pronunciation() {
     </Layout>
   )
 }
-
-export default AuthMiddleware(Pronunciation)
