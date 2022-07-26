@@ -1,43 +1,43 @@
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { signIn } from "next-auth/client";
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { signIn } from 'next-auth/react'
 import {
   AtSymbolIcon,
   LockClosedIcon,
   ArrowCircleLeftIcon,
   ArrowCircleRightIcon,
-} from "@heroicons/react/outline";
-import Notification from "./cp/Notification";
+} from '@heroicons/react/outline'
+import Notification from './cp/Notification'
 
 export default function Login({ redirectTo }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoginStarted, setIsLoginStarted] = useState(false);
-  const [loginError, setLoginError] = useState({});
-  const router = useRouter();
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoginStarted, setIsLoginStarted] = useState(false)
+  const [loginError, setLoginError] = useState({})
+  const router = useRouter()
 
   useEffect(() => {
-    const error = router.query.error;
+    const error = router.query.error
     if (error) {
-      setEmail(router.query.email);
-      const message = error.split("Error:")[1];
-      const loginErrorObject = { message, code: 401 };
-      setLoginError(loginErrorObject);
+      setEmail(router.query.email)
+      const message = error.split('Error:')[1]
+      const loginErrorObject = { message, code: 401 }
+      setLoginError(loginErrorObject)
       setTimeout(() => {
-        setLoginError({});
-      }, 3000);
+        setLoginError({})
+      }, 3000)
     }
-  }, [router]);
+  }, [router])
 
   async function handleLogin(e) {
-    e.preventDefault();
-    setIsLoginStarted(true);
-    await signIn("credentials", {
+    e.preventDefault()
+    setIsLoginStarted(true)
+    await signIn('credentials', {
       email,
       password,
       callbackUrl: `${window.location.origin}${redirectTo}`,
-    });
+    })
   }
 
   return (
@@ -68,7 +68,7 @@ export default function Login({ redirectTo }) {
                   name="email"
                   className="w-full rounded-lg border border-gray-400 py-2 pl-10 pr-4 text-sm placeholder-gray-500 focus:border-blue-400 focus:outline-none sm:text-base"
                   placeholder="Email Address"
-                  value={email || ""}
+                  value={email || ''}
                 />
               </div>
             </div>
@@ -115,5 +115,5 @@ export default function Login({ redirectTo }) {
         </div>
       </div>
     </div>
-  );
+  )
 }

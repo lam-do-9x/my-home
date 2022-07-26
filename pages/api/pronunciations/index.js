@@ -1,6 +1,7 @@
 import { databaseNotion } from '@lib/notion'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const id = process.env.NOTION_PRONUNCIATION_ID
   let body = {
     sorts: [
@@ -15,3 +16,5 @@ export default async function handle(req, res) {
 
   return res.json({ pronunciations: results, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)

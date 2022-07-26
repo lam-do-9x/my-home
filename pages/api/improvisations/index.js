@@ -1,6 +1,7 @@
 import { prisma } from '@lib/prisma'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   switch (req.method) {
     case 'POST':
       handlePOST(req, res)
@@ -56,3 +57,5 @@ async function handleGET(req, res) {
 
   return res.json({ improvisations, pageCount, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)

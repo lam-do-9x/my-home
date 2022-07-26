@@ -1,6 +1,7 @@
 import { prisma, Prisma, prismaErrorCode } from '@lib/prisma'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   try {
     const dictionary = await prisma.dictionary.update({
       where: {
@@ -19,3 +20,5 @@ export default async function handle(req, res) {
     }
   }
 }
+
+export default apiAuthMiddleware(handle)

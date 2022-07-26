@@ -1,6 +1,7 @@
 import { prisma } from '@lib/prisma'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const skip = Number(req.query.skip)
   const take = Number(req.query.take)
 
@@ -70,3 +71,5 @@ export default async function handle(req, res) {
 
   return res.json({ dictionaries, pageCount, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)

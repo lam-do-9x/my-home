@@ -1,7 +1,8 @@
 import { prisma } from '@lib/prisma'
 import { randInt } from '@lib/randomWord'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const selected = await prisma.selected.findUnique({
     where: {
       value: req.query.session,
@@ -39,3 +40,5 @@ export default async function handle(req, res) {
 
   return res.json({ receipt, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)

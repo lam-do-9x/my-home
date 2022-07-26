@@ -1,12 +1,13 @@
 import { prisma } from '@lib/prisma'
 import { removeDuplicateArrayObject } from '@lib/helper'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
 function transformSelected(selected) {
   const selectedSection = selected.map((clothe) => clothe.selected)
   return removeDuplicateArrayObject(selectedSection)
 }
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const receiptIngredientsSelected =
     await prisma.receiptIngredientsSelected.findMany({
       select: {
@@ -33,3 +34,5 @@ export default async function handle(req, res) {
 
   return res.json({ receiptIngredients, receiptSessions, receiptMethods })
 }
+
+export default apiAuthMiddleware(handle)

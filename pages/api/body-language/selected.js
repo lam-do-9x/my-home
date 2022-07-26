@@ -1,12 +1,13 @@
 import { prisma } from '@lib/prisma'
 import { removeDuplicateArrayObject } from '@lib/helper'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
 function transformSelected(selected) {
   const selectedSection = selected.map((clothe) => clothe.selected)
   return removeDuplicateArrayObject(selectedSection)
 }
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const bodyLanguageEmotionSelected =
     await prisma.bodyLanguageEmotionsSelected.findMany({
       select: {
@@ -32,3 +33,5 @@ export default async function handle(req, res) {
     bodyLanguageTypesSelectedOptions,
   })
 }
+
+export default apiAuthMiddleware(handle)

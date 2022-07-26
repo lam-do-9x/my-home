@@ -1,8 +1,9 @@
 import { prisma } from '@lib/prisma'
 import { capitalizeFirstLetter } from '@lib/helper'
 import { getRandomIds } from '@lib/randomWord'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   switch (req.method) {
     case 'POST':
       handlePOST(req, res)
@@ -174,3 +175,5 @@ async function handlePOST(req, res) {
 
   return res.json({ bodyLanguage, code: 201 })
 }
+
+export default apiAuthMiddleware(handle)

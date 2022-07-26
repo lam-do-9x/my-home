@@ -1,6 +1,7 @@
 import { prisma } from '@lib/prisma'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const operate = {
     where: {
       ipa: {
@@ -16,3 +17,5 @@ export default async function handle(req, res) {
   const pronunciations = await prisma.dictionary.findMany(operate)
   return res.json({ pronunciations, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)

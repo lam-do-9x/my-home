@@ -1,6 +1,7 @@
 import { prisma } from '@lib/prisma'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const improvisation = await prisma.improvisation.update({
     where: {
       id: Number(req.query.id),
@@ -10,3 +11,5 @@ export default async function handle(req, res) {
 
   return res.json({ improvisation, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)

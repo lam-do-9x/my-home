@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/client'
+import { useSession } from 'next-auth/react'
 import Main from '@components/Main'
 import Login from '@components/Login'
 
 export default function login() {
   const router = useRouter()
   const [redirectTo, setRedirectTo] = useState('/cp/english/youglish')
-  const [session, loading] = useSession()
+  const { data: session, status } = useSession()
 
   useEffect(async () => {
     if (!router.isReady) return
@@ -17,7 +17,7 @@ export default function login() {
     }
   }, [router.isReady])
 
-  if (loading && session) {
+  if (status && session) {
     router.push(redirectTo)
   }
 

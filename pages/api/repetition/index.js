@@ -1,7 +1,8 @@
 import { databaseNotion } from '@lib/notion'
 import { formatDate } from '@lib/dateTime'
+import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   const id = process.env.NOTION_REPETITION_ID
 
   const body = {
@@ -23,3 +24,5 @@ export default async function handle(req, res) {
 
   return res.json({ repetitions: results, code: 200 })
 }
+
+export default apiAuthMiddleware(handle)
