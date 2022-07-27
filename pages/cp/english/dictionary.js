@@ -5,7 +5,8 @@ import {
   AnnotationIcon,
 } from '@heroicons/react/outline'
 import { SearchIcon, CheckIcon } from '@heroicons/react/solid'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import Loader from '@components/cp/Loader'
 import Modal from '@components/cp/Modal'
 import UpSetModal from '@components/cp/UpSetModal'
@@ -89,7 +90,8 @@ export default function Dictionary() {
   }
 
   return (
-    <Layout>
+    <CpLayout>
+      <Header title="Dictionary" />
       <div className="mx-6 mt-6 flex items-center">
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Dictionary
@@ -202,6 +204,6 @@ export default function Dictionary() {
           </div>
         </div>
       </div>
-    </Layout>
+    </CpLayout>
   )
 }

@@ -1,6 +1,6 @@
-import Head from "next/head";
-import Header from "./Header";
-import Nav from "./Nav";
+import Head from 'next/head'
+import Header from './Header'
+import Nav from '../Sidebar'
 
 export default function Layout(props) {
   return (
@@ -16,5 +16,5 @@ export default function Layout(props) {
         <main className="w-full">{props.children}</main>
       </div>
     </div>
-  );
+  )
 }

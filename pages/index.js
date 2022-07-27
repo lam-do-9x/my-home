@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import Main from '@components/Main'
+import Layout from '@components/Layout'
 import HomeBlog from '@components/HomeBlog'
 import Nav from '@components/Nav'
+import Header from '@components/Header'
 
 const isLast = (blogs, index) => {
   const blogLength = blogs.length - 1
@@ -10,7 +11,8 @@ const isLast = (blogs, index) => {
 
 export default function Index({ blogs }) {
   return (
-    <Main>
+    <Layout>
+      <Header title="Lam Do" />
       <Nav />
       <div className="flex flex-col items-center justify-center px-6 py-8">
         <h1 className="mb-2	text-5xl font-bold uppercase text-gray-700">
@@ -31,7 +33,7 @@ export default function Index({ blogs }) {
           </Link>
         )}
       </div>
-    </Main>
+    </Layout>
   )
 }
 
