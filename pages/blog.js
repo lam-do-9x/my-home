@@ -1,34 +1,31 @@
-import Main from '@components/Main'
-import AllBlog from '@components/AllBlog'
+import Layout from '@components/Layout'
+import Header from '@components/Header'
 import Nav from '@components/Nav'
+import AllBlog from '@components/AllBlog'
 
 export default function Blog({ blogs }) {
   return (
-    <Main>
+    <Layout>
+      <Header title="All Blog" />
       <Nav />
-      <div className="flex flex-col items-center justify-center px-6 py-8">
-        <h1 className="mb-8	text-5xl font-bold uppercase text-gray-700">
+      <div className="mx-auto p-4">
+        <h1 className="mb-2	text-center text-5xl font-bold uppercase text-gray-700">
           All Blog
         </h1>
-        <div className="w-full max-w-4xl">
+        <div className="mt-4 w-full">
           {blogs.map(({ year, data }) => {
             return (
               <div className="flex flex-col items-center" key={year}>
                 <div className="text-3xl font-bold">{year}</div>
                 {data.map((blog) => {
-                  return (
-                    <AllBlog
-                      blog={blog}
-                      key={blog.properties.slug.rich_text[0]?.plain_text}
-                    />
-                  )
+                  return <AllBlog blog={blog} key={blog.id} />
                 })}
               </div>
             )
           })}
         </div>
       </div>
-    </Main>
+    </Layout>
   )
 }
 

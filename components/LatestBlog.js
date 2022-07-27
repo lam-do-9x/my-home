@@ -13,7 +13,7 @@ export default function LatestBlog({ blog, last }) {
   return (
     <Link href={`${blog.properties.slug.rich_text[0]?.plain_text}-${blog.id}`}>
       <div
-        className={`mt-4 w-full max-w-4xl px-10 pb-4 ${
+        className={`mt-4 w-full max-w-4xl pb-4 ${
           last ? '' : 'border-b border-gray-300'
         } flex cursor-pointer`}
       >
