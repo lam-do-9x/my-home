@@ -1,11 +1,14 @@
-import Link from "next/link";
-import { monthDate } from "../lib/dateTime";
+import Link from 'next/link'
+import { formatDateMonthStr } from '../lib/dateTime'
 
 export default function AllBlog(props) {
   return (
     <div className="flex w-full px-10 py-3">
       <span className="w-1/3 text-xl text-gray-600">
-        {monthDate(new Date(props.blog.properties.publishedDate?.date.start))}
+        {formatDateMonthStr(props.blog.properties.publishedDate?.date.start, {
+          month: 'long',
+          day: 'numeric',
+        })}
       </span>
       <Link
         href={`${props.blog.properties.slug.rich_text[0]?.plain_text}-${props.blog.id}`}
@@ -15,5 +18,5 @@ export default function AllBlog(props) {
         </p>
       </Link>
     </div>
-  );
+  )
 }
