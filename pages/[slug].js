@@ -1,41 +1,36 @@
-import Main from '@components/Main'
+import Layout from '@components/Layout'
+import Header from '@components/Header'
 import Nav from '@components/Nav'
 import NotionRender from '@components/notion/NotionRender'
 import { parsePageId } from '@lib/parsePageId'
 
 export default function Slug({ blocks, page }) {
   return (
-    <Main>
-      <div className="pb-8">
-        <Nav page={page} />
-        <div className="mb-16 flex h-screen flex-col items-center justify-center bg-black">
-          <style jsx>{`
-            .art-cover {
-              background-image: url(${page.cover
-                ? page.cover[page.cover.type].url
-                : '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'});
-            }
-          `}</style>
-          <div className="art-cover absolute z-10 h-screen w-full bg-cover bg-center bg-no-repeat opacity-30"></div>
-          <div className="container z-20 mx-20 flex flex-col justify-center px-56 text-white">
-            <div className="text-5xl uppercase">
-              {page.properties.title.title[0].text.content}
-            </div>
-            <div className="my-8 text-xl">
-              {page.properties.excerpt.rich_text[0]?.plain_text}
-            </div>
-          </div>
-        </div>
-        <div
-          className="container mx-20 w-full px-56"
-          key={page.properties.slug.rich_text[0]?.plain_text}
-        >
-          <div className="prose lg:prose-xl">
-            {<NotionRender blocks={blocks} />}
-          </div>
+    <Layout>
+      <Header title={page.properties.title.title[0].text.content} />
+      <Nav page={page} />
+      <style jsx>{`
+        .art-cover {
+          background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+            url(${page.cover
+              ? page.cover[page.cover.type].url
+              : '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'});
+        }
+      `}</style>
+      <div className="art-cover relative min-h-screen">
+        <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-white">
+          <p className="text-3xl uppercase">
+            {page.properties.title.title[0].text.content}
+          </p>
+          <p className="mt-8 text-xl">
+            {page.properties.excerpt.rich_text[0]?.plain_text}
+          </p>
         </div>
       </div>
-    </Main>
+      <div className="prose mx-auto mb-8 lg:prose-xl" key={page.id}>
+        {<NotionRender blocks={blocks} />}
+      </div>
+    </Layout>
   )
 }
 
