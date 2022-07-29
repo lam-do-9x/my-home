@@ -6,9 +6,9 @@ function isValid(email, password) {
     if (process.env.ADMIN_PASSWORD === password) {
       return true
     }
-    throw new Error('Your password was wrong!')
+    throw new Error('field=password&message=Your password was wrong!')
   }
-  throw new Error('Your email was incorrect!')
+  throw new Error('field=email&message=Your email was incorrect!')
 }
 
 const providers = [
@@ -18,12 +18,12 @@ const providers = [
       try {
         if (isValid(credentials.email, credentials.password)) {
           return {
-            status: 'success',
-            data: { email: credentials.email, name: 'Lam Do' },
+            status: 200,
+            ok: true,
           }
         }
       } catch (e) {
-        throw new Error(`${e}&email=${credentials.email}`)
+        throw new Error(e)
       }
     },
   }),
@@ -31,9 +31,6 @@ const providers = [
 
 export const authOptions = {
   providers,
-  pages: {
-    error: '/login',
-  },
 }
 
 export default NextAuth(authOptions)
