@@ -18,13 +18,13 @@ export default function Nav({ page = {} }) {
           </div>
         </Link>
         <div className="flex items-center justify-between">
-          <Link href="/blog">
+          <Link href="/blogs">
             <p
               className={`my-1 mx-4 ${
                 Object.keys(page).length !== 0 ? 'text-white' : ''
               } cursor-pointer`}
             >
-              Blog
+              Blogs
             </p>
           </Link>
           <a

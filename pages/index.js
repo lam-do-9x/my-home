@@ -60,7 +60,7 @@ export default function Index({ blogs }) {
           ))}
         </ul>
         {blogs.length === 5 && (
-          <Link href="/blog">
+          <Link href="/blogs">
             <button className="text-bold border border-gray-600 p-4 text-2xl uppercase">
               See all blog
             </button>
