@@ -1,13 +1,13 @@
-import { Fragment } from "react";
-import { Text } from "./Text";
+import { Fragment } from 'react'
+import { Text } from './Text'
 
 export const Paragraph = ({ value }) => {
   return (
     <p>
       <Text text={value.text} />
     </p>
-  );
-};
+  )
+}
 
 export const Heading = ({ value, type }) => {
   return {
@@ -26,27 +26,27 @@ export const Heading = ({ value, type }) => {
         <Text text={value.text} />
       </h3>
     ),
-  }[type];
-};
+  }[type]
+}
 
 export const ListItem = ({ value }) => {
   return (
     <li>
       <Text text={value.text} />
     </li>
-  );
-};
+  )
+}
 
 export const ToDo = ({ value, id }) => {
   return (
     <div>
       <label htmlFor={id}>
-        <input type="checkbox" id={id} defaultChecked={value.checked} />{" "}
+        <input type="checkbox" id={id} defaultChecked={value.checked} />{' '}
         <Text text={value.text} />
       </label>
     </div>
-  );
-};
+  )
+}
 
 export const Toggle = ({ value, renderBlock }) => {
   return (
@@ -58,20 +58,20 @@ export const Toggle = ({ value, renderBlock }) => {
         <Fragment key={block.id}>{renderBlock(block)}</Fragment>
       ))}
     </details>
-  );
-};
+  )
+}
 
 export const Quote = ({ value }) => {
-  return <blockquote>{value.text[0].plain_text}</blockquote>;
-};
+  return <blockquote>{value.text[0].plain_text}</blockquote>
+}
 
 export const Picture = ({ value }) => {
-  return <img src={value[value.type].url} alt="" title="" />;
-};
+  return <img src={value[value.type].url} alt="" title="" />
+}
 
 export const BulletBox = ({ value }) => {
-  const bullet = value.text[1].text.content.split("-");
-  const content = bullet.shift();
+  const bullet = value.text[1].text.content.split('-')
+  const content = bullet.shift()
 
   return (
     <div
@@ -81,20 +81,20 @@ export const BulletBox = ({ value }) => {
       <div className="bg-gray-200 p-4">
         <Text text={value.text[0]} />
       </div>
-      {content !== "" ? <p>{content}</p> : ""}
+      {content !== '' ? <p>{content}</p> : ''}
       <style jsx>{`
         .columns-2 {
           column-count: 2;
         }
       `}</style>
-      <ul className={`${bullet.length >= 10 ? "columns-2" : ""}`}>
+      <ul className={`${bullet.length >= 10 ? 'columns-2' : ''}`}>
         {bullet.map((item) => {
-          return <li key={`${item}`}>{item}</li>;
+          return <li key={`${item}`}>{item}</li>
         })}
       </ul>
     </div>
-  );
-};
+  )
+}
 
 export const ContentBox = ({ value }) => {
   return (
@@ -105,13 +105,13 @@ export const ContentBox = ({ value }) => {
             <div className="mb-4 bg-gray-200 p-4">
               <Text text={item} />
             </div>
-          );
+          )
         }
-        return <Text text={item} key={item.plain_text} />;
+        return <Text text={item} key={item.plain_text} />
       })}
     </div>
-  );
-};
+  )
+}
 
 export const Callout = ({ value }) => {
   return (
@@ -122,10 +122,10 @@ export const Callout = ({ value }) => {
             <div className="text-center">
               <Text text={item} />
             </div>
-          );
+          )
         }
-        return <Text text={item} key={item.plain_text} />;
+        return <Text text={item} key={item.plain_text} />
       })}
     </div>
-  );
-};
+  )
+}

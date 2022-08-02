@@ -19,12 +19,7 @@ export const Bookmarks = ({ value }) => {
             <p className="my-0 mx-2 text-base font-normal">{value.url}</p>
           </div>
         </div>
-        <Images
-          src={value.images[0]}
-          width="250"
-          height="106"
-          className="w-1/3"
-        />
+        <Images src={value.images[0]} width="250" height="106" />
       </div>
     </a>
   )

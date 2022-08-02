@@ -1,41 +1,41 @@
-const renderText = (value, type) => {
+const renderText = (value) => {
   const {
     annotations: { bold, code, color, italic, strikethrough, underline },
     text,
-  } = value;
+  } = value
 
   function hasWhiteSpace() {
-    return text.content.indexOf("\n") > -1;
+    return text.content.indexOf('\n') > -1
   }
 
   return (
     <span
       className={[
-        bold ? "font-bold" : "",
-        code ? "rounded-sm bg-gray-200 font-mono" : "",
-        italic ? "italic" : "",
-        strikethrough ? "line-through" : "",
-        underline ? "underline" : "",
-        hasWhiteSpace() ? "whitespace-pre-wrap" : "",
+        bold ? 'font-bold' : '',
+        code ? 'rounded-sm bg-gray-200 font-mono' : '',
+        italic ? 'italic' : '',
+        strikethrough ? 'line-through' : '',
+        underline ? 'underline' : '',
+        hasWhiteSpace() ? 'whitespace-pre-wrap' : '',
       ]
-        .join(" ")
-        .trim("")}
-      style={color !== "default" ? { color } : {}}
-      key={type}
+        .join(' ')
+        .trim('')}
+      style={color !== 'default' ? { color } : {}}
+      key={text.content}
     >
       {text.link ? <a href={text.link.url}>{text.content}</a> : text.content}
     </span>
-  );
-};
+  )
+}
 
-export const Text = ({ text, type }) => {
+export const Text = ({ text }) => {
   if (!text) {
-    return null;
+    return null
   }
   if (!Array.isArray(text)) {
-    return renderText(text, type);
+    return renderText(text)
   }
   return text.map((value) => {
-    return renderText(value, type);
-  });
-};
+    return renderText(value)
+  })
+}
