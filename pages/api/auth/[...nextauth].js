@@ -18,8 +18,8 @@ const providers = [
       try {
         if (isValid(credentials.email, credentials.password)) {
           return {
-            status: 200,
-            ok: true,
+            status: 'success',
+            data: { email: credentials.email, name: 'Lam Do' },
           }
         }
       } catch (e) {
