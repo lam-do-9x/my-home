@@ -30,6 +30,8 @@ const providers = [
   }),
 ]
 
+console.log(process.env.NEXTAUTH_SECRET)
+
 export const authOptions = {
   providers,
   callbacks: {
