@@ -18,8 +18,9 @@ const providers = [
       try {
         if (isValid(credentials.email, credentials.password)) {
           return {
-            status: 'success',
-            data: { email: credentials.email, name: 'Lam Do' },
+            id: 1,
+            email: credentials.email,
+            name: 'Lam Do',
           }
         }
       } catch (e) {
@@ -31,6 +32,27 @@ const providers = [
 
 export const authOptions = {
   providers,
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    session({ session, token }) {
+      if (token) {
+        session.id = token.id
+      }
+      return session
+    },
+  },
+  session: {
+    strategy: 'jwt',
+  },
+  jwt: {
+    encryption: true,
+    secret: process.env.NEXTAUTH_SECRET,
+  },
 }
 
 export default NextAuth(authOptions)
