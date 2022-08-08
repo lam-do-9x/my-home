@@ -50,10 +50,7 @@ export const authOptions = {
     strategy: 'jwt',
   },
   jwt: {
-    encryption: true,
-    secret: process.env.JWT_SECRET,
-    signingKey: process.env.JWT_SIGNING_KEY,
-    encryptionKey: process.env.JWT_ENCRYPTION_KEY,
+    maxAge: 60 * 60 * 24 * 30,
   },
 }
 
