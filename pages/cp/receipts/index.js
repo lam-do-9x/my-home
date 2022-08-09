@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Select from 'react-select'
 import { PencilAltIcon, RefreshIcon } from '@heroicons/react/outline'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import ReceiptModal from '@components/cp/ReceiptModal'
 import Loader from '@components/cp/Loader'
 import Paginate from '@components/cp/Paginate'
@@ -106,8 +107,9 @@ export default function Receipts() {
   }
 
   return (
-    <Layout>
-      <div className="mx-6 mt-6 h-full w-full">
+    <CpLayout>
+      <Header title="Receipt" />
+      <div className="mx-6 mt-6 w-full">
         <div className="flex">
           <h2 className="font-large my-auto mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
             Receipts
@@ -214,6 +216,6 @@ export default function Receipts() {
           </div>
         )}
       </div>
-    </Layout>
+    </CpLayout>
   )
 }

@@ -6,7 +6,8 @@ import {
 } from '@heroicons/react/outline'
 import Image from 'next/image'
 import Select from 'react-select'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import { getColor } from '@components/cp/Emotion'
 import InsertBodyLanguage from '@components/cp/InsertBodyLanguage'
 import Loader from '@components/cp/Loader'
@@ -68,8 +69,9 @@ export default function BodyLanguage() {
   }
 
   return (
-    <Layout>
-      <div className="mx-6 my-6 h-full w-full">
+    <CpLayout>
+      <Header title="Body Language" />
+      <div className="mx-6 my-6 w-full">
         <div className="flex items-center">
           <h2 className="font-large mr-4 flex rounded border p-2 text-lg uppercase">
             Body Language
@@ -167,6 +169,6 @@ export default function BodyLanguage() {
           </div>
         )}
       </div>
-    </Layout>
+    </CpLayout>
   )
 }

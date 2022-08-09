@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import Loader from '@components/cp/Loader'
 import PronunciationModal from '@components/cp/PronunciationModal'
 
@@ -33,7 +34,8 @@ export default function Pronunciation() {
   }
 
   return (
-    <Layout>
+    <CpLayout>
+      <Header title="Pronunciation" />
       <div className="mx-6 mt-6 flex items-center">
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Pronunciation
@@ -99,6 +101,6 @@ export default function Pronunciation() {
           </div>
         </div>
       </div>
-    </Layout>
+    </CpLayout>
   )
 }

@@ -5,7 +5,8 @@ import {
   PencilIcon,
 } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import UpSetImpov from '@components/cp/UpSetImpov'
 import MDRender from '@components/cp/MDR'
 import RandomWord from '@components/cp/RandomWord'
@@ -95,7 +96,8 @@ export default function Improvisation() {
   }
 
   return (
-    <Layout>
+    <CpLayout>
+      <Header title="Improvisation" />
       <div className="mx-6 mt-6 flex">
         <h2 className="font-large mr-4 flex max-w-fit rounded border p-2 text-lg uppercase">
           Improvisation
@@ -190,6 +192,6 @@ export default function Improvisation() {
           )}
         </div>
       </div>
-    </Layout>
+    </CpLayout>
   )
 }

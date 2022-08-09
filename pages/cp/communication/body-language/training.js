@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { LightningBoltIcon, ArrowRightIcon } from '@heroicons/react/outline'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import BodyLanguageTrainingStart from '@components/cp/BodyLanguageTrainingStart'
 import BodyLanguageTrainingQA from '@components/cp/BodyLanguageTrainingQA'
 import BodyLanguageTrainingFinish from '@components/cp/BodyLanguageTrainingFinish'
@@ -17,8 +18,9 @@ export default function BodyLanguage() {
   }
 
   return (
-    <Layout>
-      <div className="mx-6 my-6 h-full w-full">
+    <CpLayout>
+      <Header title="Body Language Training" />{' '}
+      <div className="mx-6 my-6 w-full">
         <div className="flex items-center">
           <h2 className="font-large mr-4 flex rounded border p-2 text-lg uppercase">
             Body Language Training
@@ -59,6 +61,6 @@ export default function BodyLanguage() {
           <BodyLanguageTrainingFinish hide={hideFinish} results={qa} />
         </div>
       </div>
-    </Layout>
+    </CpLayout>
   )
 }

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { RefreshIcon, VideoCameraIcon } from '@heroicons/react/outline'
+import { RefreshIcon, CalendarIcon } from '@heroicons/react/outline'
 import { formatDate } from '@lib/dateTime'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import WordLearn from '@components/cp/WordLearn'
 import Modal from '@components/cp/Modal'
 import UpSetModal from '@components/cp/UpSetModal'
@@ -76,8 +77,9 @@ export default function Youglish() {
   }
 
   return (
-    <Layout>
-      <div className="flex py-4">
+    <CpLayout>
+      <Header title="Youglish" />
+      <div className="flex p-6">
         <h2 className="font-large flex max-w-min rounded border p-2 text-lg uppercase">
           Youglish
         </h2>
@@ -90,19 +92,11 @@ export default function Youglish() {
           target="_blank"
           rel="noreferrer"
         >
+          <CalendarIcon className="mr-2 h-5 w-5" />
           Daily Lesson
         </a>
-        <a
-          className="mx-2 flex items-center justify-center rounded bg-gray-100 p-2 font-bold text-gray-500 hover:bg-gray-200"
-          href="https://www.youtube.com/playlist?list=WL"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <VideoCameraIcon className="mx-2 h-5 w-5" />
-          Youtube
-        </a>
       </div>
-      <div className="flex w-full">
+      <div className="flex w-full px-6">
         <WordLearn
           onView={(id) => setView(id)}
           onEdit={(id) => setEdit(id)}
@@ -117,6 +111,6 @@ export default function Youglish() {
           onClick={(dictionary) => close(dictionary)}
         />
       )}
-    </Layout>
+    </CpLayout>
   )
 }

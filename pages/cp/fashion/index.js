@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Select from 'react-select'
 import { PencilAltIcon } from '@heroicons/react/outline'
-import Layout from '@components/cp/Layout'
+import { CpLayout } from '@components/Layout'
+import Header from '@components/Header'
 import ImageModal from '@components/cp/ImageModal'
 import Loader from '@components/cp/Loader'
 import InsertFashion from '@components/cp/InsertFashion'
@@ -83,8 +84,9 @@ export default function Fashion() {
   }
 
   return (
-    <Layout>
-      <div className="mx-6 my-6 h-full w-full">
+    <CpLayout>
+      <Header title="Fashion" />
+      <div className="mx-6 my-6 w-full">
         <div className="flex">
           <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
             Fashion
@@ -173,6 +175,6 @@ export default function Fashion() {
           <InsertFashion onClick={(fashion) => handleInsert(fashion)} />
         )}
       </div>
-    </Layout>
+    </CpLayout>
   )
 }
