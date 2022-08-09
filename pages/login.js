@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useSession } from 'next-auth/react'
+import { withIronSessionSsr } from 'iron-session/next'
+import { sessionOptions } from '@lib/session'
 import { ArrowCircleRightIcon } from '@heroicons/react/outline'
 import useLoginForm from '@lib/hooks/useLoginForm'
 import Layout from '@components/Layout'
@@ -8,25 +9,19 @@ import Header from '@components/Header'
 import Nav from '@components/Nav'
 import Input from '@components/form/Input'
 
-export default function login() {
+export default function login({ session }) {
   const router = useRouter()
-  const { data: session } = useSession()
-  const [redirect, setRedirect] = useState('/cp/english/dictionary')
   const { state, handleChange, handleSubmit } = useLoginForm()
   const hasEmailAndPassword =
     state.input.email === '' || state.input.password === ''
 
   useEffect(async () => {
     if (!router.isReady) return
-    const { redirect } = router.query
-    if (redirect) {
-      setRedirect(redirect)
+    const redirect = router.query.redirect ?? '/cp/english/dictionary'
+    if (session) {
+      router.push(redirect)
     }
   }, [router.isReady])
-
-  if (session) {
-    router.push(redirect)
-  }
 
   return (
     <Layout>
@@ -70,3 +65,15 @@ export default function login() {
     </Layout>
   )
 }
+
+export const getServerSideProps = withIronSessionSsr(async function ({ req }) {
+  const user = req.session.user
+
+  const props = {}
+
+  if (user) {
+    props['session'] = user
+  }
+
+  return { props }
+}, sessionOptions)

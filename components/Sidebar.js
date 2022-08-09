@@ -12,11 +12,12 @@ import {
   ChatAlt2Icon,
   ChatIcon,
   TemplateIcon,
+  LogoutIcon,
 } from '@heroicons/react/outline'
 import ActiveLink from './cp/ActiveLink'
 
 export default function Sidebar() {
-  const { pathname } = useRouter()
+  const { pathname, push } = useRouter()
   const [show, setShow] = useState(false)
   const [section, setSection] = useState(undefined)
   const pathShow = {
@@ -42,10 +43,19 @@ export default function Sidebar() {
     setSection(currentSection)
   }
 
+  async function handleLogout() {
+    await fetch('/api/auth/logout')
+    push('/login')
+  }
+
   return (
     <div className="w-64 bg-stone-50 p-6">
-      <div className="my-2 text-center text-xl font-bold uppercase text-gray-400 underline underline-offset-4">
+      <div className="my-2 flex items-center justify-center text-xl font-bold uppercase text-gray-400 underline underline-offset-4">
         Lam Do
+        <LogoutIcon
+          className="mx-2 h-6 w-6 cursor-pointer"
+          onClick={handleLogout}
+        />
       </div>
       <div
         className={`-mx-3 flex cursor-pointer flex-col rounded-lg p-3 text-sm font-medium ${
