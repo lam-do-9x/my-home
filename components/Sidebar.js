@@ -160,10 +160,6 @@ export default function Sidebar() {
         `div[data-label=${label}]`
       )
       handleDropDownList(target)
-      const dropdownList = target.parentElement.querySelector(
-        `#${target.dataset.label}`
-      )
-      console.log(dropdownList)
     }
   }, [])
 
