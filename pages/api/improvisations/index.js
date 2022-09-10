@@ -59,3 +59,9 @@ async function handleGET(req, res) {
 }
 
 export default apiAuthMiddleware(handle)
+
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+}
