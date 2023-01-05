@@ -15,7 +15,7 @@ model Dictionary {
   word          String    @unique
   ipa           String?
   pronunciation String?
-  content       String?
+  content       String? @db.Text
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   contentAt     DateTime?
