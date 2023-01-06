@@ -9,6 +9,7 @@
     "migrate": "prisma migrate dev",
     "generate": "prisma generate",
     "deploy": "prisma migrate deploy",
+    "schema-format": "prisma format",
     "lint": "eslint --fix",
     "format": "prettier --write --ignore-unknown"
   },
@@ -46,6 +47,9 @@
     "*.js": [
       "yarn lint",
       "yarn format"
+    ],
+    "*.prisma": [
+      "yarn schema-format"
     ]
   },
   "husky": {

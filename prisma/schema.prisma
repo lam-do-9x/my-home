@@ -15,10 +15,12 @@ model Dictionary {
   word          String    @unique
   ipa           String?
   pronunciation String?
-  content       String? @db.Text
+  content       String?   @db.Text
   createdAt     DateTime? @default(now())
   updatedAt     DateTime? @updatedAt
   contentAt     DateTime?
+  topic         Topic     @relation(fields: [topicId], references: [id])
+  topicId       Int
 }
 
 model Improvisation {
@@ -155,4 +157,13 @@ model ReceiptMethodsSelected {
   assignedAt DateTime @default(now())
 
   @@id([receiptId, selectedId])
+}
+
+model Topic {
+  id           Int          @id @default(autoincrement())
+  name         String       @unique
+  content      String?      @db.Text
+  dictionaries Dictionary[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime?    @updatedAt
 }
