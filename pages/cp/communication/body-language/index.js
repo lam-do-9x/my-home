@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import {
-  PencilAltIcon,
+  PencilIcon,
   PresentationChartBarIcon,
-} from '@heroicons/react/outline'
+} from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Select from 'react-select'
 import { CpLayout } from '@components/Layout'
@@ -80,7 +80,7 @@ export default function BodyLanguage() {
             className="mx-1 cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
             onClick={() => setUpSet(true)}
           >
-            <PencilAltIcon className="h-5 w-5" />
+            <PencilIcon className="h-5 w-5" />
           </div>
           <Link href="/cp/communication/body-language/training">
             <div className="mx-1 cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100">

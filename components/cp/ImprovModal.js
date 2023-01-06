@@ -1,10 +1,10 @@
-import { XIcon } from "@heroicons/react/outline";
-import MDRender from "./MDR";
-import styles from "./CP.module.css";
+import { XIcon } from '@heroicons/react/24/outline'
+import MDRender from './MDR'
+import styles from './CP.module.css'
 
 export default function ImprovModal(props) {
   function close() {
-    props.onClick();
+    props.onClick()
   }
 
   return (
@@ -17,11 +17,11 @@ export default function ImprovModal(props) {
           />
         </div>
         <div
-          className={`my-2 px-7 ${styles["max-h-modal"]} prose mb-4 overflow-x-hidden`}
+          className={`my-2 px-7 ${styles['max-h-modal']} prose mb-4 overflow-x-hidden`}
         >
           <MDRender content={props.improvisation.content} />
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Select from 'react-select'
-import { PencilAltIcon, RefreshIcon } from '@heroicons/react/outline'
+import { PencilIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import ReceiptModal from '@components/cp/ReceiptModal'
@@ -118,7 +118,7 @@ export default function Receipts() {
             className="my-auto mr-4 cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
             onClick={() => setUpSet(true)}
           >
-            <PencilAltIcon className="h-5 w-5" />
+            <PencilIcon className="h-5 w-5" />
           </div>
           <div className="flex cursor-pointer items-center rounded-md border p-3 shadow">
             <Select
@@ -126,7 +126,7 @@ export default function Receipts() {
               onChange={(selected) => setSuggestSession(selected.value)}
               instanceId
             />
-            <RefreshIcon className="ml-2 h-5 w-5" onClick={suggest} />
+            <ArrowPathIcon className="ml-2 h-5 w-5" onClick={suggest} />
           </div>
         </div>
         {isLoading ? (

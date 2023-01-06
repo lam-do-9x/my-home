@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { RefreshIcon, CalendarIcon } from '@heroicons/react/outline'
+import { ArrowPathIcon, CalendarIcon } from '@heroicons/react/24/outline'
 import { formatDate } from '@lib/dateTime'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
@@ -84,7 +84,7 @@ export default function Youglish() {
           Youglish
         </h2>
         <div className="mx-2 flex items-center justify-center">
-          <RefreshIcon className="mx-1 h-5 w-5" onClick={changeYg} />
+          <ArrowPathIcon className="mx-1 h-5 w-5" onClick={changeYg} />
         </div>
         <a
           className="mx-2 flex items-center justify-center rounded bg-gray-100 p-2 text-center font-bold text-gray-500 hover:bg-gray-200"

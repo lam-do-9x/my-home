@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LightningBoltIcon, ArrowRightIcon } from '@heroicons/react/outline'
+import { BoltIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import BodyLanguageTrainingStart from '@components/cp/BodyLanguageTrainingStart'
@@ -30,7 +30,7 @@ export default function BodyLanguage() {
           <div className="row-gap-0 grid gap-8 lg:grid-cols-3">
             <div className="relative text-center">
               <div className="mx-auto mb-4 flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 sm:h-12 sm:w-12">
-                <LightningBoltIcon className="h-6 w-6" />
+                <BoltIcon className="h-6 w-6" />
               </div>
               <h6 className="mb-2 text-xl font-bold">Start</h6>
               <div className="top-0 right-0 flex h-24 items-center justify-center lg:absolute lg:-mr-8">
@@ -39,7 +39,7 @@ export default function BodyLanguage() {
             </div>
             <div className="relative text-center">
               <div className="mx-auto mb-4 flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 sm:h-12 sm:w-12">
-                <LightningBoltIcon className="h-6 w-6" />
+                <BoltIcon className="h-6 w-6" />
               </div>
               <h6 className="mb-2 text-xl font-bold">In progress</h6>
               <div className="top-0 right-0 flex h-24 items-center justify-center lg:absolute lg:-mr-8">
@@ -48,7 +48,7 @@ export default function BodyLanguage() {
             </div>
             <div className="relative text-center">
               <div className="mx-auto mb-4 flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 sm:h-12 sm:w-12">
-                <LightningBoltIcon className="h-6 w-6" />
+                <BoltIcon className="h-6 w-6" />
               </div>
               <h6 className="mb-2 text-xl font-bold">Finish</h6>
             </div>

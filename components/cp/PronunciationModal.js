@@ -1,14 +1,14 @@
-import { XIcon, PlayIcon } from "@heroicons/react/outline";
+import { XMarkIcon, PlayIcon } from '@heroicons/react/24/outline'
 
 export default function PronunciationModal(props) {
   function close() {
-    props.onClick();
+    props.onClick()
   }
 
   function play(pronunciation) {
     new Audio(
       `https://www.oxfordlearnersdictionaries.com${pronunciation}`
-    ).play();
+    ).play()
   }
 
   return (
@@ -18,7 +18,7 @@ export default function PronunciationModal(props) {
           <div className="w-full text-center font-bold text-yellow-500">
             {props.ipa}
           </div>
-          <XIcon
+          <XMarkIcon
             className="h-5 w-5 cursor-pointer fill-current text-gray-700"
             onClick={close}
           />
@@ -31,14 +31,14 @@ export default function PronunciationModal(props) {
           `}</style>
           <ul
             className={`${
-              props.pronunciations.length >= 100 ? "columns-4" : ""
+              props.pronunciations.length >= 100 ? 'columns-4' : ''
             }`}
           >
             {props.pronunciations.map((pronounce) => (
               <li className="flex items-center" key={pronounce.word}>
                 {pronounce.word}
                 <PlayIcon
-                  className="h-5 w-5"
+                  className="h-4 w-4"
                   onClick={() => play(pronounce.pronunciation)}
                 />
               </li>
@@ -47,5 +47,5 @@ export default function PronunciationModal(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

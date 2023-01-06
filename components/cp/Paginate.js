@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
+import { useState, useEffect } from 'react'
+import ReactPaginate from 'react-paginate'
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 
 export default function Paginate(props) {
-  const [selected, setSelected] = useState(undefined);
+  const [selected, setSelected] = useState(undefined)
 
   useEffect(() => {
     if (props.pageCount > 1) {
-      setSelected(0);
+      setSelected(0)
     }
-  }, [props.pageCount]);
+  }, [props.pageCount])
 
   const handlePageClick = (event) => {
-    const newOffset = event.selected * props.perPage;
-    props.handlePageClick(newOffset);
-    setSelected(event.selected);
-  };
+    const newOffset = event.selected * props.perPage
+    props.handlePageClick(newOffset)
+    setSelected(event.selected)
+  }
 
   return (
     <ReactPaginate
@@ -36,5 +36,5 @@ export default function Paginate(props) {
       nextLinkClassName="inline-flex items-center px-3 py-2 text-gray-700 rounded-r-md border border-gray-300"
       disabledLinkClassName="text-gray-100 cursor-not-allowed"
     />
-  );
+  )
 }

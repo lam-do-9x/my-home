@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Select from 'react-select'
-import { PencilAltIcon } from '@heroicons/react/outline'
+import { PencilIcon } from '@heroicons/react/24/outline'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import ImageModal from '@components/cp/ImageModal'
@@ -95,7 +95,7 @@ export default function Fashion() {
             className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100"
             onClick={() => setUpSet(true)}
           >
-            <PencilAltIcon className="h-5 w-5" />
+            <PencilIcon className="h-5 w-5" />
           </div>
         </div>
         {isLoading ? (

@@ -1,34 +1,34 @@
-import { useState } from "react";
-import { XCircleIcon, SaveIcon } from "@heroicons/react/outline";
-import fetchClient from "../../lib/fetchClient";
-import MDE from "./MDE";
+import { useState } from 'react'
+import { XCircleIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import fetchClient from '../../lib/fetchClient'
+import MDE from './MDE'
 
 export default function UpSetImpov(props) {
-  const [content, setContent] = useState(props.improvisation.content);
+  const [content, setContent] = useState(props.improvisation.content)
 
   function close(improvisation = {}) {
-    props.onClick(improvisation);
+    props.onClick(improvisation)
   }
 
   async function submit() {
     const body = JSON.stringify({
       content,
       display: content.substr(0, 100),
-    });
+    })
 
-    let response = {};
+    let response = {}
 
     if (Object.keys(props.improvisation).length !== 0) {
       response = await fetchClient(
         `/api/improvisations/${props.improvisation.id}`,
         body,
-        "PATCH"
-      );
+        'PATCH'
+      )
     } else {
-      await fetchClient("/api/improvisations", body);
+      await fetchClient('/api/improvisations', body)
     }
 
-    close(response.improvisation);
+    close(response.improvisation)
   }
 
   return (
@@ -44,7 +44,7 @@ export default function UpSetImpov(props) {
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>
-              <SaveIcon className="h-5 w-5" />
+              <ArrowDownTrayIcon className="h-5 w-5" />
             </button>
             <button
               className="mx-2 rounded-full border p-3"
@@ -56,5 +56,5 @@ export default function UpSetImpov(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

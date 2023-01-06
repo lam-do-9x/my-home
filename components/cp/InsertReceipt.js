@@ -1,45 +1,45 @@
-import { useEffect, useState } from "react";
-import CreatableSelect from "react-select/creatable";
-import { XCircleIcon, SaveIcon } from "@heroicons/react/outline";
-import fetchClient from "../../lib/fetchClient";
-import uploadToCloudinary from "../../lib/uploadToCloudinary";
+import { useEffect, useState } from 'react'
+import CreatableSelect from 'react-select/creatable'
+import { XCircleIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import fetchClient from '../../lib/fetchClient'
+import uploadToCloudinary from '../../lib/uploadToCloudinary'
 
 export default function InsertReceipt(props) {
-  const [options, setOptions] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [sessions, setSessions] = useState([]);
-  const [methods, setMethods] = useState([]);
-  const [name, setName] = useState("");
-  const [reference, setReference] = useState("");
-  const [note, setNote] = useState("");
-  const [cover, setCover] = useState([]);
+  const [options, setOptions] = useState([])
+  const [ingredients, setIngredients] = useState([])
+  const [sessions, setSessions] = useState([])
+  const [methods, setMethods] = useState([])
+  const [name, setName] = useState('')
+  const [reference, setReference] = useState('')
+  const [note, setNote] = useState('')
+  const [cover, setCover] = useState([])
 
   useEffect(async () => {
-    const options = await fetch("/api/receipts/selected").then((res) =>
+    const options = await fetch('/api/receipts/selected').then((res) =>
       res.json()
-    );
-    setOptions(options);
-  }, []);
+    )
+    setOptions(options)
+  }, [])
 
   function close(receipt) {
-    setIngredients([]);
-    setSessions([]);
-    setMethods([]);
-    setName("");
-    setReference("");
-    setNote("");
-    props.onClick(receipt);
+    setIngredients([])
+    setSessions([])
+    setMethods([])
+    setName('')
+    setReference('')
+    setNote('')
+    props.onClick(receipt)
   }
 
   function handleFileSelected(e) {
-    setCover(e.target.files);
+    setCover(e.target.files)
   }
 
   async function submit() {
     const uploadResponse = await uploadToCloudinary(
       process.env.NEXT_PUBLIC_RECEIPT_UPLOAD_PRESET,
       cover[0]
-    );
+    )
 
     const body = JSON.stringify({
       cover: uploadResponse.secure_url,
@@ -49,11 +49,11 @@ export default function InsertReceipt(props) {
       name,
       reference,
       note,
-    });
+    })
 
-    const receipt = await fetchClient("/api/receipts", body);
+    const receipt = await fetchClient('/api/receipts', body)
 
-    close(receipt);
+    close(receipt)
   }
 
   return (
@@ -125,7 +125,7 @@ export default function InsertReceipt(props) {
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>
-              <SaveIcon className="h-5 w-5" />
+              <ArrowDownTrayIcon className="h-5 w-5" />
             </button>
             <button
               className="mx-2 rounded-full border p-3"
@@ -137,5 +137,5 @@ export default function InsertReceipt(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

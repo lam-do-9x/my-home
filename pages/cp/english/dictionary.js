@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from 'react'
 import {
-  AdjustmentsIcon,
+  AdjustmentsVerticalIcon,
   PencilIcon,
-  AnnotationIcon,
-} from '@heroicons/react/outline'
-import { SearchIcon, CheckIcon } from '@heroicons/react/solid'
+  ChatBubbleLeftIcon,
+} from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon, CheckIcon } from '@heroicons/react/24/solid'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import Loader from '@components/cp/Loader'
@@ -102,7 +102,7 @@ export default function Dictionary() {
           target="_blank"
           rel="noreferrer"
         >
-          <AnnotationIcon className="mx-2 h-5 w-5" />
+          <ChatBubbleLeftIcon className="mx-2 h-5 w-5" />
           Text to speech
         </a>
       </div>
@@ -112,7 +112,7 @@ export default function Dictionary() {
             <div className="mb-2 flex justify-end">
               <label className="relative block">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                  <SearchIcon className="h-5 w-5 fill-gray-300" />
+                  <MagnifyingGlassIcon className="h-5 w-5 fill-gray-300" />
                 </span>
                 <input
                   className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-9 pr-3 shadow-sm placeholder:italic placeholder:text-gray-400 focus:outline-none sm:text-sm"
@@ -131,7 +131,7 @@ export default function Dictionary() {
                   <th className="py-3 px-6 text-center">ipa</th>
                   <th className="py-3 px-6 text-center">pronunciation</th>
                   <th className="flex justify-center py-3 px-6">
-                    <AdjustmentsIcon className="h-6 w-6" />
+                    <AdjustmentsVerticalIcon className="h-6 w-6" />
                   </th>
                 </tr>
               </thead>

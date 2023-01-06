@@ -1,17 +1,21 @@
-import { useState } from "react";
-import { XIcon, XCircleIcon, SaveIcon } from "@heroicons/react/outline";
-import fetchClient from "../../lib/fetchClient";
-import MDE from "./MDE";
-import Notification from "./Notification";
-import styles from "./CP.module.css";
+import { useState } from 'react'
+import {
+  XMarkIcon,
+  XCircleIcon,
+  ArrowDownTrayIcon,
+} from '@heroicons/react/24/outline'
+import fetchClient from '../../lib/fetchClient'
+import MDE from './MDE'
+import Notification from './Notification'
+import styles from './CP.module.css'
 
 export default function UpSetModal(props) {
-  const [content, setContent] = useState(props.dictionary.content);
-  const [word, setWord] = useState(props.dictionary.word);
-  const [response, setResponse] = useState({});
+  const [content, setContent] = useState(props.dictionary.content)
+  const [word, setWord] = useState(props.dictionary.word)
+  const [response, setResponse] = useState({})
 
   function close(dictionary = {}) {
-    props.onClick(dictionary);
+    props.onClick(dictionary)
   }
 
   async function submit() {
@@ -19,39 +23,39 @@ export default function UpSetModal(props) {
       word: word.trim(),
       content,
       contentAt: props.dictionary.contentAt ?? new Date(),
-    });
+    })
 
-    let response = {};
+    let response = {}
 
     if (Object.keys(props.dictionary).length !== 0) {
       response = await fetchClient(
         `/api/dictionaries/${props.dictionary.id}`,
         body,
-        "PUT"
-      );
+        'PUT'
+      )
     } else {
-      response = await fetchClient("/api/dictionaries", body);
+      response = await fetchClient('/api/dictionaries', body)
     }
 
     if (response.code === 400) {
-      setResponse(response);
+      setResponse(response)
 
       setTimeout(() => {
-        setResponse({});
-      }, 3000);
+        setResponse({})
+      }, 3000)
 
-      return;
+      return
     }
 
-    close(response.dictionary);
+    close(response.dictionary)
   }
 
   return (
     <div
-      className={`fixed left-0 top-0 right-0 bottom-0 ${styles["modal"]} flex h-full w-screen items-center justify-center`}
+      className={`fixed left-0 top-0 right-0 bottom-0 ${styles['modal']} flex h-full w-screen items-center justify-center`}
     >
       <div
-        className={`mx-auto w-3/4 max-w-xl rounded-xl ${styles["max-h-modal"]} border bg-white p-5 shadow-lg`}
+        className={`mx-auto w-3/4 max-w-xl rounded-xl ${styles['max-h-modal']} border bg-white p-5 shadow-lg`}
       >
         <div className="overflow-hidden rounded-md">
           <Notification response={response} />
@@ -60,7 +64,7 @@ export default function UpSetModal(props) {
               Word<i className="ml-sm text-red-500">*</i>
             </div>
             <div className="cursor-pointer rounded-full border p-1">
-              <XIcon className="h-5 w-5" onClick={close} />
+              <XMarkIcon className="h-5 w-5" onClick={close} />
             </div>
           </div>
           <input
@@ -77,7 +81,7 @@ export default function UpSetModal(props) {
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>
-              <SaveIcon className="h-5 w-5" />
+              <ArrowDownTrayIcon className="h-5 w-5" />
             </button>
             <button
               className="mx-2 rounded-full border p-3"
@@ -89,5 +93,5 @@ export default function UpSetModal(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

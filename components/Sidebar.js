@@ -1,32 +1,38 @@
 import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import {
-  GlobeIcon,
-  BookmarkAltIcon,
+  GlobeAltIcon,
+  BookmarkSquareIcon,
   FilmIcon,
-  ReceiptTaxIcon,
+  CakeIcon,
   UserIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  VolumeUpIcon,
-  ChatAlt2Icon,
-  ChatIcon,
-  TemplateIcon,
-  LogoutIcon,
-} from '@heroicons/react/outline'
+  SpeakerWaveIcon,
+  ChatBubbleLeftRightIcon,
+  ChatBubbleLeftEllipsisIcon,
+  PhotoIcon,
+  ArrowRightOnRectangleIcon,
+  ClipboardDocumentListIcon,
+} from '@heroicons/react/24/outline'
 import ActiveLink from './ActiveLink'
 import { getContentByField, getStringBeforeCharacter } from '@lib/string'
 
 const SIDEBAR = [
   [
     {
-      icon: <GlobeIcon className="h-6 w-6" />,
+      icon: <GlobeAltIcon className="h-6 w-6" />,
       label: 'English',
     },
     {
-      icon: <BookmarkAltIcon className="h-6 w-6" />,
+      icon: <BookmarkSquareIcon className="h-6 w-6" />,
       label: 'Dictionary',
       href: '/cp/english/dictionary',
+    },
+    {
+      icon: <ClipboardDocumentListIcon className="h-6 w-6" />,
+      label: 'Topic',
+      href: '/cp/english/topic',
     },
     {
       icon: <FilmIcon className="h-6 w-6" />,
@@ -34,14 +40,14 @@ const SIDEBAR = [
       href: '/cp/english/youglish',
     },
     {
-      icon: <VolumeUpIcon className="h-6 w-6" />,
+      icon: <SpeakerWaveIcon className="h-6 w-6" />,
       label: 'Pronunciation',
       href: '/cp/english/pronunciation',
     },
   ],
   [
     {
-      icon: <ChatAlt2Icon className="h-6 w-6" />,
+      icon: <ChatBubbleLeftRightIcon className="h-6 w-6" />,
       label: 'Communication',
     },
     {
@@ -50,18 +56,18 @@ const SIDEBAR = [
       href: '/cp/communication/body-language',
     },
     {
-      icon: <ChatIcon className="h-6 w-6" />,
+      icon: <ChatBubbleLeftEllipsisIcon className="h-6 w-6" />,
       label: 'Improvisation',
       href: '/cp/communication/improvisation',
     },
   ],
   {
-    icon: <ReceiptTaxIcon className="h-6 w-6" />,
+    icon: <CakeIcon className="h-6 w-6" />,
     label: 'Receipts',
     href: '/cp/receipts',
   },
   {
-    icon: <TemplateIcon className="h-6 w-6" />,
+    icon: <PhotoIcon className="h-6 w-6" />,
     label: 'Fashion',
     href: '/cp/fashion',
   },
@@ -172,7 +178,7 @@ export default function Sidebar() {
     <div className="w-64 bg-stone-50 p-6" ref={sidebarRef}>
       <div className="my-2 flex items-center justify-center text-xl font-bold uppercase text-gray-700 underline underline-offset-4">
         Lam Do
-        <LogoutIcon
+        <ArrowRightOnRectangleIcon
           className="mx-2 h-6 w-6 cursor-pointer"
           onClick={handleLogout}
         />

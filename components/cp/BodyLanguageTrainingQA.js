@@ -1,73 +1,69 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 import {
   ArrowCircleLeftIcon,
   ArrowCircleRightIcon,
   ArchiveIcon,
-} from "@heroicons/react/outline";
-import { getRandomAnswers, shuffle } from "../../lib/randomWord";
-import Loader from "./Loader";
-import MediaDisplay from "./MediaDisplay";
-import fetchClient from "../../lib/fetchClient";
+} from '@heroicons/react/24/outline'
+import { getRandomAnswers, shuffle } from '../../lib/randomWord'
+import Loader from './Loader'
+import MediaDisplay from './MediaDisplay'
+import fetchClient from '../../lib/fetchClient'
 
 export default function BodyLanguageTrainingQA(props) {
-  const [questions, setQuestions] = useState([]);
-  const [questionIndex, setQuestionIndex] = useState(1);
-  const [answers, setAnswers] = useState([]);
-  const [listAnswer, setListAnswer] = useState([]);
+  const [questions, setQuestions] = useState([])
+  const [questionIndex, setQuestionIndex] = useState(1)
+  const [answers, setAnswers] = useState([])
+  const [listAnswer, setListAnswer] = useState([])
 
   function handleAnswers(options, correctAnswer) {
-    const uniqueAnswer = getRandomAnswers(options, correctAnswer);
-    return shuffle([...uniqueAnswer, correctAnswer]);
+    const uniqueAnswer = getRandomAnswers(options, correctAnswer)
+    return shuffle([...uniqueAnswer, correctAnswer])
   }
 
   useEffect(async () => {
     const { questions } = await fetch(
-      "/api/body-language?take=10&page=training"
-    ).then((res) => res.json());
+      '/api/body-language?take=10&page=training'
+    ).then((res) => res.json())
 
-    setQuestions(questions);
+    setQuestions(questions)
 
-    const options = await fetch("/api/body-language/selected").then((res) =>
+    const options = await fetch('/api/body-language/selected').then((res) =>
       res.json()
-    );
+    )
 
     const answers = questions.map((question) => {
       return handleAnswers(
         options.bodyLanguageEmotionSelectedOptions,
         question?.emotions[0].selected
-      );
-    });
-    setAnswers(answers);
-  }, []);
+      )
+    })
+    setAnswers(answers)
+  }, [])
 
   async function showResults() {
     const qa = questions.map((question, index) => {
       return {
         question: question.id,
-        answer: listAnswer[index] ?? "",
+        answer: listAnswer[index] ?? '',
         examDate: new Date(),
         correct: question?.emotions[0].selected.value === listAnswer[index],
-      };
-    });
+      }
+    })
 
-    await fetchClient(
-      `/api/body-language/training`,
-      JSON.stringify(qa),
-      "POST"
-    );
+    await fetchClient(`/api/body-language/training`, JSON.stringify(qa), 'POST')
 
-    props.onClick(qa);
+    props.onClick(qa)
   }
 
   function onChangeRadioInput(input, index) {
-    listAnswer[index] = input.currentTarget.value;
-    setListAnswer(listAnswer);
+    listAnswer[index] = input.currentTarget.value
+    setListAnswer(listAnswer)
   }
 
   return (
     <div
       className={`my-10 flex flex-col items-center justify-center ${
-        props.hide ? "hidden" : "block"
+        props.hide ? 'hidden' : 'block'
       }`}
     >
       {props.hide ? (
@@ -80,7 +76,7 @@ export default function BodyLanguageTrainingQA(props) {
           {questions.map((question, index) => (
             <section
               className={`my-4 flex w-full ${
-                questionIndex === index + 1 ? "block" : "hidden"
+                questionIndex === index + 1 ? 'block' : 'hidden'
               }`}
               key={question.id}
             >
@@ -132,5 +128,5 @@ export default function BodyLanguageTrainingQA(props) {
         </div>
       )}
     </div>
-  );
+  )
 }

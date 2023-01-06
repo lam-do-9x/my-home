@@ -1,47 +1,47 @@
-import { useEffect, useState } from "react";
-import CreatableSelect from "react-select/creatable";
-import { XCircleIcon, SaveIcon } from "@heroicons/react/outline";
-import fetchClient from "../../lib/fetchClient";
-import uploadToCloudinary from "../../lib/uploadToCloudinary";
+import { useEffect, useState } from 'react'
+import CreatableSelect from 'react-select/creatable'
+import { XCircleIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import fetchClient from '../../lib/fetchClient'
+import uploadToCloudinary from '../../lib/uploadToCloudinary'
 
 export default function InsertFashion(props) {
-  const [options, setOptions] = useState([]);
-  const [clothes, setClothes] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [image, setImage] = useState([]);
+  const [options, setOptions] = useState([])
+  const [clothes, setClothes] = useState([])
+  const [types, setTypes] = useState([])
+  const [image, setImage] = useState([])
 
   useEffect(async () => {
-    const options = await fetch("/api/fashions/selected").then((res) =>
+    const options = await fetch('/api/fashions/selected').then((res) =>
       res.json()
-    );
-    setOptions(options);
-  }, []);
+    )
+    setOptions(options)
+  }, [])
 
   function close(fashion) {
-    setClothes([]);
-    setTypes([]);
-    props.onClick(fashion);
+    setClothes([])
+    setTypes([])
+    props.onClick(fashion)
   }
 
   function handleFileSelected(e) {
-    setImage(e.target.files);
+    setImage(e.target.files)
   }
 
   async function submit() {
     const uploadResponse = await uploadToCloudinary(
       process.env.NEXT_PUBLIC_FASHION_UPLOAD_PRESET,
       image[0]
-    );
+    )
 
     const body = JSON.stringify({
       image: uploadResponse.secure_url,
       clothes,
       types,
-    });
+    })
 
-    const fashion = await fetchClient("/api/fashions", body);
+    const fashion = await fetchClient('/api/fashions', body)
 
-    close(fashion);
+    close(fashion)
   }
 
   return (
@@ -74,7 +74,7 @@ export default function InsertFashion(props) {
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>
-              <SaveIcon className="h-5 w-5" />
+              <ArrowDownTrayIcon className="h-5 w-5" />
             </button>
             <button
               className="mx-2 rounded-full border p-3"
@@ -86,5 +86,5 @@ export default function InsertFashion(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

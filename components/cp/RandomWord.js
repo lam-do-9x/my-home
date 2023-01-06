@@ -1,27 +1,27 @@
-import { useState, useEffect } from "react";
-import { PlusSmIcon } from "@heroicons/react/outline";
-import { generateRandomWord } from "../../lib/randomWord";
+import { useState, useEffect } from 'react'
+import { PlusIcon } from '@heroicons/react/24/outline'
+import { generateRandomWord } from '../../lib/randomWord'
 
 export default function RandomWord() {
-  const [randomWord, setRandomWord] = useState("");
-  const [time, setTime] = useState(0);
+  const [randomWord, setRandomWord] = useState('')
+  const [time, setTime] = useState(0)
 
   useEffect(() => {
-    if (time <= 0) return;
+    if (time <= 0) return
 
     const intervalId = setInterval(() => {
-      setTime(time - 1);
-    }, 1000);
+      setTime(time - 1)
+    }, 1000)
 
     return () => {
-      clearInterval(intervalId);
-    };
-  });
+      clearInterval(intervalId)
+    }
+  })
 
   function getRandom() {
-    const word = generateRandomWord();
-    setRandomWord(word);
-    setTime(60);
+    const word = generateRandomWord()
+    setRandomWord(word)
+    setTime(60)
   }
 
   return (
@@ -42,10 +42,10 @@ export default function RandomWord() {
           className="my-2 flex items-center justify-center rounded-full border p-2 focus:outline-none"
           onClick={getRandom}
         >
-          <PlusSmIcon className="h-5 w-5" />
+          <PlusIcon className="h-5 w-5" />
           Generate
         </button>
       </div>
     </div>
-  );
+  )
 }

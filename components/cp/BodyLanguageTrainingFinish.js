@@ -1,25 +1,25 @@
 import {
-  PresentationChartLineIcon,
+  PresentationChartBarIcon,
   CheckCircleIcon,
   QuestionMarkCircleIcon,
-  RefreshIcon,
-} from "@heroicons/react/outline";
+  ArrowPathIcon,
+} from '@heroicons/react/24/outline'
 
 export default function BodyLanguageTrainingFinish(props) {
   function correctAnswer(results) {
     return results.reduce((total, result) => {
-      return result.correct ? total + 1 : total;
-    }, 0);
+      return result.correct ? total + 1 : total
+    }, 0)
   }
 
   return (
     <div
       className={`my-10 flex flex-col items-center justify-center ${
-        props.hide ? "hidden" : "block"
+        props.hide ? 'hidden' : 'block'
       }`}
     >
       <p className="my-2 text-center text-xl font-bold">Results</p>
-      <PresentationChartLineIcon className="my-4 h-10 w-10" />
+      <PresentationChartBarIcon className="my-4 h-10 w-10" />
       <div className="mb-10 flex">
         <div className="mx-1 flex">
           <p>{correctAnswer(props.results)}</p>
@@ -32,8 +32,8 @@ export default function BodyLanguageTrainingFinish(props) {
         </div>
       </div>
       <a href="/cp/communication/body-language/training">
-        <RefreshIcon className="h-8 w-8 cursor-pointer" />
+        <ArrowPathIcon className="h-8 w-8 cursor-pointer" />
       </a>
     </div>
-  );
+  )
 }

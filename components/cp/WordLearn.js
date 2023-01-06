@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 import {
   PencilIcon,
-  AdjustmentsIcon,
-  SearchIcon,
-} from "@heroicons/react/outline";
-import Loader from "./Loader";
-import Paginate from "./Paginate";
+  AdjustmentsVerticalIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/react/24/outline'
+import Loader from './Loader'
+import Paginate from './Paginate'
 
 export default function WordLearn(props) {
-  const [isLoading, setLoading] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [time, setTime] = useState(7);
-  const [dictionaries, setDictionaries] = useState([]);
+  const [isLoading, setLoading] = useState(true)
+  const [pageCount, setPageCount] = useState(0)
+  const [offset, setOffset] = useState(0)
+  const [time, setTime] = useState(7)
+  const [dictionaries, setDictionaries] = useState([])
 
   useEffect(() => {
-    fetchRandom();
-    setLoading(false);
-  }, [offset, time]);
+    fetchRandom()
+    setLoading(false)
+  }, [offset, time])
 
   async function fetchRandom() {
     const { dictionaries, pageCount } = await fetch(
       `/api/dictionaries?page=yg&take=5&skip=${offset}&time=${time}`
-    ).then((res) => res.json());
+    ).then((res) => res.json())
 
-    setDictionaries(dictionaries);
+    setDictionaries(dictionaries)
 
-    setPageCount(pageCount > 1 ? pageCount : 0);
+    setPageCount(pageCount > 1 ? pageCount : 0)
 
-    return dictionaries;
+    return dictionaries
   }
 
   return (
@@ -50,7 +50,7 @@ export default function WordLearn(props) {
             <th className="py-3 px-6 text-left">word</th>
             <th className="py-3 px-6 text-center">ipa</th>
             <th className="flex justify-center py-3 px-6">
-              <AdjustmentsIcon className="h-6 w-6" />
+              <AdjustmentsVerticalIcon className="h-6 w-6" />
             </th>
           </tr>
         </thead>
@@ -84,7 +84,7 @@ export default function WordLearn(props) {
                       className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500"
                       onClick={() => props.onSearch(dictionary.word)}
                     >
-                      <SearchIcon className="h-5 w-5" />
+                      <MagnifyingGlassIcon className="h-5 w-5" />
                     </div>
                     <div
                       className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500"
@@ -105,5 +105,5 @@ export default function WordLearn(props) {
         handlePageClick={(offset) => setOffset(offset)}
       />
     </div>
-  );
+  )
 }

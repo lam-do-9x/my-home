@@ -1,46 +1,46 @@
-import { useEffect, useState } from "react";
-import CreatableSelect from "react-select/creatable";
-import { XCircleIcon, SaveIcon } from "@heroicons/react/outline";
-import fetchClient from "../../lib/fetchClient";
-import uploadToCloudinary from "../../lib/uploadToCloudinary";
+import { useEffect, useState } from 'react'
+import CreatableSelect from 'react-select/creatable'
+import { XCircleIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import fetchClient from '../../lib/fetchClient'
+import uploadToCloudinary from '../../lib/uploadToCloudinary'
 
 export default function InsertBodyLanguage(props) {
-  const [options, setOptions] = useState([]);
-  const [emotions, setEmotion] = useState([]);
-  const [types, setTypes] = useState([]);
-  const [media, setMedia] = useState([]);
+  const [options, setOptions] = useState([])
+  const [emotions, setEmotion] = useState([])
+  const [types, setTypes] = useState([])
+  const [media, setMedia] = useState([])
 
   useEffect(async () => {
-    const options = await fetch("/api/body-language/selected").then((res) =>
+    const options = await fetch('/api/body-language/selected').then((res) =>
       res.json()
-    );
-    setOptions(options);
-  }, []);
+    )
+    setOptions(options)
+  }, [])
 
   function close(fashion) {
-    setEmotion([]);
-    setTypes([]);
-    props.onClick(fashion);
+    setEmotion([])
+    setTypes([])
+    props.onClick(fashion)
   }
 
   function handleFileSelected(e) {
-    setMedia(e.target.files);
+    setMedia(e.target.files)
   }
 
   async function submit() {
     const uploadResponse = await uploadToCloudinary(
       process.env.NEXT_PUBLIC_BODY_LANGUAGE_UPLOAD_PRESET,
       media[0]
-    );
+    )
     const body = JSON.stringify({
       media: uploadResponse.secure_url,
       emotions,
       types,
-    });
+    })
 
-    const bodyLanguage = await fetchClient("/api/body-language", body);
+    const bodyLanguage = await fetchClient('/api/body-language', body)
 
-    close(bodyLanguage);
+    close(bodyLanguage)
   }
 
   return (
@@ -72,7 +72,7 @@ export default function InsertBodyLanguage(props) {
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>
-              <SaveIcon className="h-5 w-5" />
+              <ArrowDownTrayIcon className="h-5 w-5" />
             </button>
             <button
               className="mx-2 rounded-full border p-3"
@@ -84,5 +84,5 @@ export default function InsertBodyLanguage(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

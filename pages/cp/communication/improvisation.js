@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import {
-  AdjustmentsIcon,
-  PencilAltIcon,
+  AdjustmentsVerticalIcon,
+  PencilSquareIcon,
   PencilIcon,
-} from '@heroicons/react/outline'
-import { SearchIcon } from '@heroicons/react/solid'
+} from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import UpSetImpov from '@components/cp/UpSetImpov'
@@ -112,11 +112,11 @@ export default function Improvisation() {
                 className="cursor-pointer rounded-md border p-2 shadow hover:bg-gray-100"
                 onClick={create}
               >
-                <PencilAltIcon className="h-5 w-5" />
+                <PencilSquareIcon className="h-5 w-5" />
               </div>
               <label className="relative block">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                  <SearchIcon className="h-5 w-5 fill-gray-300" />
+                  <MagnifyingGlassIcon className="h-5 w-5 fill-gray-300" />
                 </span>
                 <input
                   className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-9 pr-3 shadow-sm placeholder:italic placeholder:text-gray-400 focus:outline-none sm:text-sm"
@@ -133,7 +133,7 @@ export default function Improvisation() {
                 <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">
                   <th className="py-3 px-6 text-center">content</th>
                   <th className="flex justify-center py-3 px-6">
-                    <AdjustmentsIcon className="h-6 w-6" />
+                    <AdjustmentsVerticalIcon className="h-6 w-6" />
                   </th>
                 </tr>
               </thead>

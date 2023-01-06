@@ -1,9 +1,9 @@
-import { XIcon } from "@heroicons/react/outline";
-import Image from "next/image";
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
 
 export default function ReceiptModal(props) {
   function close() {
-    props.onClick();
+    props.onClick()
   }
 
   return (
@@ -14,7 +14,7 @@ export default function ReceiptModal(props) {
             <a href={props.receipt.reference} target="_blank" rel="noreferrer">
               {props.receipt.name}
             </a>
-            <XIcon
+            <XMarkIcon
               className="h-5 w-5 cursor-pointer"
               onClick={() => close({})}
             />
@@ -72,14 +72,14 @@ export default function ReceiptModal(props) {
               )}
             </div>
             <div
-              style={{ width: "100%", position: "relative" }}
+              style={{ width: '100%', position: 'relative' }}
               className="my-auto w-1/2"
             >
               <Image
                 className="object-fit"
                 src={
                   props.receipt.cover ??
-                  "/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg"
+                  '/ngo-thanh-tung-pCTuLkx8erE-unsplash.jpg'
                 }
                 width={700}
                 height={475}
@@ -90,5 +90,5 @@ export default function ReceiptModal(props) {
         </div>
       </div>
     </div>
-  );
+  )
 }
