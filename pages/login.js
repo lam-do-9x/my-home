@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { withIronSessionSsr } from 'iron-session/next'
 import { sessionOptions } from '@lib/session'
-import { ArrowCircleRightIcon } from '@heroicons/react/24/outline'
+import { ArrowRightCircleIcon } from '@heroicons/react/24/outline'
 import useLoginForm from '@lib/hooks/useLoginForm'
 import Layout from '@components/Layout'
 import Header from '@components/Header'
@@ -57,7 +57,7 @@ export default function login({ session }) {
               disabled={hasEmailAndPassword}
             >
               <span className="mr-2 uppercase">Login</span>
-              <ArrowCircleRightIcon className="h-6 w-6" />
+              <ArrowRightCircleIcon className="h-6 w-6" />
             </button>
           </form>
         </div>
