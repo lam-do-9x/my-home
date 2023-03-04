@@ -136,20 +136,20 @@ export default function Fashion() {
                   <div className="flex w-64 flex-wrap justify-center p-2">
                     {block.clothes?.map((clothe) => (
                       <div
-                        key={clothe.selected.id}
+                        key={clothe.select.id}
                         className={`mx-2 mb-2 rounded border p-2`}
                       >
-                        {clothe.selected.label}
+                        {clothe.select.value}
                       </div>
                     ))}
                   </div>
                   <div className="flex w-64 flex-wrap justify-center p-2">
                     {block.types?.map((type) => (
                       <div
-                        key={type.selected.id}
+                        key={type.select.id}
                         className={`mx-2 rounded border p-2`}
                       >
-                        {type.selected.label}
+                        {type.select.value}
                       </div>
                     ))}
                   </div>

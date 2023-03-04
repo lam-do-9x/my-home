@@ -18,17 +18,17 @@ async function handle(req, res) {
 }
 
 async function handleGET(req, res) {
-  const selectedFashion = {
+  const selectFashion = {
     id: true,
     image: true,
     clothes: {
       select: {
-        selected: true,
+        select: true,
       },
     },
     types: {
       select: {
-        selected: true,
+        select: true,
       },
     },
   }
@@ -43,22 +43,22 @@ async function handleGET(req, res) {
   const clothes = req.query.clothes
 
   if (clothes) {
-    const clothesSelected = clothes?.split(',').map((clothe) => Number(clothe))
+    const clothesSelect = clothes?.split(',').map((clothe) => Number(clothe))
 
     operator = {
       select: {
         fashion: {
-          select: selectedFashion,
+          select: selectFashion,
         },
       },
       where: {
         selected: {
-          id: { in: clothesSelected },
+          id: { in: clothesSelect },
         },
       },
     }
 
-    const rawFashions = await prisma.fashionClothesSelected.findMany(operator)
+    const rawFashions = await prisma.fashionClothesSelect.findMany(operator)
     const fashions = rawFashions.map((fsh) => {
       return fsh.fashion
     })
@@ -74,7 +74,7 @@ async function handleGET(req, res) {
       take,
       cursor,
       orderBy,
-      select: selectedFashion,
+      select: selectFashion,
     }
   }
 
