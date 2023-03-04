@@ -11,159 +11,187 @@ generator client {
 }
 
 model Dictionary {
-  id            Int       @id @default(autoincrement())
-  word          String    @unique
+  id            Int                  @id @default(autoincrement())
+  word          String               @unique
   ipa           String?
   pronunciation String?
-  content       String?   @db.Text
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @updatedAt
+  content       String?              @db.Text
   contentAt     DateTime?
-  topic         Topic     @relation(fields: [topicId], references: [id])
-  topicId       Int
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  sentences     DictionarySentence[]
 }
 
 model Improvisation {
   id        Int      @id @default(autoincrement())
-  content   String   @unique
+  content   String   @db.Text
   display   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model Select {
+  id                         Int                          @id @default(autoincrement())
+  value                      String                       @unique
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  fashionClothesSelect       FashionClothesSelect[]
+  fashionTypesSelect         FashionTypesSelect[]
+  bodyLanguageEmotionsSelect BodyLanguageEmotionsSelect[]
+  bodyLanguageTypesSelect    BodyLanguageTypesSelect[]
+  receiptIngredientsSelect   ReceiptIngredientsSelect[]
+  receiptSessionsSelect      ReceiptSessionsSelect[]
+  receiptMethodsSelect       ReceiptMethodsSelect[]
+}
+
 model Fashion {
-  id        Int                      @id @default(autoincrement())
+  id        Int                    @id @default(autoincrement())
   image     String
-  createdAt DateTime                 @default(now())
-  updatedAt DateTime                 @updatedAt
-  clothes   FashionClothesSelected[]
-  types     FashionTypesSelected[]
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+  clothes   FashionClothesSelect[]
+  types     FashionTypesSelect[]
 }
 
-model Selected {
-  id                           Int                            @id @default(autoincrement())
-  value                        String?                        @unique
-  label                        String?                        @unique
-  createdAt                    DateTime                       @default(now())
-  updatedAt                    DateTime                       @updatedAt
-  fashionClothesSelected       FashionClothesSelected[]
-  fashionTypesSelected         FashionTypesSelected[]
-  bodyLanguageEmotionsSelected BodyLanguageEmotionsSelected[]
-  bodyLanguageTypesSelected    BodyLanguageTypesSelected[]
-  receiptIngredientsSelected   ReceiptIngredientsSelected[]
-  receiptSessionsSelected      ReceiptSessionsSelected[]
-  receiptMethodsSelected       ReceiptMethodsSelected[]
-}
-
-model FashionClothesSelected {
+model FashionClothesSelect {
   fashion    Fashion  @relation(fields: [fashionId], references: [id])
   fashionId  Int
-  selected   Selected @relation(fields: [selectedId], references: [id])
-  selectedId Int
+  select     Select   @relation(fields: [selectId], references: [id])
+  selectId   Int
   assignedAt DateTime @default(now())
 
-  @@id([fashionId, selectedId])
+  @@id([fashionId, selectId])
 }
 
-model FashionTypesSelected {
+model FashionTypesSelect {
   fashion    Fashion  @relation(fields: [fashionId], references: [id])
   fashionId  Int
-  selected   Selected @relation(fields: [selectedId], references: [id])
-  selectedId Int
+  select     Select   @relation(fields: [selectId], references: [id])
+  selectId   Int
   assignedAt DateTime @default(now())
 
-  @@id([fashionId, selectedId])
+  @@id([fashionId, selectId])
 }
 
 model BodyLanguage {
-  id               Int                            @id @default(autoincrement())
+  id               Int                          @id @default(autoincrement())
   media            String
-  createdAt        DateTime                       @default(now())
-  updatedAt        DateTime                       @updatedAt
-  emotions         BodyLanguageEmotionsSelected[]
-  types            BodyLanguageTypesSelected[]
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
   BodyLanguageExam BodyLanguageExam[]
-}
-
-model BodyLanguageEmotionsSelected {
-  bodyLanguage   BodyLanguage @relation(fields: [bodyLanguageId], references: [id])
-  bodyLanguageId Int
-  selected       Selected     @relation(fields: [selectedId], references: [id])
-  selectedId     Int
-  assignedAt     DateTime     @default(now())
-
-  @@id([bodyLanguageId, selectedId])
-}
-
-model BodyLanguageTypesSelected {
-  bodyLanguage   BodyLanguage @relation(fields: [bodyLanguageId], references: [id])
-  bodyLanguageId Int
-  selected       Selected     @relation(fields: [selectedId], references: [id])
-  selectedId     Int
-  assignedAt     DateTime     @default(now())
-
-  @@id([bodyLanguageId, selectedId])
+  emotions         BodyLanguageEmotionsSelect[]
+  types            BodyLanguageTypesSelect[]
 }
 
 model BodyLanguageExam {
   id           Int          @id @default(autoincrement())
-  bodyLanguage BodyLanguage @relation(fields: [question], references: [id])
   question     Int
   answer       String
   examDate     DateTime
   correct      Boolean      @default(false)
+  bodyLanguage BodyLanguage @relation(fields: [question], references: [id])
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }
 
+model BodyLanguageEmotionsSelect {
+  bodyLanguage   BodyLanguage @relation(fields: [bodyLanguageId], references: [id])
+  bodyLanguageId Int
+  select         Select       @relation(fields: [selectId], references: [id])
+  selectId       Int
+  assignedAt     DateTime     @default(now())
+
+  @@id([bodyLanguageId, selectId])
+}
+
+model BodyLanguageTypesSelect {
+  bodyLanguage   BodyLanguage @relation(fields: [bodyLanguageId], references: [id])
+  bodyLanguageId Int
+  select         Select       @relation(fields: [selectId], references: [id])
+  selectId       Int
+  assignedAt     DateTime     @default(now())
+
+  @@id([bodyLanguageId, selectId])
+}
+
 model Receipt {
-  id          Int                          @id @default(autoincrement())
+  id          Int                        @id @default(autoincrement())
   name        String
   reference   String?
   cover       String?
-  note        String?
-  ingredients ReceiptIngredientsSelected[]
-  sessions    ReceiptSessionsSelected[]
-  methods     ReceiptMethodsSelected[]
-  createdAt   DateTime                     @default(now())
-  updatedAt   DateTime                     @updatedAt
+  note        String?                    @db.Text
+  createdAt   DateTime                   @default(now())
+  updatedAt   DateTime                   @updatedAt
+  ingredients ReceiptIngredientsSelect[]
+  sessions    ReceiptSessionsSelect[]
+  methods     ReceiptMethodsSelect[]
 }
 
-model ReceiptIngredientsSelected {
+model ReceiptIngredientsSelect {
   receipt    Receipt  @relation(fields: [receiptId], references: [id])
   receiptId  Int
-  selected   Selected @relation(fields: [selectedId], references: [id])
-  selectedId Int
+  select     Select   @relation(fields: [selectId], references: [id])
+  selectId   Int
   assignedAt DateTime @default(now())
 
-  @@id([receiptId, selectedId])
+  @@id([receiptId, selectId])
 }
 
-model ReceiptSessionsSelected {
+model ReceiptSessionsSelect {
   receipt    Receipt  @relation(fields: [receiptId], references: [id])
   receiptId  Int
-  selected   Selected @relation(fields: [selectedId], references: [id])
-  selectedId Int
+  select     Select   @relation(fields: [selectId], references: [id])
+  selectId   Int
   assignedAt DateTime @default(now())
 
-  @@id([receiptId, selectedId])
+  @@id([receiptId, selectId])
 }
 
-model ReceiptMethodsSelected {
+model ReceiptMethodsSelect {
   receipt    Receipt  @relation(fields: [receiptId], references: [id])
   receiptId  Int
-  selected   Selected @relation(fields: [selectedId], references: [id])
-  selectedId Int
+  select     Select   @relation(fields: [selectId], references: [id])
+  selectId   Int
   assignedAt DateTime @default(now())
 
-  @@id([receiptId, selectedId])
+  @@id([receiptId, selectId])
 }
 
 model Topic {
-  id           Int          @id @default(autoincrement())
-  name         String       @unique
-  content      String?      @db.Text
-  dictionaries Dictionary[]
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime?    @updatedAt
+  id        Int             @id @default(autoincrement())
+  name      String          @unique
+  content   String?         @db.Text
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  sentences TopicSentence[]
+}
+
+model Sentence {
+  id                 Int                  @id @default(autoincrement())
+  title              String               @unique
+  content            String?              @db.Text
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  topicSentence      TopicSentence[]
+  dictionarySentence DictionarySentence[]
+}
+
+model TopicSentence {
+  topic      Topic    @relation(fields: [topicId], references: [id])
+  topicId    Int
+  sentence   Sentence @relation(fields: [sentenceId], references: [id])
+  sentenceId Int
+  assignedAt DateTime @default(now())
+
+  @@id([topicId, sentenceId])
+}
+
+model DictionarySentence {
+  dictionary   Dictionary @relation(fields: [dictionaryId], references: [id])
+  dictionaryId Int
+  sentence     Sentence   @relation(fields: [sentenceId], references: [id])
+  sentenceId   Int
+  assignedAt   DateTime   @default(now())
+
+  @@id([dictionaryId, sentenceId])
 }
