@@ -15,7 +15,7 @@ export default function InsertReceipt(props) {
   const [cover, setCover] = useState([])
 
   useEffect(async () => {
-    const options = await fetch('/api/receipts/selected').then((res) =>
+    const options = await fetch('/api/receipts/select').then((res) =>
       res.json()
     )
     setOptions(options)

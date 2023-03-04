@@ -26,10 +26,10 @@ export default function ReceiptModal(props) {
                 <ul className="flex flex-wrap">
                   {props.receipt.ingredients?.map((ingredient) => (
                     <li
-                      key={ingredient.selected.id}
+                      key={ingredient.select.id}
                       className="my-2 mr-2 border p-2"
                     >
-                      {ingredient.selected.label}
+                      {ingredient.select.value}
                     </li>
                   ))}
                 </ul>
@@ -40,10 +40,10 @@ export default function ReceiptModal(props) {
                   <ul className="flex flex-wrap">
                     {props.receipt.sessions.map((session) => (
                       <li
-                        key={session.selected.id}
+                        key={session.select.id}
                         className="my-2 mr-2 border p-2"
                       >
-                        {session.selected.label}
+                        {session.select.value}
                       </li>
                     ))}
                   </ul>
@@ -55,10 +55,10 @@ export default function ReceiptModal(props) {
                   <ul className="flex flex-wrap">
                     {props.receipt.methods.map((method) => (
                       <li
-                        key={method.selected.id}
+                        key={method.select.id}
                         className="my-2 mr-2 border p-2"
                       >
-                        {method.selected.label}
+                        {method.select.value}
                       </li>
                     ))}
                   </ul>

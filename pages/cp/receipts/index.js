@@ -18,7 +18,7 @@ export default function Receipts() {
   const [pageCount, setPageCount] = useState(0)
   const [offset, setOffset] = useState(0)
   const [options, setOptions] = useState([])
-  const [selected, setSelected] = useState('')
+  const [select, setSelect] = useState('')
   const [selectIngredients, setSelectIngredients] = useState(null)
   const [selectSessions, setSelectSessions] = useState(null)
   const [suggestSession, setSuggestSession] = useState(null)
@@ -31,8 +31,8 @@ export default function Receipts() {
   async function getReceipts(selecting) {
     let url = `/api/receipts?take=8&skip=${offset}`
 
-    if (selecting || selected !== '') {
-      url = `${url}${selecting || selected}`
+    if (selecting || select !== '') {
+      url = `${url}${selecting || select}`
     }
 
     return await fetch(url).then((res) => res.json())
@@ -43,7 +43,7 @@ export default function Receipts() {
     setReceipts(receipts)
     setPageCount(pageCount > 1 ? pageCount : 0)
     setLoading(false)
-    const options = await fetch('/api/receipts/selected').then((res) =>
+    const options = await fetch('/api/receipts/select').then((res) =>
       res.json()
     )
     setOptions(options)
@@ -58,16 +58,16 @@ export default function Receipts() {
     setUpSet(false)
   }
 
-  async function handleOnChangeIngredient(selected) {
+  async function handleOnChangeIngredient(select) {
     setSelectSessions(null)
-    setSelectIngredients(selected)
-    const ingredientSelected = selected
+    setSelectIngredients(select)
+    const ingredientSelect = select
       ?.map((select) => {
         return select.id
       })
       .join(',')
 
-    const ingredientQuery = `&ingredients=${ingredientSelected}`
+    const ingredientQuery = `&ingredients=${ingredientSelect}`
 
     const { receipts, pageCount } = await getReceipts(
       ingredientQuery !== '' ? ingredientQuery : 'undefined'
@@ -75,19 +75,19 @@ export default function Receipts() {
 
     setPageCount(pageCount > 1 ? pageCount : 0)
     setReceipts(receipts)
-    setSelected(ingredientQuery)
+    setSelect(ingredientQuery)
   }
 
-  async function handleOnChangeSession(selected) {
+  async function handleOnChangeSession(select) {
     setSelectIngredients(null)
-    setSelectSessions(selected)
-    const sessionsSelected = selected
+    setSelectSessions(select)
+    const sessionsSelect = select
       ?.map((select) => {
         return select.id
       })
       .join(',')
 
-    const sessionQuery = `&sessions=${sessionsSelected}`
+    const sessionQuery = `&sessions=${sessionsSelect}`
 
     const { receipts, pageCount } = await getReceipts(
       sessionQuery !== '' ? sessionQuery : 'undefined'
@@ -95,7 +95,7 @@ export default function Receipts() {
 
     setPageCount(pageCount > 1 ? pageCount : 0)
     setReceipts(receipts)
-    setSelected(sessionQuery)
+    setSelect(sessionQuery)
   }
 
   async function suggest() {
@@ -123,7 +123,7 @@ export default function Receipts() {
           <div className="flex cursor-pointer items-center rounded-md border p-3 shadow">
             <Select
               options={options.receiptSessions}
-              onChange={(selected) => setSuggestSession(selected.value)}
+              onChange={(select) => setSuggestSession(select.value)}
               instanceId
             />
             <ArrowPathIcon className="ml-2 h-5 w-5" onClick={suggest} />
@@ -177,20 +177,20 @@ export default function Receipts() {
                   <div className="flex w-64 flex-wrap justify-center p-2">
                     {receipt.sessions?.map((session) => (
                       <div
-                        key={session.selected.id}
+                        key={session.select.id}
                         className={`mx-2 mb-2 rounded border p-2`}
                       >
-                        {session.selected.label}
+                        {session.select.value}
                       </div>
                     ))}
                   </div>
                   <div className="flex w-64 flex-wrap justify-center p-2">
                     {receipt.methods?.map((method) => (
                       <div
-                        key={method.selected.id}
+                        key={method.select.id}
                         className={`mx-2 mb-2 rounded border p-2`}
                       >
-                        {method.selected.label}
+                        {method.select.value}
                       </div>
                     ))}
                   </div>

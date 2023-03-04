@@ -26,17 +26,17 @@ async function handleGET(req, res) {
     reference: true,
     ingredients: {
       select: {
-        selected: true,
+        select: true,
       },
     },
     sessions: {
       select: {
-        selected: true,
+        select: true,
       },
     },
     methods: {
       select: {
-        selected: true,
+        select: true,
       },
     },
   }
@@ -66,7 +66,7 @@ async function handleGET(req, res) {
       distinct: ['receiptId'],
     }
 
-    const receiptsRaw = await prisma.receiptIngredientsSelected.findMany({
+    const receiptsRaw = await prisma.receiptIngredientsSelect.findMany({
       take,
       skip,
       select: {
@@ -81,7 +81,7 @@ async function handleGET(req, res) {
       return r.receipt
     })
 
-    const total = await prisma.receiptIngredientsSelected.findMany({
+    const total = await prisma.receiptIngredientsSelect.findMany({
       ...operator,
     })
 
@@ -106,7 +106,7 @@ async function handleGET(req, res) {
       distinct: ['receiptId'],
     }
 
-    const receiptsRaw = await prisma.receiptSessionsSelected.findMany({
+    const receiptsRaw = await prisma.receiptSessionsSelect.findMany({
       take,
       skip,
       select: {
@@ -121,7 +121,7 @@ async function handleGET(req, res) {
       return r.receipt
     })
 
-    const total = await prisma.receiptSessionsSelected.findMany({
+    const total = await prisma.receiptSessionsSelect.findMany({
       ...operator,
     })
 
