@@ -135,21 +135,21 @@ export default function BodyLanguage() {
                   )}
                   <div className="flex w-64 flex-wrap justify-center p-2">
                     <div
-                      key={bodyLanguage.emotions[0].selected.id}
+                      key={bodyLanguage.emotions[0].select.id}
                       className={`mx-2 mb-2 rounded border p-2 ${getColor(
-                        bodyLanguage.emotions[0].selected.value
+                        bodyLanguage.emotions[0].select.value
                       )}`}
                     >
-                      {bodyLanguage.emotions[0].selected.label}
+                      {bodyLanguage.emotions[0].select.value}
                     </div>
                   </div>
                   <div className="flex w-64 flex-wrap justify-center p-2">
                     {bodyLanguage.types?.map((type) => (
                       <div
-                        key={type.selected.id}
+                        key={type.select.id}
                         className={`mx-2 rounded border p-2`}
                       >
-                        {type.selected.label}
+                        {type.select.value}
                       </div>
                     ))}
                   </div>

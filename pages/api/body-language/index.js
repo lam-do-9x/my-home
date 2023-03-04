@@ -19,17 +19,17 @@ async function handle(req, res) {
 }
 
 async function handleGET(req, res) {
-  const selectedBodyLanguage = {
+  const selectBodyLanguage = {
     id: true,
     media: true,
     emotions: {
       select: {
-        selected: true,
+        select: true,
       },
     },
     types: {
       select: {
-        selected: true,
+        select: true,
       },
     },
   }
@@ -46,25 +46,25 @@ async function handleGET(req, res) {
   const emotions = req.query.emotions
 
   if (emotions && emotions !== 'undefined') {
-    const emotionsSelected = emotions
+    const emotionsSelect = emotions
       ?.split(',')
       .map((emotion) => Number(emotion))
 
     operator = {
       where: {
         selected: {
-          id: { in: emotionsSelected },
+          id: { in: emotionsSelect },
         },
       },
     }
 
-    const bodyLanguagesRaw = await prisma.bodyLanguageEmotionsSelected.findMany(
+    const bodyLanguagesRaw = await prisma.bodyLanguageEmotionsSelect.findMany(
       {
         take,
         skip,
         select: {
           bodyLanguage: {
-            select: selectedBodyLanguage,
+            select: selectBodyLanguage,
           },
         },
         ...operator,
@@ -74,7 +74,7 @@ async function handleGET(req, res) {
       return bl.bodyLanguage
     })
 
-    const total = await prisma.bodyLanguageEmotionsSelected.count(operator)
+    const total = await prisma.bodyLanguageEmotionsSelect.count(operator)
 
     const pageCount = Math.ceil(total / take)
 
@@ -111,7 +111,7 @@ async function handleGET(req, res) {
     take,
     skip: !Number.isNaN(skip) ? skip : undefined,
     ...operator,
-    select: selectedBodyLanguage,
+    select: selectBodyLanguage,
   })
 
   return res.json({ bodyLanguages, pageCount, code: 200 })
