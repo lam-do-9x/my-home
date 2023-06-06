@@ -14,6 +14,7 @@ import {
   PhotoIcon,
   ArrowRightOnRectangleIcon,
   ClipboardDocumentListIcon,
+  DocumentMagnifyingGlassIcon
 } from '@heroicons/react/24/outline'
 import ActiveLink from './ActiveLink'
 import { getContentByField, getStringBeforeCharacter } from '@lib/string'
@@ -43,6 +44,11 @@ const SIDEBAR = [
       icon: <SpeakerWaveIcon className="h-6 w-6" />,
       label: 'Pronunciation',
       href: '/cp/english/pronunciation',
+    },
+    {
+      icon: <DocumentMagnifyingGlassIcon className="h-6 w-6" />,
+      label: 'Sentence',
+      href: '/cp/english/sentence',
     },
   ],
   [
