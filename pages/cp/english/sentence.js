@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import {
   AdjustmentsVerticalIcon,
   PencilIcon,
@@ -20,7 +20,7 @@ export default function Sentence() {
     setLoading(false)
   }, [offset])
 
-  async function fetchSentences(word) {
+  async function fetchSentences() {
     let url = `/api/sentences?take=10&skip=${offset}`
 
     const { sentences, pageCount } = await fetchClient(url)
