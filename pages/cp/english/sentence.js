@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   AdjustmentsVerticalIcon,
-  PencilIcon,
+  PencilIcon
 } from '@heroicons/react/24/outline'
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
+import { debounce } from '@lib/helper'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import Loader from '@components/cp/Loader'
@@ -10,25 +12,48 @@ import fetchClient from '@lib/fetchClient'
 import Paginate from '@components/cp/Paginate'
 
 export default function Sentence() {
-  const [isLoading, setLoading] = useState(true)
-  const [pageCount, setPageCount] = useState(0)
-  const [sentences, setSentences] = useState([])
-  const [offset, setOffset] = useState(0)
+    const [isLoading, setLoading] = useState(true)
+    const [pageCount, setPageCount] = useState(0)
+    const [sentences, setSentences] = useState([])
+    const [offset, setOffset] = useState(0)
+    const [keyword, setKeyword] = useState('')
 
-  useEffect(async () => {
-    await fetchSentences()
-    setLoading(false)
-  }, [offset])
+    useEffect(async () => {
+        await fetchSentences()
+        setLoading(false)
+    }, [offset])
 
-  async function fetchSentences() {
-    let url = `/api/sentences?take=10&skip=${offset}`
+    async function fetchSentences(word) {
+        let url = `/api/sentences?take=10&skip=${offset}`
 
-    const { sentences, pageCount } = await fetchClient(url)
+        if (word || keyword !== '') {
+            url = `${url}&q=${word || keyword}`
+        }
 
-    setPageCount(pageCount > 1 ? pageCount : 0)
+        const { sentences, pageCount } = await fetchClient(url)
 
-    setSentences(sentences)
-  }
+        setPageCount(pageCount > 1 ? pageCount : 0)
+
+        setSentences(sentences)
+    }
+
+    async function fetchSentenceByQuery(word) {
+        await fetchSentences(word)
+        setLoading(false)
+    }
+
+    const debounceDropDown = useRef(
+        debounce((word) => fetchSentenceByQuery(word), 1000)
+    ).current
+
+    function search(e) {
+        setLoading(true)
+        setPageCount(0)
+        setOffset(0)
+        const { value } = e.target
+        setKeyword(value)
+        debounceDropDown(value)
+    }
 
   return (
     <CpLayout>
@@ -41,6 +66,21 @@ export default function Sentence() {
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center overflow-hidden font-sans shadow">
           <div className="mx-6 mb-6 w-full">
+            <div className="mb-2 flex justify-end">
+              <label className="relative block">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-2">
+                  <MagnifyingGlassIcon className="h-5 w-5 fill-gray-300" />
+                </span>
+                <input
+                  className="block w-full rounded-md border border-gray-300 bg-white py-2 pl-9 pr-3 shadow-sm placeholder:italic placeholder:text-gray-400 focus:outline-none sm:text-sm"
+                  placeholder="Search for word..."
+                  type="text"
+                  name="search"
+                  onChange={search}
+                  value={keyword}
+                />
+              </label>
+            </div>
             <table className="w-full min-w-max table-auto rounded shadow-md">
               <thead>
                 <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">

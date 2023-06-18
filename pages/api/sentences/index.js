@@ -5,10 +5,22 @@ async function handle(req, res) {
   const skip = Number(req.query.skip)
   const take = Number(req.query.take)
 
-  const operate = {
+  let operate = {
     orderBy: {
       title: 'asc',
     },
+  }
+
+  if (req.query.q) {
+    operate = {
+      where: {
+        OR: [
+            { title: { contains: req.query.q} },
+            { content: { contains: req.query.q } },
+        ],
+      },
+      ...operate,
+    }
   }
 
   const totalPage = await prisma.sentence.count(operate)
