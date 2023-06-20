@@ -8,8 +8,8 @@ import { debounce } from '@lib/helper'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
 import Loader from '@components/cp/Loader'
-import fetchClient from '@lib/fetchClient'
 import Paginate from '@components/cp/Paginate'
+import InsertSentence from '@components/cp/InsertSentence'
 
 export default function Sentence() {
     const [isLoading, setLoading] = useState(true)
@@ -17,6 +17,7 @@ export default function Sentence() {
     const [sentences, setSentences] = useState([])
     const [offset, setOffset] = useState(0)
     const [keyword, setKeyword] = useState('')
+    const [isUpSet, setUpSet] = useState(false)
 
     useEffect(async () => {
         await fetchSentences()
@@ -30,7 +31,7 @@ export default function Sentence() {
             url = `${url}&q=${word || keyword}`
         }
 
-        const { sentences, pageCount } = await fetchClient(url)
+        const {sentences, pageCount} = await fetch(url).then((response) => response.json())
 
         setPageCount(pageCount > 1 ? pageCount : 0)
 
@@ -55,6 +56,13 @@ export default function Sentence() {
         debounceDropDown(value)
     }
 
+    async function close(sentence) {
+        if (Object.keys(sentence).length > 0) {
+            await fetchSentences()
+        }
+        setUpSet(false);
+  }
+
   return (
     <CpLayout>
       <Header title="Dictionary" />
@@ -62,6 +70,9 @@ export default function Sentence() {
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Sentences
         </h2>
+        <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100" onClick={() => setUpSet(true)}>
+          <PencilIcon className="h-5 w-5" />
+        </div>
       </div>
       <div className="overflow-x-auto">
         <div className="flex items-center justify-center overflow-hidden font-sans shadow">
@@ -109,7 +120,7 @@ export default function Sentence() {
                       </td>
                       <td className="py-3 px-6 text-center">
                         <div className="text-bold flex items-center justify-center">
-                          {sentence.content.length > 50 ? `${sentence.content.slice(0, 50)}...` : sentence.content}
+                          {sentence?.content?.length > 50 ? `${sentence.content.slice(0, 50)}...` : sentence.content}
                         </div>
                       </td>
                       <td className="py-3 px-6">
@@ -124,6 +135,9 @@ export default function Sentence() {
                 )}
               </tbody>
             </table>
+            {isUpSet && (
+              <InsertSentence onClick={(sentence) => close(sentence)}/>
+            )}
             <Paginate
               perPage={10}
               pageCount={pageCount}
