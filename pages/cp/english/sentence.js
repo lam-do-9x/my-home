@@ -15,6 +15,7 @@ export default function Sentence() {
     const [isLoading, setLoading] = useState(true)
     const [pageCount, setPageCount] = useState(0)
     const [sentences, setSentences] = useState([])
+    const [sentence, setSentence] = useState({})
     const [offset, setOffset] = useState(0)
     const [keyword, setKeyword] = useState('')
     const [isUpSet, setUpSet] = useState(false)
@@ -61,7 +62,13 @@ export default function Sentence() {
             await fetchSentences()
         }
         setUpSet(false);
-  }
+    }
+
+    function edit(sentence) {
+        setSentence(sentence)
+
+        setUpSet(true)
+    }
 
   return (
     <CpLayout>
@@ -125,7 +132,7 @@ export default function Sentence() {
                       </td>
                       <td className="py-3 px-6">
                         <div className="item-center flex justify-center">
-                          <div className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500">
+                          <div className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500" onClick={() => edit(sentence)}>
                             <PencilIcon className="h-5 w-5" />
                           </div>
                         </div>
@@ -136,7 +143,7 @@ export default function Sentence() {
               </tbody>
             </table>
             {isUpSet && (
-              <InsertSentence onClick={(sentence) => close(sentence)}/>
+              <InsertSentence sentence={sentence} onClick={(sentence) => close(sentence)}/>
             )}
             <Paginate
               perPage={10}

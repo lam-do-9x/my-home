@@ -19,9 +19,15 @@ export default function InsertSentence(props) {
     if (title !== '') {
         const body = JSON.stringify({title, content})
 
-        const {sentence} = await fetchClient('/api/sentences', body)
+        let response = {}
 
-        close(sentence)
+        if (Object.keys(props.sentence).length !== 0) {
+            response = await fetchClient(`/api/sentences/${props.sentence.id}`, body, 'PATCH')
+        } else {
+            response = await fetchClient('/api/sentences', body)
+        }
+
+        close(response.sentence)
     }
   }
 
@@ -34,6 +40,7 @@ export default function InsertSentence(props) {
             <input
               type="text"
               className="mt-1 block w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm placeholder-slate-400 shadow-sm"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
