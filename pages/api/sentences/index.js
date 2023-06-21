@@ -1,4 +1,4 @@
-import { prisma } from '@lib/prisma'
+import { prisma, Prisma, prismaErrorCode } from '@lib/prisma'
 import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
 async function handle(req, res) {
