@@ -10,19 +10,22 @@ import Header from '@components/Header'
 import fetchClient from '@lib/fetchClient'
 import Loader from '@components/cp/Loader'
 import Paginate from '@components/cp/Paginate'
+import InsertTopic from '@components/cp/InsertTopic'
 
 export default function Topic() {
   const [isLoading, setLoading] = useState(true)
   const [offset, setOffset] = useState(0)
   const [pageCount, setPageCount] = useState(0)
   const [topics, setTopics] = useState([])
+  const [topic, setTopic] = useState({})
+  const [isUpSet, setUpSet] = useState(false)
 
   useEffect(async () => {
-    await fetchDictionaries()
+    await fetchTopics()
     setLoading(false)
   }, [offset])
 
-  async function fetchDictionaries() {
+  async function fetchTopics() {
     let url = `/api/topics?take=10&skip=${offset}`
 
     const { topics, pageCount } = await fetchClient(url)
@@ -32,6 +35,12 @@ export default function Topic() {
     setTopics(topics)
   }
 
+  async function close(topic) {
+        if (Object.keys(topic).length > 0) {
+            await fetchTopics()
+        }
+        setUpSet(false);
+    }
   return (
     <CpLayout>
       <Header title="Dictionary" />
@@ -39,7 +48,7 @@ export default function Topic() {
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Topic
         </h2>
-        <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100">
+        <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100" onClick={() => setUpSet(true)}>
           <PlusIcon className="h-5 w-5" />
         </div>
       </div>
@@ -102,6 +111,9 @@ export default function Topic() {
                 )}
               </tbody>
             </table>
+            {isUpSet && (
+              <InsertTopic topic={topic} onClick={(topic) => close(topic)}/>
+            )}
             <Paginate
               perPage={10}
               pageCount={pageCount}
