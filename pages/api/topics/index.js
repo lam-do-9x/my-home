@@ -27,6 +27,7 @@ async function handleGET(req, res) {
     select: {
       id: true,
       name: true,
+      content: true,
     },
   }
 

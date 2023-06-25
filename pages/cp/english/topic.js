@@ -73,7 +73,7 @@ export default function Topic() {
               <thead>
                 <tr className="bg-gray-200 text-center text-sm uppercase leading-normal text-gray-600">
                   <th className="py-3 px-6 text-left">Name</th>
-                  <th className="py-3 px-6 text-left">Words</th>
+                  <th className="py-3 px-6 text-left">Content</th>
                   <th className="flex justify-center py-3 px-6">
                     <AdjustmentsVerticalIcon className="h-6 w-6" />
                   </th>
@@ -95,10 +95,8 @@ export default function Topic() {
                       <td className="my-4 flex cursor-pointer py-3 px-6">
                         <span className="font-medium">{topic.name}</span>
                       </td>
-                      <td className="py-3 px-6 text-center">
-                        <div className="text-bold flex items-center justify-center">
-                          {topic.dictionaries}
-                        </div>
+                      <td className="py-3 px-6">
+                        {topic?.content?.length > 50 ? `${topic.content.slice(0, 50)}...` : topic.content}
                       </td>
                       <td className="py-3 px-6">
                         <div className="item-center flex justify-center">
