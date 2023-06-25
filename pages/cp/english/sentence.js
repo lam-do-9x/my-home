@@ -72,7 +72,7 @@ export default function Sentence() {
 
   return (
     <CpLayout>
-      <Header title="Dictionary" />
+      <Header title="Sentences" />
       <div className="mx-6 mt-6 flex items-center">
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Sentences

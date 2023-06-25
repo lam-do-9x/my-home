@@ -10,6 +10,7 @@ import Header from '@components/Header'
 import Loader from '@components/cp/Loader'
 import Paginate from '@components/cp/Paginate'
 import InsertTopic from '@components/cp/InsertTopic'
+import TopicModal from '@components/cp/TopicModal'
 
 export default function Topic() {
     const [isLoading, setLoading] = useState(true)
@@ -18,6 +19,7 @@ export default function Topic() {
     const [topics, setTopics] = useState([])
     const [topic, setTopic] = useState({})
     const [isUpSet, setUpSet] = useState(false)
+    const [isDetail, setDetail] = useState(false)
 
     useEffect(async () => {
         await fetchTopics()
@@ -42,9 +44,14 @@ export default function Topic() {
         setUpSet(false);
     }
 
+    function handleOpenDetail(topic) {
+        setTopic(topic);
+        setDetail(true);
+    }
+
   return (
     <CpLayout>
-      <Header title="Dictionary" />
+      <Header title="Topic" />
       <div className="mx-6 mt-6 flex items-center">
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Topic
@@ -92,7 +99,7 @@ export default function Topic() {
                       className="border-b border-gray-200 hover:bg-gray-100"
                       key={topic.id}
                     >
-                      <td className="my-4 flex cursor-pointer py-3 px-6">
+                      <td className="my-4 flex cursor-pointer py-3 px-6" onClick={() => handleOpenDetail(topic)}>
                         <span className="font-medium">{topic.name}</span>
                       </td>
                       <td className="py-3 px-6">
@@ -112,6 +119,9 @@ export default function Topic() {
             </table>
             {isUpSet && (
               <InsertTopic topic={topic} onClick={(topic) => close(topic)}/>
+            )}
+             {isDetail && (
+              <TopicModal topic={topic} onClick={() => setDetail(false)}/>
             )}
             <Paginate
               perPage={10}
