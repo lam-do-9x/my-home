@@ -5,28 +5,29 @@ import fetchClient from '../../lib/fetchClient'
 import AsyncMultiSelect from '@components/AsyncMultiSelect'
 
 export default function InsertTopic(props) {
-  const [name, setName] = useState(props?.topic?.title)
-  const [content, setContent] = useState(props?.topic?.content)
-  const [sentences, setSentences] = useState(props?.topic?.sentences)
+  const [name, setName] = useState(props?.topic?.title || '')
+  const [content, setContent] = useState(props?.topic?.content || '')
+  const [sentences, setSentences] = useState(props?.topic?.sentences || [])
 
   function close(topic) {
     setName('')
     setContent('')
+    setSentences([])
     props.onClick(topic)
   }
 
   async function submit(e) {
     e.target.disabled = true;
 
-    if (title !== '') {
-        const body = JSON.stringify({name, content})
+    if (name !== '') {
+        const body = JSON.stringify({name, content, sentences})
 
         let response = {}
 
         if (Object.keys(props.topic).length !== 0) {
             response = await fetchClient(`/api/topics/${props.topic.id}`, body, 'PATCH')
         } else {
-            response = await fetchClient('/api/topic', body)
+            response = await fetchClient('/api/topics', body)
         }
 
         close(response.topic)
@@ -55,9 +56,7 @@ export default function InsertTopic(props) {
           </div>
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Sentences</p>
-            <AsyncMultiSelect
-              onChange={(sentences) => setSentences(sentences)}
-            />
+            <AsyncMultiSelect onChange={(sentences) => setSentences(sentences)}/>
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>

@@ -1,6 +1,6 @@
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
-export default function AsyncMultiSelect() {
+export default function AsyncMultiSelect(props) {
     async function searchSentence(keyword) {
         if (keyword !== '') {
             let url = `/api/sentences?take=100&skip=1&q=${keyword}`
@@ -28,6 +28,7 @@ export default function AsyncMultiSelect() {
             isMulti
             cacheOptions
             loadOptions={promiseOptions}
+            onChange={(sentence) => props.onChange(sentence)}
         />
     )
 }

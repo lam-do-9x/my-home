@@ -7,40 +7,41 @@ import {
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { CpLayout } from '@components/Layout'
 import Header from '@components/Header'
-import fetchClient from '@lib/fetchClient'
 import Loader from '@components/cp/Loader'
 import Paginate from '@components/cp/Paginate'
 import InsertTopic from '@components/cp/InsertTopic'
 
 export default function Topic() {
-  const [isLoading, setLoading] = useState(true)
-  const [offset, setOffset] = useState(0)
-  const [pageCount, setPageCount] = useState(0)
-  const [topics, setTopics] = useState([])
-  const [topic, setTopic] = useState({})
-  const [isUpSet, setUpSet] = useState(false)
+    const [isLoading, setLoading] = useState(true)
+    const [offset, setOffset] = useState(0)
+    const [pageCount, setPageCount] = useState(0)
+    const [topics, setTopics] = useState([])
+    const [topic, setTopic] = useState({})
+    const [isUpSet, setUpSet] = useState(false)
 
-  useEffect(async () => {
-    await fetchTopics()
-    setLoading(false)
-  }, [offset])
+    useEffect(async () => {
+        await fetchTopics()
+        setLoading(false)
+    }, [offset])
 
-  async function fetchTopics() {
-    let url = `/api/topics?take=10&skip=${offset}`
+    async function fetchTopics() {
+        let url = `/api/topics?take=10&skip=${offset}`
 
-    const { topics, pageCount } = await fetchClient(url)
+        const { topics, pageCount } = await fetch(url).then((response) => response.json())
 
-    setPageCount(pageCount > 1 ? pageCount : 0)
+        setPageCount(pageCount > 1 ? pageCount : 0)
 
-    setTopics(topics)
-  }
+        setTopics(topics)
+    }
 
-  async function close(topic) {
+    async function close(topic) {
         if (Object.keys(topic).length > 0) {
             await fetchTopics()
         }
+
         setUpSet(false);
     }
+
   return (
     <CpLayout>
       <Header title="Dictionary" />
