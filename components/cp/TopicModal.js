@@ -47,8 +47,8 @@ export default function TopicModal(props) {
                     </div>
                     ) : (
                         sentences?.map((sentence) => (
-                            <li className="my-2 mr-2 border p-2">
-                                {sentence.sentence.title}
+                            <li key={sentence.value} className="my-2 mr-2 border p-2">
+                                {sentence.label}
                             </li>
                         ))
                     )}

@@ -2,10 +2,11 @@ import { prisma } from '@lib/prisma'
 import apiAuthMiddleware from '@lib/apiAuthMiddleware'
 
 async function handle(req, res) {
-    const sentences = await prisma.topicSentence.findMany({
+    const topicSentence = await prisma.topicSentence.findMany({
         select: {
             sentence: {
                 select: {
+                    id: true,
                     title: true
                 }
             }
@@ -14,6 +15,13 @@ async function handle(req, res) {
             topicId: Number(req.query.id)
         },
         distinct: ['sentenceId'],
+    })
+
+    const sentences = topicSentence.map((sentence) => {
+        return {
+            value: sentence.sentence.id,
+            label: sentence.sentence.title
+        }
     })
 
     return res.json({ sentences, code: 200 })

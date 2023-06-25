@@ -49,6 +49,11 @@ export default function Topic() {
         setDetail(true);
     }
 
+    function handleOpenEdit(topic) {
+        setTopic(topic);
+        setUpSet(true);
+    }
+
   return (
     <CpLayout>
       <Header title="Topic" />
@@ -107,7 +112,7 @@ export default function Topic() {
                       </td>
                       <td className="py-3 px-6">
                         <div className="item-center flex justify-center">
-                          <div className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500">
+                          <div className="mr-2 w-4 transform cursor-pointer hover:scale-110 hover:text-yellow-500" onClick={() => handleOpenEdit(topic)}>
                             <PencilIcon className="h-5 w-5" />
                           </div>
                         </div>

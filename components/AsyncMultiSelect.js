@@ -27,6 +27,7 @@ export default function AsyncMultiSelect(props) {
         <AsyncCreatableSelect
             isMulti
             cacheOptions
+            defaultValue={props.default}
             loadOptions={promiseOptions}
             onChange={(sentence) => props.onChange(sentence)}
         />
