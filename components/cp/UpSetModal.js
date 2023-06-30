@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   XMarkIcon,
   XCircleIcon,
@@ -8,11 +8,31 @@ import fetchClient from '../../lib/fetchClient'
 import MDE from './MDE'
 import Notification from './Notification'
 import styles from './CP.module.css'
+import AsyncMultiSelect from '@components/AsyncMultiSelect'
+import Loader from '@components/cp/Loader'
 
 export default function UpSetModal(props) {
   const [content, setContent] = useState(props.dictionary.content)
   const [word, setWord] = useState(props.dictionary.word)
   const [response, setResponse] = useState({})
+  const [sentences, setSentences] = useState([])
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(async () => {
+        if (props?.dictionary?.id) {
+            const url = `/api/dictionaries/${props.dictionary.id}/sentences`
+
+            const { sentences } = await fetch(url).then((response) => response.json())
+
+            setSentences(sentences)
+
+            setLoading(false)
+
+            return;
+        }
+
+        setLoading(false)
+    }, [])
 
   function close(dictionary = {}) {
     props.onClick(dictionary)
@@ -22,6 +42,7 @@ export default function UpSetModal(props) {
     const body = JSON.stringify({
       word: word.trim(),
       content,
+      sentences,
       contentAt: props.dictionary.contentAt ?? new Date(),
     })
 
@@ -31,7 +52,7 @@ export default function UpSetModal(props) {
       response = await fetchClient(
         `/api/dictionaries/${props.dictionary.id}`,
         body,
-        'PUT'
+        'PATCH'
       )
     } else {
       response = await fetchClient('/api/dictionaries', body)
@@ -78,6 +99,19 @@ export default function UpSetModal(props) {
               content={content}
               onChange={(content) => setContent(content)}
             />
+          </div>
+           <div className="mb-4 w-full">
+            <p className="mb-2 text-xl font-semibold">Sentences</p>
+            { isLoading
+                ?   (
+                    <tr className="border-b border-gray-200">
+                        <td colSpan="4">
+                        <Loader />
+                        </td>
+                    </tr>
+                    )
+                :   (<AsyncMultiSelect default={sentences} onChange={(sentences) => setSentences(sentences)}/>)
+            }
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>
