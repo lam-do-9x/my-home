@@ -3,11 +3,13 @@ import { XCircleIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import MDE from './MDE'
 import fetchClient from '../../lib/fetchClient'
 import AsyncMultiSelect from '@components/AsyncMultiSelect'
+import Loader from '@components/cp/Loader'
 
 export default function InsertTopic(props) {
   const [name, setName] = useState(props?.topic?.name || '')
   const [content, setContent] = useState(props?.topic?.content || '')
   const [sentences, setSentences] = useState([])
+  const [isLoading, setLoading] = useState(true)
 
     useEffect(async () => {
         if (props?.topic?.id) {
@@ -16,7 +18,13 @@ export default function InsertTopic(props) {
             const { sentences } = await fetch(url).then((response) => response.json())
 
             setSentences(sentences)
+
+            setLoading(false)
+
+            return;
         }
+
+        setLoading(false)
     }, [])
 
   function close(topic) {
@@ -66,7 +74,16 @@ export default function InsertTopic(props) {
           </div>
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Sentences</p>
-            { sentences.length > 0 ? <AsyncMultiSelect default={sentences} onChange={(sentences) => setSentences(sentences)}/> : null}
+            { isLoading
+                ?   (
+                    <tr className="border-b border-gray-200">
+                        <td colSpan="4">
+                        <Loader />
+                        </td>
+                    </tr>
+                    )
+                :   (<AsyncMultiSelect default={sentences} onChange={(sentences) => setSentences(sentences)}/>)
+            }
           </div>
           <div className="flex justify-end">
             <button className="mx-2 rounded-full border p-3" onClick={submit}>

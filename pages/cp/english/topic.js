@@ -54,6 +54,11 @@ export default function Topic() {
         setUpSet(true);
     }
 
+    function handleOpenCreate() {
+        setTopic({});
+        setUpSet(true);
+    }
+
   return (
     <CpLayout>
       <Header title="Topic" />
@@ -61,7 +66,7 @@ export default function Topic() {
         <h2 className="font-large mr-4 flex max-w-min rounded border p-2 text-lg uppercase">
           Topic
         </h2>
-        <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100" onClick={() => setUpSet(true)}>
+        <div className="cursor-pointer rounded-md border p-3 shadow hover:bg-gray-100" onClick={handleOpenCreate}>
           <PlusIcon className="h-5 w-5" />
         </div>
       </div>
