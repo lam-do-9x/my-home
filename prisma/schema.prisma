@@ -1,6 +1,6 @@
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -19,6 +19,7 @@ model Dictionary {
   createdAt     DateTime             @default(now())
   updatedAt     DateTime             @updatedAt
   sentences     DictionarySentence[]
+  topics        DictionaryTopic[]
 }
 
 model Improvisation {
@@ -157,12 +158,13 @@ model ReceiptMethodsSelect {
 }
 
 model Topic {
-  id        Int             @id @default(autoincrement())
-  name      String          @unique
-  content   String?         @db.Text
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  sentences TopicSentence[]
+  id           Int               @id @default(autoincrement())
+  name         String            @unique
+  content      String?           @db.Text
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  sentences    TopicSentence[]
+  dictionaries DictionaryTopic[]
 }
 
 model Sentence {
@@ -193,4 +195,14 @@ model DictionarySentence {
   assignedAt   DateTime   @default(now())
 
   @@id([dictionaryId, sentenceId])
+}
+
+model DictionaryTopic {
+  dictionary   Dictionary @relation(fields: [dictionaryId], references: [id])
+  dictionaryId Int
+  topic        Topic      @relation(fields: [topicId], references: [id])
+  topicId      Int
+  assignedAt   DateTime   @default(now())
+
+  @@id([dictionaryId, topicId])
 }
