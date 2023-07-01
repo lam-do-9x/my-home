@@ -16,17 +16,35 @@ export default function UpSetModal(props) {
   const [word, setWord] = useState(props.dictionary.word)
   const [response, setResponse] = useState({})
   const [sentences, setSentences] = useState([])
+  const [topics, setTopics] = useState([])
   const [isLoading, setLoading] = useState(true)
+  const [isLoadingTopic, setLoadingTopic] = useState(true)
+
+  async function getDictionarySentence(id) {
+        const url = `/api/dictionaries/${id}/sentences`
+
+        const { sentences } = await fetch(url).then((response) => response.json())
+
+        setSentences(sentences)
+
+        setLoading(false)
+  }
+
+  async function getDictionaryTopic(id) {
+        const url = `/api/dictionaries/${id}/topics`
+
+        const { topics } = await fetch(url).then((response) => response.json())
+
+        setTopics(topics)
+
+        setLoadingTopic(false)
+  }
 
   useEffect(async () => {
         if (props?.dictionary?.id) {
-            const url = `/api/dictionaries/${props.dictionary.id}/sentences`
+            await getDictionarySentence(props?.dictionary?.id);
 
-            const { sentences } = await fetch(url).then((response) => response.json())
-
-            setSentences(sentences)
-
-            setLoading(false)
+            await getDictionaryTopic(props?.dictionary?.id);
 
             return;
         }
@@ -101,14 +119,27 @@ export default function UpSetModal(props) {
             />
           </div>
            <div className="mb-4 w-full">
+            <p className="mb-2 text-xl font-semibold">Topics</p>
+            { isLoadingTopic
+                ?   (
+                    <div className="border-gray-200">
+                        <div colSpan="4">
+                        <Loader />
+                        </div>
+                    </div>
+                    )
+                :   (<AsyncMultiSelect default={topics} onChange={(topics) => setTopics(topics)}/>)
+            }
+          </div>
+           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Sentences</p>
             { isLoading
                 ?   (
-                    <tr className="border-b border-gray-200">
-                        <td colSpan="4">
+                    <div className="border-gray-200">
+                        <div colSpan="4">
                         <Loader />
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                     )
                 :   (<AsyncMultiSelect default={sentences} onChange={(sentences) => setSentences(sentences)}/>)
             }
