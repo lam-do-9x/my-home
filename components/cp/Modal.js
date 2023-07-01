@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import MDRender from './MDR'
 import styles from './CP.module.css'
-import AsyncMultiSelect from '@components/AsyncMultiSelect'
 import Loader from '@components/cp/Loader'
 
 export default function Modal(props) {
