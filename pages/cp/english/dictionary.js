@@ -61,9 +61,7 @@ export default function Dictionary() {
     debounceDropDown(value)
   }
 
-  function show(id) {
-    const dictionary = dictionaries.find((d) => d.id === id)
-
+  function show(dictionary) {
     setDictionary(dictionary)
 
     setShow(true)
@@ -150,7 +148,7 @@ export default function Dictionary() {
                     >
                       <td
                         className="my-4 flex cursor-pointer py-3 px-6"
-                        onClick={() => show(dictionary.id)}
+                        onClick={() => show(dictionary)}
                       >
                         <span className="font-medium">{dictionary.word}</span>
                         {dictionary.content.length !== 0 && (

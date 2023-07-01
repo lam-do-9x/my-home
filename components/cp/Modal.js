@@ -1,4 +1,4 @@
-import { XIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import MDRender from './MDR'
 import styles from './CP.module.css'
 
@@ -18,7 +18,7 @@ export default function Modal(props) {
           <div className="w-full text-center font-bold text-yellow-500">
             {props.dictionary.word}
           </div>
-          <XIcon
+          <XMarkIcon
             className="h-5 w-5 cursor-pointer fill-current text-gray-700"
             onClick={close}
           />
