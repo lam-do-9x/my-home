@@ -39,7 +39,13 @@ export default function InsertTopic(props) {
             getTopicDictionary(props?.topic?.id)
 
             getTopicSentence(props?.topic?.id)
+
+            return;
         }
+
+        setLoading(false)
+
+        setLoadingDictionary(false)
     }, [])
 
   function close(topic) {
