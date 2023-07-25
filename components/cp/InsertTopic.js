@@ -10,21 +10,36 @@ export default function InsertTopic(props) {
   const [content, setContent] = useState(props?.topic?.content || '')
   const [sentences, setSentences] = useState([])
   const [isLoading, setLoading] = useState(true)
+  const [dictionaries, setDictionaries] = useState([])
+  const [isLoadingDictionary, setLoadingDictionary] = useState(true)
+
+    async function getTopicDictionary(id) {
+        const url = `/api/topics/${id}/dictionaries`
+
+        const { dictionaries } = await fetch(url).then((response) => response.json())
+
+        setDictionaries(dictionaries)
+
+        setLoadingDictionary(false)
+    }
+
+    async function getTopicSentence(id) {
+        const url = `/api/topics/${props.topic.id}/sentences`
+
+        const { sentences } = await fetch(url).then((response) => response.json())
+
+        setSentences(sentences)
+
+        setLoading(false)
+
+    }
 
     useEffect(async () => {
         if (props?.topic?.id) {
-            const url = `/api/topics/${props.topic.id}/sentences`
+            getTopicDictionary(props?.topic?.id)
 
-            const { sentences } = await fetch(url).then((response) => response.json())
-
-            setSentences(sentences)
-
-            setLoading(false)
-
-            return;
+            getTopicSentence(props?.topic?.id)
         }
-
-        setLoading(false)
     }, [])
 
   function close(topic) {
@@ -71,6 +86,19 @@ export default function InsertTopic(props) {
               content={content}
               onChange={(content) => setContent(content)}
             />
+          </div>
+          <div className="mb-4 w-full">
+            <p className="mb-2 text-xl font-semibold">Dictionaries</p>
+            { isLoadingDictionary
+                ?   (
+                    <div className="border-gray-200">
+                        <div colSpan="4">
+                        <Loader />
+                        </div>
+                    </div>
+                    )
+                :   (<AsyncMultiSelect default={dictionaries} dictionary={true} onChange={(dictionaries) => setDictionaries(dictionaries)}/>)
+            }
           </div>
           <div className="mb-4 w-full">
             <p className="mb-2 text-xl font-semibold">Sentences</p>

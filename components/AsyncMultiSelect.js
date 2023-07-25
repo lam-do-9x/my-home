@@ -5,9 +5,22 @@ export default function AsyncMultiSelect(props) {
         if (keyword !== '') {
             let url = `/api/sentences?take=100&skip=1&q=${keyword}`
 
-            const { sentences } = await fetch(url).then((response) => response.json())
+            if (props.dictionary) {
+                url = `/api/dictionaries?take=100&skip=1&q=${keyword}`
+            }
 
-            return sentences.map((sentence) => {
+            const res = await fetch(url).then((response) => response.json())
+
+            if (props.dictionary) {
+                return res.dictionaries.map((dictionary) => {
+                    return {
+                        value: dictionary.id,
+                        label: dictionary.word
+                    }
+                });
+             }
+
+            return res.sentences.map((sentence) => {
                 return {
                     value: sentence.id,
                     label: sentence.title
@@ -29,7 +42,7 @@ export default function AsyncMultiSelect(props) {
             cacheOptions
             defaultValue={props.default}
             loadOptions={promiseOptions}
-            onChange={(sentence) => props.onChange(sentence)}
+            onChange={(selected) => props.onChange(selected)}
         />
     )
 }
