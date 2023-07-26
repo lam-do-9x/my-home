@@ -69,11 +69,34 @@ async function handlePOST(req, res) {
     }
   })
 
+  const createDictionaries = req.body.dictionaries?.map((dictionary) => {
+    if (dictionary.__isNew__) {
+      return {
+        assignedAt,
+        dictionary: {
+          create: {
+            word: dictionary.value,
+          },
+        },
+      }
+    }
+
+    return {
+      assignedAt,
+      dictionary: {
+        connect: {
+          id: dictionary.value,
+        },
+      },
+    }
+  })
+
   const { name, content } = req.body
 
   const topic = await prisma.topic.create({
     data: {
       sentences: { create: createSentences },
+      dictionaries: { create: createDictionaries },
       name,
       content
     },
