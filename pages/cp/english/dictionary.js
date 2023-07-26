@@ -151,7 +151,7 @@ export default function Dictionary() {
                         onClick={() => show(dictionary)}
                       >
                         <span className="font-medium">{dictionary.word}</span>
-                        {dictionary.content.length !== 0 && (
+                        {dictionary?.content?.length !== 0 && (
                           <CheckIcon className="h-5 w-5" />
                         )}
                       </td>

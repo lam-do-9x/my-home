@@ -24,7 +24,7 @@ export default function InsertTopic(props) {
     }
 
     async function getTopicSentence(id) {
-        const url = `/api/topics/${props.topic.id}/sentences`
+        const url = `/api/topics/${id}/sentences`
 
         const { sentences } = await fetch(url).then((response) => response.json())
 
@@ -59,7 +59,7 @@ export default function InsertTopic(props) {
     e.target.disabled = true;
 
     if (name !== '') {
-        const body = JSON.stringify({name, content, sentences})
+        const body = JSON.stringify({name, content, sentences, dictionaries})
 
         let response = {}
 

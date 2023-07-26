@@ -11,6 +11,15 @@ async function handle(req, res) {
 
     const topicSentenceIds = topicSentence.map(sentence => sentence.sentenceId)
 
+    const topicDictionary = await prisma.dictionaryTopic.findMany({
+        where: {
+            topicId: Number(req.query.id)
+        },
+        distinct: ['dictionaryId'],
+    })
+
+    const topicDictionaryIds = topicDictionary.map(dictionary => dictionary.dictionaryId)
+
     const sentencesUpdate = req.body.sentences
 
     const assignedAt = new Date()
@@ -50,6 +59,43 @@ async function handle(req, res) {
             })
     }
 
+    const dictionariesUpdate = req.body.dictionaries
+
+    const dictionaries =  {
+        deleteMany: {
+            topicId: Number(req.query.id),
+            dictionaryId: {
+                notIn: dictionariesUpdate
+                        .filter((dictionary) => !dictionary.__isNew__)
+                        .map((dictionary ) => dictionary.value )
+            }
+        },
+        create: dictionariesUpdate
+            .map((dictionary ) => {
+                if (dictionary.__isNew__) {
+                    return {
+                        assignedAt,
+                        dictionary: {
+                        create: {
+                            word: dictionary.value,
+                        },
+                        },
+                    }
+                }
+
+                if (!topicDictionaryIds.includes(dictionary.value)) {
+                    return {
+                        assignedAt,
+                        dictionary: {
+                            connect: {
+                                id: dictionary.value,
+                            },
+                        },
+                    }
+                }
+            })
+    }
+
     const { name, content } = req.body
 
     const topic = await prisma.topic.update({
@@ -58,12 +104,13 @@ async function handle(req, res) {
         },
         data: {
             sentences,
+            dictionaries,
             name,
             content
         },
     })
 
-    return res.json({ topic, code: 201 })
+    return res.json({ topic, code: 200 })
 }
 
 export default apiAuthMiddleware(handle)
