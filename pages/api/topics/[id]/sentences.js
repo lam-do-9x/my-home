@@ -7,7 +7,8 @@ async function handle(req, res) {
             sentence: {
                 select: {
                     id: true,
-                    title: true
+                    title: true,
+                    content: true,
                 }
             }
         },
@@ -20,7 +21,10 @@ async function handle(req, res) {
     const sentences = topicSentence.map((sentence) => {
         return {
             value: sentence.sentence.id,
-            label: sentence.sentence.title
+            label: sentence.sentence.title,
+            id: sentence.sentence.id,
+            title: sentence.sentence.title,
+            content: sentence.sentence.content
         }
     })
 

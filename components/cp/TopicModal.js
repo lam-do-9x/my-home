@@ -1,23 +1,41 @@
 import { useEffect, useState } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import Loader from '@components/cp/Loader'
+import InsertSentence from '@components/cp/InsertSentence'
 
 export default function TopicModal(props) {
-  const [sentences, setSentence] = useState([])
+  const [sentences, setSentences] = useState([])
+  const [sentence, setSentence] = useState({})
   const [isLoading, setLoading] = useState(true)
+  const [isUpSet, setUpSet] = useState(false)
+
+  async function getSentences(id) {
+    const url = `/api/topics/${id}/sentences`
+
+    const { sentences } = await fetch(url).then((response) => response.json())
+
+    setSentences(sentences)
+  }
 
   useEffect(async () => {
-         const url = `/api/topics/${props.topic.id}/sentences`
-
-        const { sentences } = await fetch(url).then((response) => response.json())
-
-        setSentence(sentences)
-
+        await getSentences(props.topic.id)
         setLoading(false)
     }, [])
 
     function close() {
         props.onClick()
+    }
+
+    function edit(sentence) {
+        setSentence(sentence)
+        setUpSet(true)
+    }
+
+    async function closeSentence(sentence) {
+        if (Object.keys(sentence).length > 0) {
+            await getSentences(props.topic.id)
+        }
+        setUpSet(false);
     }
 
   return (
@@ -47,12 +65,13 @@ export default function TopicModal(props) {
                     </div>
                     ) : (
                         sentences?.map((sentence) => (
-                            <li key={sentence.value} className="my-2 mr-2 border p-2">
+                            <li key={sentence.value} className="my-2 mr-2 border p-2 cursor-pointer" onClick={() => edit(sentence)}>
                                 {sentence.label}
                             </li>
                         ))
                     )}
                 </ul>
+                {isUpSet && (<InsertSentence sentence={sentence} onClick={(sentence) => closeSentence(sentence)}/>)}
             </div>
           </div>
         </div>
