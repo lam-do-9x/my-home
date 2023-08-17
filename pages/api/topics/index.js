@@ -21,24 +21,36 @@ async function handleGET(req, res) {
   const take = Number(req.query.take)
 
   let operate = {
-    orderBy: {
-      name: 'asc',
-    },
     select: {
       id: true,
       name: true,
       content: true,
     },
+    orderBy: [
+       { name: 'asc'},
+       { createdAt: 'desc'}
+    ],
+  }
+
+  if (req.query.q) {
+    operate = {
+      where: {
+        name: {
+          contains: req.query.q,
+        },
+      },
+      ...operate,
+    }
   }
 
   const totalPage = await prisma.topic.count(operate)
 
-  const pageCount = Math.ceil(totalPage / take)
+  const pageCount = Math.ceil(totalPage.id / take)
 
   const topics = await prisma.topic.findMany({
     skip: !Number.isNaN(skip) ? skip : undefined,
     take: !Number.isNaN(take) ? take : undefined,
-    ...operate,
+    ...operate
   })
 
   return res.json({ topics, pageCount, code: 200 })

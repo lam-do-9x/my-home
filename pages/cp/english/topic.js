@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import {
   AdjustmentsVerticalIcon,
   PlusIcon,
@@ -11,6 +11,7 @@ import Loader from '@components/cp/Loader'
 import Paginate from '@components/cp/Paginate'
 import InsertTopic from '@components/cp/InsertTopic'
 import TopicModal from '@components/cp/TopicModal'
+import { debounce } from '@lib/helper'
 
 export default function Topic() {
     const [isLoading, setLoading] = useState(true)
@@ -20,20 +21,43 @@ export default function Topic() {
     const [topic, setTopic] = useState({})
     const [isUpSet, setUpSet] = useState(false)
     const [isDetail, setDetail] = useState(false)
+    const [keyword, setKeyword] = useState('')
 
     useEffect(async () => {
         await fetchTopics()
         setLoading(false)
     }, [offset])
 
-    async function fetchTopics() {
-        let url = `/api/topics?take=10&skip=${offset}`
+    async function fetchTopics(word) {
+        let url = `/api/topics?take=7&skip=${offset}`
+
+        if (word || keyword !== '') {
+            url = `${url}&q=${word || keyword}`
+        }
 
         const { topics, pageCount } = await fetch(url).then((response) => response.json())
 
         setPageCount(pageCount > 1 ? pageCount : 0)
 
         setTopics(topics)
+    }
+
+    async function fetchTopicByQuery(word) {
+        await fetchTopics(word)
+        setLoading(false)
+    }
+
+    const debounceDropDown = useRef(
+        debounce((word) => {fetchTopicByQuery(word)}, 1000)
+      ).current
+
+    function search(e) {
+        setLoading(true)
+        setPageCount(0)
+        setOffset(0)
+        const { value } = e.target
+        setKeyword(value)
+        debounceDropDown(value)
     }
 
     async function close(topic) {
@@ -83,6 +107,8 @@ export default function Topic() {
                   placeholder="Search for topic..."
                   type="text"
                   name="search"
+                  onChange={search}
+                  value={keyword}
                 />
               </label>
             </div>
@@ -134,7 +160,7 @@ export default function Topic() {
               <TopicModal topic={topic} onClick={() => setDetail(false)}/>
             )}
             <Paginate
-              perPage={10}
+              perPage={7}
               pageCount={pageCount}
               handlePageClick={(offset) => setOffset(offset)}
             />
