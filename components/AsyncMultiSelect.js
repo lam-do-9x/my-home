@@ -36,6 +36,15 @@ export default function AsyncMultiSelect(props) {
             }, 500);
         });
 
+    const styles = {
+        valueContainer: (base) => ({
+            ...base,
+            maxHeight: 75,
+            overflowY: "auto"
+        }),
+
+    };
+
     return (
         <AsyncCreatableSelect
             isMulti
@@ -43,6 +52,8 @@ export default function AsyncMultiSelect(props) {
             defaultValue={props.default}
             loadOptions={promiseOptions}
             onChange={(selected) => props.onChange(selected)}
+            styles={styles}
+            maxMenuHeight={100}
         />
     )
 }
