@@ -29,10 +29,7 @@ async function handleGET(req, res) {
   if (req.query.q) {
     operate = {
       where: {
-        OR: [
-            { title: { contains: req.query.q} },
-            { content: { contains: req.query.q } },
-        ],
+        title: { contains: req.query.q}
       },
       ...operate,
     }
